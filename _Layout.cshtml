@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<link rel="shortcut icon" href="http://i.imgur.com/Xb0gMkQ.png">-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@Page.Title</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/css/normalize.css" rel="stylesheet">
+    <link id="default" type="text/css" href="~/css/bootstrap.css" rel="stylesheet">
+    <link href="~/css/materialize.css" />
+    <link rel="shortcut icon" href="~/res/favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/js/materialize.js"></script>
+
+    <script type="text/javascript">
+	//Stolen from Jake
+		function googleTranslateElementInit() {				/* allows user to change language */
+			new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+		}
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Used for toggling stylesheets -->
+    <script>
+	function cssToggle(){
+	    //Stolen from Jake
+		var x=document.getElementById('cssToggle');
+		if(x.checked){
+			swapSheet('css/alt.css');
+		}
+		else{
+			swapSheet('css/bootstrap.css');
+		}
+	}
+
+    </script>
+    <script>
+	function swapSheet(x){
+	    //Stolen from Jake
+		document.getElementById('default').setAttribute('href', x)
+	}
+    </script>
+    <!-- Need this script to increase text size by 150% -->
+    <script>
+        function zoomText() { //Stolen from Jake
+		var x = document.getElementById('zoomText');
+		if(x.checked){
+			document.getElementById('main-content').style.fontSize = '150%';
+		}
+		else{
+			document.getElementById('main-content').style.fontSize = 'initial';
+		}
+	}
+
+    </script>
+</head>
+<body style="background: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/kindajean.png);">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="main.php">
+                    Timetabling System:
+
+                    You are logged in as Computer Science
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="main.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li><a href="book.php"><span class="glyphicon glyphicon-book"></span> Room Request</a></li>
+                    <li><a href="allocations.php"><span class="glyphicon glyphicon-saved"></span> Room Allocations</a></li>
+                    <li><a href="rooms.php"><span class="glyphicon glyphicon-blackboard"></span> Available Rooms</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="glyphicon glyphicon-cog"></span> Settings
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="addmodule.php">Add New Module</a></li>
+                            <li><a href="editmodule.php">Edit Module Details</a></li>
+                            <li><a href="adddepartment.php">Add New Department</a></li>
+                            <li><a href="editdepartment.php">Edit Department Details</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="help.php"><span class="glyphicon glyphicon-question-sign"></span> Help</a></li>
+                    <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+                    <li><a id="google_translate_element"></a></li>
+                    <li><a><label><input type='checkbox' id='cssToggle' onchange='cssToggle();' style="width:15px;height: 15px;" /> Colour Assist</label></a></li>
+                    <!-- This checkbox is used for increase font size -->
+                    <li><a><label style='font-size:2em;'><input type='checkbox' id='zoomText' onchange='zoomText();' style="width:15px; height:15px;" /> Font Assist</label></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id='main-content' class="container-fluid">
+        @RenderBody()
+    </div>
+
+    <footer class="footer">
+
+        <!-- Stolen from Connor, Jake -->
+
+        <nav class="navbar navbar-inverse">
+
+            <div class="collapse navbar-collapse panel-body" id="wrap">
+
+
+                <div class="row">
+                    <div class='col-md-6'>
+                        <br>
+                        <img src="http://i.imgur.com/kTTtuqJ.png" alt="logo" height="" width="">	<!-- loughborough logo image -->
+
+                    </div>
+
+                    <div class='col-md-6'>
+
+                        <h2 style='color:white;'>Links</font></h2>												<!-- links to relevant pages, opens in new tab -->
+                        <a href="http://www.lboro.ac.uk/internal" target="_blank">Loughborough homepage</a>
+                        <br>
+                        <a href="http://learn.lboro.ac.uk/" target="_blank">Learn Portal</a>
+                        <br>
+                        <a href="http://maps.lboro.ac.uk/" target="_blank">Campus Map</a>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </nav>
+
+    </footer>
+
+
+</body>
+</html>
