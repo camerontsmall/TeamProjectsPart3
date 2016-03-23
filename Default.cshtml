@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Lboro Timetable";
+    var DB = Database.Open("OLEDbConnection");
+    var Grid = new WebGrid(DB.Query("SELECT * FROM allocation"));
 }
 
 <h3>We suggest the following:</h3>
@@ -26,3 +28,16 @@
         <a href="http://go.microsoft.com/fwlink/?LinkId=245143">Learn more…</a>
     </li>
 </ol>
+<div>
+    @Grid.GetHtml(
+        tableStyle: "MyTable",
+        headerStyle: "columnHead",
+        alternatingRowStyle: "altRow",
+        columns: Grid.Columns(Grid.Column("RequestNo", "Request Number"),
+            Grid.Column("Email", "Eamil"),
+            Grid.Column("RoomCode", "Room Code"),
+            Grid.Column("Status", "Status"),
+            Grid.Column("GroupNo", "Group Number")
+        )
+    )
+</div>
