@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Lboro Timetable";
-    var DB = Database.Open("OLEDbConnection");
+    var DB = Database.Open("dbConnectionString");
     var Grid = new WebGrid(DB.Query("SELECT * FROM allocation"));
 }
 
