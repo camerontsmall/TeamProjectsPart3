@@ -1,4 +1,8 @@
 ﻿<!DOCTYPE html>
+@if (!WebSecurity.IsAuthenticated)
+{
+    Response.Redirect("~/Account/Login");
+}
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +14,10 @@
 </head>
 <body>
     <header>
+        <form id="logoutForm" action="~/Account/Logout" method="post" style="display:none;">
+            @AntiForgery.GetHtml();
+        </form>
+
         <nav data-activates="main_nav" class="btn-collapse top-nav blue darken-1 full hide-on-large-only fixed">
             <a href='#' data-activates='main_nav' class='button-collapse'><i class="mdi-navigation-menu"></i></a>
         </nav>
@@ -20,7 +28,7 @@
             </li>
             @Links.NavLink("Dashboard", "")
             @Links.NavLink("Manage Requests", "requests")
-
+            @Links.NavFullLink("Log out", "javascript:document.getElementById('logoutForm').submit()")
         </ul>
     </header>
 

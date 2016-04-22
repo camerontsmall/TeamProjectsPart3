@@ -1,3 +1,11 @@
 ﻿@helper NavLink(string name, string url) {
     <li><a href="~/@url">@name</a></li>
 }
+
+@helper NavFullLink(string name, string url){
+    <li><a href="@url">@name</a></li>
+}
+
+@helper NavAction(string name, string action) {
+    <li onclick="@action">@name</li>
+}

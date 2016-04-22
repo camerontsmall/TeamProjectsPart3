@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@Page.Title</title>
+    <script src="~/js/materialize.js" ></script>
+    <link rel="stylesheet" href="~/css/materialize.css" />
+    <link rel="stylesheet" href="~/css/styles_main.css" />
+    
+</head>
+<body>
+    <div id='wrapper' class="container">
+        @RenderBody()
+    </div>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
