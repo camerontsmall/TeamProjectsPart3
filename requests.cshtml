@@ -2,7 +2,7 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Lboro Timetable";
     var DB = Database.Open("dbConnectionString");
-    var Grid = new WebGrid(DB.Query("SELECT * FROM allocation"));
+    var Grid = new WebGrid(DB.Query("SELECT * FROM submissions"));
 }
 
 <h3>Requests</h3>
@@ -12,10 +12,10 @@
         headerStyle: "columnHead",
         alternatingRowStyle: "altRow",
         columns: Grid.Columns(Grid.Column("RequestNo", "Request Number"),
-            Grid.Column("Email", "Email"),
-            Grid.Column("RoomCode", "Room Code"),
-            Grid.Column("Status", "Status"),
-            Grid.Column("GroupNo", "Group Number")
+            Grid.Column("ModuleCode", "Module Code"),
+            Grid.Column("Preference", "Room Code"),
+            Grid.Column("SpecialRequirements", "Special requirements"),
+            Grid.Column("Weeks", "Weeks")
         )
     )
 </div>

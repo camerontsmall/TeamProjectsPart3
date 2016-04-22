@@ -93,9 +93,8 @@
     @* If at least one validation error exists, notify the user *@
     @Html.ValidationSummary("Account creation was unsuccessful. Please correct the errors and try again.", excludeFieldErrors: true, htmlAttributes: null)
 
-    <fieldset>
-        <legend>Registration Form</legend>
-        <ol>
+    <div>
+        <ul>
             <li class="email">
                 <label for="email" @if(!ModelState.IsValidField("email")){<text>class="error-label"</text>}>Email address</label>
                 <input type="text" id="email" name="email" value="@email" @Validation.For("email") />
@@ -114,22 +113,8 @@
                 @* Write any password validation errors to the page *@
                 @Html.ValidationMessage("confirmPassword")
             </li>
-            <li class="recaptcha">
-                <div class="message-info">
-                    <p>
-                        To enable CAPTCHA verification, <a href="http://go.microsoft.com/fwlink/?LinkId=204140">install the 
-                        ASP.NET Web Helpers Library</a> and uncomment ReCaptcha.GetHtml and replace 'PUBLIC_KEY'
-                        with your public key. At the top of this page, uncomment ReCaptcha. Validate and
-                        replace 'PRIVATE_KEY' with your private key.
-                        Register for reCAPTCHA keys at <a href="http://recaptcha.net">reCAPTCHA.net</a>.
-                    </p>
-                </div>
-                @*
-                @ReCaptcha.GetHtml("PUBLIC_KEY", theme: "white")
-                @Html.ValidationMessage("recaptcha")
-                *@
-            </li>
-        </ol>
-        <input type="submit" value="Register" />
-    </fieldset>
+        </ul>
+        <input class="waves-effect waves-light btn" type="submit" value="Register" />
+        <a class="waves-effect waves-light btn" href="~/Account/Login">Log in instead</a>      
+    </div>
 </form>
