@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Contact";
+
+}
+
+
+<div id='main-content' class="container-fluid">
+
+    <!-- Hidden until submission is completed and request sent -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Module Added</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Your submission for a new module has been sent!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form class="form-horizontal" action="postModule.php" method="get">
+                    <fieldset>
+                        <span class="h2">Add Module</span> <span class="h4">- <a href="help.php">Click for help on this page!</a></span>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="departmentName">Department <span style="font-size:1.25em;color:red;">*</span></label>
+                            <div class="col-md-4">
+                                <input id="firstSelect" name="dept" class="form-control" placeholder="" disabled>
+
+                                </input>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="moduleCode">Module Code <span style="font-size:1.25em;color:red;">*</span></label>
+                            <div class="col-md-4">
+                                <input id="moduleCode" name="moduleCode" type="text" value="" class="form-control input-md">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="moduleTitle">Module Title <span style="font-size:1.25em;color:red;">*</span></label>
+                            <div class="col-md-4">
+                                <input id="moduleTitle" name="moduleTitle" type="text" value="" class="form-control input-md">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="submit"></label>
+                            <div class="col-md-4">
+                                <input class="btn btn-success btn-block" type="submit" value="Submit">
+                            </div>
+                        </div>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function allowInput(){
+	if(document.getElementById("firstSelect").value != ""){
+		document.getElementById("moduleCode").disabled = false;
+		document.getElementById("moduleCode").value = document.getElementById("firstSelect").value;
+		document.getElementById("moduleTitle").disabled = false;
+	}
+}
+</script>

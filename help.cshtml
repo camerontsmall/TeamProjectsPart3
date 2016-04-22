@@ -1,0 +1,197 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Contact";
+}
+
+
+
+<h1>Help</h1>
+<hr>
+<!-- Single statement block -->
+@{ var myMessage = "Hello World"; }
+
+<!-- Inline expression or variable -->
+<p>The value of myMessage is: @myMessage</p>
+
+<div class="row">
+    <div class="col-md-3">
+        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal1">Home Help</button>
+        <div id="myModal1" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Home Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>This page acts as a home page and is the first screen that you will see once you've logged in. It contains important information such as the current booking round, links off to some of the websites functions such as making a room request, as well as a short description on what these functions do.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal2">Room Request Help</button>
+        <div id="myModal2" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Room Request Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            This page contains an easy-to-use form which will guide you through the process of booking desired lecture rooms.
+                            Here you should input all relevant information, from department and module code to when and where you want this lecture/seminar to take place.
+                            In addition, you should also enter any special requirements to ensure the correct room(s) is allocated with respect to your request.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal3">Room Allocation Help</button>
+        <div id="myModal3" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Room Allocation Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            This page allows you to view all of the current room bookings that have been made.
+                            It will be updated whenever another room request is made allowing you to easily see when room requests have been granted.
+                            When a room booking is granted it is coloured green, when it is still pending it is coloured blue and when it is denied is coloured red.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal4">Available Rooms Help</button>
+        <div id="myModal4" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Available Rooms Informatio</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            This page shows all remaining rooms which have not yet been fully allocated.
+                            The rooms can be filtered so that you can see which are appropriate for your bookings (e.g. wheelchair access).
+                            Using this page, you can taper any future requests to help maximise success in the booking process.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal5">Add Module Help</button>
+        <div id="myModal5" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Module Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Use this page to create a new module simply by entering a module name and module code, E.g. CV999.
+                            Then submit the form and the new module will be added, ready to be used.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal6">Edit Module Details Help</button>
+        <div id="myModal6" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit Module Details Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Use this page to modify an already existing modules details.
+                            You will need to enter the existing module details as well as the new module details.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <div class="col-md-3">
+        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal7">Add Department Help</button>
+        <div id="myModal7" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Department Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Use this page to create a new department simply by entering a department name and department code, E.g. XY.
+                            Then submit the form and the new department will be created, ready for use.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal8">Edit Department Details Help</button>
+        <div id="myModal8" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit Department Details Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Use this page to edit an already exisiting department by entering its current department name and department code. Then enter the new details associated with the department and submit the form.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+

@@ -1,0 +1,298 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Contact";
+}
+
+    <div id='main-content' class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <!-- Hidden until submission is completed and request sent -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Submission Complete</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Your submission has been sent!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Hidden until duplicate request is sent and found -->
+                <div class="modal fade" id="dupeModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Duplicate Request</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Your request already exists!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <span class="h2">Room Booking</span>
+                <span class="h4">- <a href="help.php">Click for help on this page!</a></span>
+                <hr>
+                <form class="form-horizontal" action="submit_booking.php" method="get">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="NumberofRooms">Number of Rooms <span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8">
+                                        <select id="rooms" name="rooms" class="form-control" value="4" onchange='sendNoRooms();' required>
+                                            <option disabled selected style="display:none;"></option>
+                                            <?php
+                                            //contributions by: Joseph, Jake
+                                            //php to echo the drop down based on what has been chosen (mainly for use with copy/edit functions from the allocations page)
+                                            if(isset($rooms)){
+                                            if($rooms == 1){
+                                            echo "
+                                            <option selected value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3'>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>";
+                                            }
+                                            else if($rooms == 2){
+                                            echo "
+                                            <option value='1'>1</option>
+                                            <option selected value='2'>2</option>
+                                            <option value='3'>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>";
+                                            }
+                                            else if($rooms == 3){
+                                            echo "
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option selected value='3'>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>";
+                                            }
+                                            else if($rooms == 4){
+                                            echo "
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3'>3</option>
+                                            <option selected value='4'>4</option>
+                                            <option value='5'>5</option>";
+                                            }
+                                            else if($rooms == 5){
+                                            echo "
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3'>3</option>
+                                            <option value='4'>4</option>
+                                            <option selected value='5'>5</option>";
+                                            }
+
+
+                                            }
+                                            else{
+                                            echo "
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                            <option value='3'>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>";
+                                            }
+
+
+                                            ?>
+                                        </select>
+
+                                        <font size="2"><i>(<b>NOTE:</b> Please choose number of rooms before filling out the form.)</i></font>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="firstSelect">Department <span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8">
+                                        <select id="department" name="department" class="form-control">
+
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="module">Module<span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8" id="secondSelect">
+                                        <select id="module" name="module" class="form-control" required>
+
+                                            <option disabled selected style="display:none;"></option>
+
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- contributions by: Joseph -->
+                                <!-- button to enable past submission data, runs enableData function on click -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="pastData"></label>
+                                    <div class="col-md-8">
+                                        <input class="btn btn-success" type="button" id="pastData" name="pastData" value="Enable past submission data?" onclick="enableData(this.value);">
+                                        <i><b>Please choose a module first.</b></i><span style="font-size:1.25em;color:red;">* </span>
+                                        <br>
+                                        <font size="2"><i><b>(NOTE:</b> only partial past submission data may be available.)</i></font>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="Semester">Semester <span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8">
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="Start Week">Start Week <span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8">
+                                       
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="End Week">End Week <span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8">
+                                     
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="day">Day <span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8">
+                                        <select id="day" name="day" class="form-control" value="4" required>
+                                            <option disabled selected style="display:none;"></option>
+                                          
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="period">Period <span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8">
+                                       
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="length">Length in hours <span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8">
+                                       
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="NumberofStudents">Number of students <span style="font-size:1.25em;color:red;">*</span></label>
+                                    <div class="col-md-8">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="park">Park (C, E, W)</label>
+                                    <div class="col-md-8">
+                                        <select id="park" name="park" value="" class="form-control">
+                                            <option disabled selected style="display:none;"></option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="priority">Priority (P)</label>
+                                    <div class="col-md-8">
+                                       
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="RoomPreference">Room Preference<br><a href="rooms.php" target="_blank"><i>(click to view available rooms)</i> </a> </label>
+                                    <div class="col-md-8">
+                                        
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="L/S">Lecture/Seminar</label>
+                                    <div class="col-md-8">
+                                       
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="DataProj">Data Projector</label>
+                                    <div class="col-md-8">
+                                       
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="NumberofStudents">Number of Projectors</label>
+                                    <div class="col-md-8">
+                                       
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="visualiser">Visualiser</label>
+                                    <div class="col-md-8">
+                                      
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="specialreq">Special Requirements</label>
+                                    <div class="col-md-8">
+                                     
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-1 control-label" for="submit"></label>
+                                        <div class="col-md-6">
+                                          
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="book.php"><button type='button' name="clear" class="btn btn-info btn-block btn-lg" value="Clear">Clear</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
