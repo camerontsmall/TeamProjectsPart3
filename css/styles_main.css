@@ -1,6 +1,6 @@
 ﻿/* Main sections */
 #wrapper{
-
+    margin-left:310px;
 }
 
 #central {
@@ -48,10 +48,14 @@ select {
 @media (min-width: 1240px) {
   #central {
     margin-left: 165px; } }
+
 @media (max-width: 992px) {
   #wrapper {
     margin: 0;
-    width: 100%; }
+    padding:10px;
+    width: 100%; 
+
+  }
 
   .longList {
     min-height: 0; } }
