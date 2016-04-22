@@ -1,0 +1,4 @@
+﻿@helper Allocation(string name) {
+    var DB = Database.Open("dbConnectionString");
+    var Data = DB.Query("SELECT * FROM allocation");
+}

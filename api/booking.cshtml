@@ -1,0 +1,24 @@
+﻿@using System.Web.Script.Serialization;
+@{
+
+    var DB = Database.Open("dbConnectionString");
+    var Data = DB.Query("SELECT * FROM allocation");
+
+    var Serializer = new JavaScriptSerializer();
+    var JSON = Serializer.Serialize(Data);
+
+    //var Grid = new WebGrid(Data);
+}
+@Html.Raw(string.Join(", ",Data));
+@*Grid.GetHtml(
+        tableStyle: "MyTable",
+        headerStyle: "columnHead",
+        alternatingRowStyle: "altRow",
+        columns: Grid.Columns(Grid.Column("RequestNo", "Request Number"),
+            Grid.Column("Email", "Eamil"),
+            Grid.Column("RoomCode", "Room Code"),
+            Grid.Column("Status", "Status"),
+            Grid.Column("GroupNo", "Group Number")
+        )
+    )
+*@
