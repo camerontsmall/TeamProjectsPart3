@@ -1,0 +1,10 @@
+﻿@using System.Runtime.Serialization.Json
+@{
+    Response.ContentType = "application/json";
+    var DB = Database.Open("dbConnectionString");
+    var Data = DB.Query("SELECT * FROM allocation");
+
+    Array Data2 = Data.ToArray();
+
+    Json.Write(Data, Response.Output);
+}
