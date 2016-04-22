@@ -1,6 +1,9 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Contact";
+    var DB = Database.Open("dbConnectionString");
+    string sqlString = "SELECT TOP (5) submissions.RequestNo, module.ModuleCode, department.DeptName, submissions.Semester, submissions.StartWeek, submissions.EndWeek, submissions.Day, submissions.Period, submissions.Length, submissions.Priority, submissions.NoOfStudents, submissions.Park, submissions.NoOfRooms, submissions.Preference, submissions.[Lecture/Seminar] AS LecSem, submissions.FixedDataProjector, submissions.NoOfProjectors, submissions.Visualiser, submissions.SpecialRequirements, submissions.GroupNo FROM submissions INNER JOIN module ON submissions.ModuleCode = module.ModuleCode INNER JOIN department ON submissions.DeptNo = department.DeptNo ORDER BY submissions.RequestNo DESC";
+    var result = DB.Query(sqlString);
 }
 
 
@@ -97,14 +100,36 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
-
+                                       @{
+                                           foreach (var row in result) {
+                                               WriteLiteral("<tr>");
+                                               WriteLiteral("<td>" + row.RequestNo + "</td>");
+                                               WriteLiteral("<td></td>");
+                                               WriteLiteral("<td>" + row.ModuleCode + "</td>");
+                                               WriteLiteral("<td>" + row.Semester + "</td>");
+                                               WriteLiteral("<td>" + row.StartWeek + "</td>");
+                                               WriteLiteral("<td>" + row.EndWeek + "</td>");
+                                               WriteLiteral("<td>" + row.Day + "</td>");
+                                               WriteLiteral("<td>" + row.Period + "</td>");
+                                               WriteLiteral("<td>" + row.Length + "</td>");
+                                               WriteLiteral("<td>" + row.Priority + "</td>");
+                                               WriteLiteral("<td>" + row.NoOfStudents + "</td>");
+                                               WriteLiteral("<td>" + row.Park + "</td>");
+                                               WriteLiteral("<td>" + row.NoOfRooms + "</td>");
+                                               WriteLiteral("<td>" + row.Preference + "</td>");
+                                               WriteLiteral("<td>" + row.LecSem + "</td>");
+                                               WriteLiteral("<td>" + row.FixedDataProjector + "</td>");
+                                               WriteLiteral("<td>" + row.NoOfProjectors + "</td>");
+                                               WriteLiteral("<td>" + row.Visualiser + "</td>");
+                                               WriteLiteral("<td>" + row.SpecialRequirements + "</td>");
+                                               WriteLiteral("<td>" + row.GroupNo + "</td>");
+                                               WriteLiteral("<td></td>");
+                                               WriteLiteral("</tr>");
+                                           }
+                                       }
                                     </tbody>
                                 </table>
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>
