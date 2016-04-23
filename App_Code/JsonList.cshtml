@@ -1,97 +1,125 @@
 ﻿@helper PrintList(string id, string JsonString, string title) {
     <!-- jsonList @id begins -->
     <div class='form listWrapper'>
-    @{;
-        string data_id = id + "_data";
-        string body_id = id + "_body";
-        string search_id = id + "_search";
-        string pagenumber = id + "_pagenumber";
-        Array data = Json.Decode(JsonString);
+        @{;
+            string data_id = id + "_data";
+            string body_id = id + "_body";
+            string search_id = id + "_search";
+            string pagenumber = id + "_pagenumber";
+            Array data = Json.Decode(JsonString);
 
-        int count = data.Length;
-        int numpages = (count - 1) / 10 + 1;
+            int count = data.Length;
+            int numpages = (count - 1) / 10 + 1;
 
-        
+
         }
-        <script type="application/json" id="@data_id">@Html.Raw(JsonString)</script>
-        <h4 class="listtitle">@title</h4>
+        <script type="application/json" id="@data_id">
+            @Html.Raw(JsonString)
+    </script>
+    <h4 class="listtitle">@title</h4>
 
-        @if (count > 10)
-        {
-            string back, next;
+    @if (count > 10)
+    {
+        string back, next;
 
-            string back_id = id + "_back";
-            string next_id = id + "_next";
-            next = "<i class='material-icons>chevron_right</i>";
-            string number_class = id + "_pagebtn";
-            <input onkeyup="list_search('@id','@data_id',this.value);" placeholder='Search' type='text' id='$search_id' />
+        string back_id = id + "_back";
+        string next_id = id + "_next";
+        next = "<i class='material-icons>chevron_right</i>";
+        string number_class = id + "_pagebtn";
+        <input onkeyup="list_search('@id','@data_id',this.value);" placeholder='Search' type='text' id='$search_id' />
             <ul class="pagination">
                 <li onclick="list_change_page('@id','@data_id'',0);" id='@back_id' class='disabled'>
                     <a href="javascript:void(0);">
                         <i class='material-icons'>chevron_left</i>
                     </a>
                 </li>
-            @for (int i = 0; i < numpages; i++) {
+                @for (int i = 0; i < numpages; i++)
+                {
                     string number_id = id + "_page" + i;
                     int ii = i + 1;
                     string active = (i == 0) ? "active" : "";
                     <li onclick="list_change_page('@id','@data_id',@i);" class="waves-effect @active @number_class" id="@number_id">@ii</li>
-            }
+                }
                 <li onclick="list_change_page('@id','@data_id',1);" id='@next_id' class=''>
                     <a href="javascript:void(0);">
                         <i class='material-icons'>chevron_right</i>
                     </a>
                 </li>
             </ul>
-        }
-        <table>
-            <tbody id='@body_id'>
-            </tbody>
-        </table>
-            @*
-            if($count > 10){
-                $back; $next;
-                $numpages = floor(($count-1) / 10 ) + 1;
-                $back_id = $this->id . '_back';
-                $next_id = $this->id . '_next';
-                $search = "<input onkeyup=\"list_search('$this->id','$data_id',this.value);\" placeholder='Search' type='text' id='$search_id' />";
-                $back = "<i class='material-icons'>chevron_left</i>";
-                $next = "<i class='material-icons'>chevron_right</i>";
-                $number_class = $this->id . '_pagebtn';
-                echo $search;
-                echo '<ul class="pagination">';
-                echo "<li onclick=\"list_change_page('$this->id','$data_id',0);\" id='$back_id' class='disabled'><a href=\"javascript:void(0);\">". $back . '</a></li>';
-                for($i = 0; $i < $numpages; $i++){
-                    $number_id = $this->id . '_page' . $i;
-                    $active = ($i == 0)? 'blue active' : '';
-                    $pageref = $i+1;    //Index 1-10 rather than 0-9
-                    echo "<li onclick=\"list_change_page('$this->id','$data_id',$i);\" class=\"waves-effect $active $number_class\" id=\"$number_id\"><a href=\"javascript:void(0);\">$pageref</a></li>";
-                }
-                echo "<li onclick=\"list_change_page('$this->id','$data_id',1);\" id='$next_id' class='waves-effect'><a href=\"javascript:void(0);\">" . $next . '</a></li>';
-                echo '</ul>';
-                //echo "$search<div class=\"listnav\"><p>Page <span id='$page_number'>1</span> of $numpages</p>$back$next</div>";
-            }
-            $listStyle = (count($this->objects) > 10)? 'longList' : 'shortList';
-            $responsive = (count($this->objects[0]) > 4)? 'responsive-table' : '';
-            echo "<table class=\"objectList bordered highlight $responsive $listStyle\" id=\"$this->id\" $this->tags >",PHP_EOL;
+    }
 
-            $first = $this->objects[0];
-            foreach($first as $key => $value){
-                if($key != "onclick" && $key != 'action'){
-                    $this->headers[] = $key;
+
+
+    @{
+        string listStyle = (count > 10) ? "longList" : "shortList";
+        string responsive = (count > 4) ? "responsive-table" : "";
+    }
+    <table class="objectList bordered higlight @responsive @listStyle" id="@id">
+        <thead>
+            <tr>
+
+                @{
+                    dynamic first = data.GetValue(0);
+
+                    foreach (KeyValuePair<string,object> element in first)
+                    {
+                        if (element.Key != "onclick" && element.Key != "action")
+                        {
+                            <th>@element.Key</th>
+                        }
+                    }
                 }
+            </tr>
+        </thead>
+
+
+        <tbody id='@body_id'></tbody>
+    </table>
+    <script>list_change_page('@id', '@data_id', 0);</script>
+    @*
+        if($count > 10){
+            $back; $next;
+            $numpages = floor(($count-1) / 10 ) + 1;
+            $back_id = $this->id . '_back';
+            $next_id = $this->id . '_next';
+            $search = "<input onkeyup=\"list_search('$this->id','$data_id',this.value);\" placeholder='Search' type='text' id='$search_id' />";
+            $back = "<i class='material-icons'>chevron_left</i>";
+            $next = "<i class='material-icons'>chevron_right</i>";
+            $number_class = $this->id . '_pagebtn';
+            echo $search;
+            echo '<ul class="pagination">';
+            echo "<li onclick=\"list_change_page('$this->id','$data_id',0);\" id='$back_id' class='disabled'><a href=\"javascript:void(0);\">". $back . '</a></li>';
+            for($i = 0; $i < $numpages; $i++){
+                $number_id = $this->id . '_page' . $i;
+                $active = ($i == 0)? 'blue active' : '';
+                $pageref = $i+1;    //Index 1-10 rather than 0-9
+                echo "<li onclick=\"list_change_page('$this->id','$data_id',$i);\" class=\"waves-effect $active $number_class\" id=\"$number_id\"><a href=\"javascript:void(0);\">$pageref</a></li>";
             }
-            echo "<thead><tr>", \PHP_EOL;
-            foreach($this->headers as $header){
-                echo "<th>". $header . "</th>", \PHP_EOL;
+            echo "<li onclick=\"list_change_page('$this->id','$data_id',1);\" id='$next_id' class='waves-effect'><a href=\"javascript:void(0);\">" . $next . '</a></li>';
+            echo '</ul>';
+            //echo "$search<div class=\"listnav\"><p>Page <span id='$page_number'>1</span> of $numpages</p>$back$next</div>";
+        }
+        $listStyle = (count($this->objects) > 10)? 'longList' : 'shortList';
+        $responsive = (count($this->objects[0]) > 4)? 'responsive-table' : '';
+        echo "<table class=\"objectList bordered highlight $responsive $listStyle\" id=\"$this->id\" $this->tags >",PHP_EOL;
+
+        $first = $this->objects[0];
+        foreach($first as $key => $value){
+            if($key != "onclick" && $key != 'action'){
+                $this->headers[] = $key;
             }
-            echo "</tr></thead><tbody id='$body_id'>", \PHP_EOL;
-            //JavaScript does this bit now
-            echo "</tbody></table>";
-            echo "<script>list_change_page('$this->id', '$data_id', 0);</script>", PHP_EOL;
-            echo "</div>", PHP_EOL;
-            */
-            *@
+        }
+        echo "<thead><tr>", \PHP_EOL;
+        foreach($this->headers as $header){
+            echo "<th>". $header . "</th>", \PHP_EOL;
+        }
+        echo "</tr></thead><tbody id='$body_id'>", \PHP_EOL;
+        //JavaScript does this bit now
+        echo "</tbody></table>";
+        echo "", PHP_EOL;
+        echo "</div>", PHP_EOL;
+        */
+    *@
 </div>
     <!-- jsonList ends -->
 }

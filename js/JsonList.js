@@ -97,9 +97,9 @@ function list_search(listId, dataLocation, term) {
         var row = data[i];
         var match = false;
         for (var key in row) {
-            if (key != 'onclick') {
+            if (key != 'onclick' && key != 'action') {
                 if (row[key]) {
-                    var content = row[key].toLowerCase();
+                    var content = row[key].toString().toLowerCase();
                     if (content.indexOf(term.toLowerCase()) != -1) {
                         match = true;
                     }
