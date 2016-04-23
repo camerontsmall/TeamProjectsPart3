@@ -2,20 +2,11 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Lboro Timetable";
     var DB = Database.Open("dbConnectionString");
-    var Grid = new WebGrid(DB.Query("SELECT * FROM submissions"));
+    var Data = DB.Query("SELECT * FROM submissions");
+    var JSON = Json.Encode(Data);
 }
 
 <h3>Requests</h3>
 <div>
-    @Grid.GetHtml(
-        tableStyle: "MyTable",
-        headerStyle: "columnHead",
-        alternatingRowStyle: "altRow",
-        columns: Grid.Columns(Grid.Column("RequestNo", "Request Number"),
-            Grid.Column("ModuleCode", "Module Code"),
-            Grid.Column("Preference", "Room Code"),
-            Grid.Column("SpecialRequirements", "Special requirements"),
-            Grid.Column("Weeks", "Weeks")
-        )
-    )
+    @JsonList.PrintList("requestlist", JSON, "All requests")
 </div>
