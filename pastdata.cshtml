@@ -1,0 +1,11 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Past Submissions";
+    var DB = Database.Open("dbConnectionString");
+    var Data = DB.Query("SELECT * FROM pastsubmissions WHERE ModuleCode LIKE 'CO%'");
+    var JSON = Json.Encode(Data);
+}
+
+<div>
+    @JsonList.PrintList("requestlist", JSON, "Past submissions")
+</div>

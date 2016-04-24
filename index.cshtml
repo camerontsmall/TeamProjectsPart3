@@ -2,10 +2,10 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Lboro Timetable";
     var DB = Database.Open("dbConnectionString");
-    var JSON = Json.Encode(DB.Query("SELECT * FROM allocation"));
+    //var JSON = Json.Encode(DB.Query("SELECT * FROM allocation"));
 }
 
 <h3>Dashboard</h3>
 <div>
-    @JsonList.PrintList("requestlist", JSON, "Approved requests")
+    @*JsonList.PrintList("requestlist", JSON, "Approved requests")*@
 </div>
