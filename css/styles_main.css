@@ -1,6 +1,8 @@
 ﻿/* Main sections */
 #wrapper{
     margin-left:310px;
+    margin-top:1em;
+    margin-bottom:2em;
 }
 
 #central {
@@ -33,6 +35,12 @@ select {
     background-color:transparent;
 }
 /* List related */
+
+.tablecontainer{
+    width:100%;
+    overflow-x:auto;
+}
+
 .objectList a {
   color: inherit; }
 

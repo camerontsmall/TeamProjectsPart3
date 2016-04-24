@@ -54,27 +54,29 @@
         string listStyle = (count > 10) ? "longList" : "shortList";
         string responsive = (count > 4) ? "responsive-table" : "";
     }
-    <table class="objectList bordered higlight @responsive @listStyle" id="@id">
-        <thead>
-            <tr>
+        <div class="tablecontainer">
+            <table class="objectList bordered higlight @responsive @listStyle" id="@id">
+                <thead>
+                    <tr>
 
-                @{
-                    dynamic first = data.GetValue(0);
+                        @{
+                            dynamic first = data.GetValue(0);
 
-                    foreach (KeyValuePair<string,object> element in first)
-                    {
-                        if (element.Key != "onclick" && element.Key != "action")
-                        {
-                            <th>@element.Key</th>
+                            foreach (KeyValuePair<string,object> element in first)
+                            {
+                                if (element.Key != "onclick" && element.Key != "action")
+                                {
+                                    <th>@element.Key</th>
+                                }
+                            }
                         }
-                    }
-                }
-            </tr>
-        </thead>
+                    </tr>
+                </thead>
 
 
-        <tbody id='@body_id'></tbody>
-    </table>
+                <tbody id='@body_id'></tbody>
+            </table>
+        </div>
     <script>list_change_page('@id', '@data_id', 0);</script>
     @*
         if($count > 10){
