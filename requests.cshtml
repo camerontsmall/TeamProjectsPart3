@@ -15,11 +15,37 @@
 <h3>Requests - @title</h3>
 <div id="requestForm">
     <form method="post" action="./requests.cshtml">
-        <label for="titleinput">Title</label>
-        <input type="text" id="titleinput" name="title" value="@title" />
-        <input class="btn waves-effect" type="submit" value="Submit"/>
+        <div class="row">
+            <div class="col s12 m12 l6" id="form_left">
+                <label for="titleinput">Module Code</label>
+                <input type="text" id="moduleinput" name="modulecode" value="@title" />
+                <label for="titleinput">Periods</label>
+                <select multiple id="periodinput" name="period" value="@title" >
+                    <option value="green">09:00-10:00</option>
+                </select>
+                <label for="titleinput">Weeks</label>
+                <select multiple id="weeksinput" name="weeks">
+                    <option value="1">Week 1</option>
+                    <option value="2">Week 2</option>
+                    <option value="3">Week 3</option>
+                </select>
+            </div>
+            <div class="col s12 m12 l6" id="form_right">
+                <label for="titleinput">Title</label>
+                <input type="text" id="titleinput" name="title" value="@title" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12" id="form_buttons">
+                <input class="btn waves-effect" type="submit" value="Submit" />
+            </div>
+        </div>
     </form>
 </div>
 <div>
     @JsonList.PrintList("requestlist", JSON, "All requests")
 </div>
+<script>
+    $('select').material_select();
+    Materialize.updateTextFields();
+</script>
