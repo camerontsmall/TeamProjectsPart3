@@ -15,7 +15,8 @@
 <h3>Requests - @title</h3>
 <div id="requestForm">
     <form method="post" action="./requests.cshtml">
-        <input type="text" name="title" value="@title" />
+        <label for="titleinput">Title</label>
+        <input type="text" id="titleinput" name="title" value="@title" />
         <input class="btn waves-effect" type="submit" value="Submit"/>
     </form>
 </div>

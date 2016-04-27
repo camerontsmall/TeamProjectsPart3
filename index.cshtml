@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Lboro Timetable";
+    Page.Name = "dashboard";
     var DB = Database.Open("dbConnectionString");
     var JSON = Json.Encode(DB.Query("SELECT * FROM request WHERE status='c'"));
 }
