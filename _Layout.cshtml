@@ -14,10 +14,22 @@
     <link rel="stylesheet" href="~/css/styles_main.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    @{ 
-       
+    @( 
+public class Page{
+        public Page(string Title, string Url)
+        {
+            this.Title = Title;
+            this.Url = Url;
+        }
+        string Title;
+        string Url;
+}
 
-    }
+List<Page> pages = new List<Page>();
+
+
+        
+    )
 </head>
 <body>
     <header>
