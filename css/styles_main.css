@@ -47,6 +47,32 @@ select {
 .longList {
   min-height: 583px; }
 
+#mobile_nav{
+    left:0;
+}
+
+#help_backdrop{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:rgba(0,0,0,0.7);
+    opacity:0;
+    display:none;
+    transition:opacity 1s;
+    z-index:1000;
+}
+
+#help_screen{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background-color:white;
+    z-index:1001;
+}
+
 /* Media queries */
 @media (min-width: 992px) {
   #central {

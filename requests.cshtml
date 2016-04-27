@@ -4,9 +4,21 @@
     var DB = Database.Open("dbConnectionString");
     var Data = DB.Query("SELECT * FROM request");
     var JSON = Json.Encode(Data);
+
+    string title = "";
+
+    if (IsPost){
+        title = Request.Form["title"];
+    }
 }
 
-<h3>Requests</h3>
+<h3>Requests - @title</h3>
+<div id="requestForm">
+    <form method="post" action="./requests.cshtml">
+        <input type="text" name="title" value="@title" />
+        <input class="btn waves-effect" type="submit" value="Submit"/>
+    </form>
+</div>
 <div>
     @JsonList.PrintList("requestlist", JSON, "All requests")
 </div>
