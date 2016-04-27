@@ -1,4 +1,6 @@
-﻿@helper NavLink(string name, string url) {
+﻿@using Navigation
+
+@helper NavLink(string name, string url) {
     <li><a href="~/@url">@name</a></li>
 }
 
@@ -10,3 +12,10 @@
     <li onclick="@action"><a href="javascript:void(0);">@name</a></li>
 }
 
+@helper NavList(List<Navigation.Page> pages){
+        foreach(Navigation.Page page in pages){
+            string Url = page.Url;
+            string Title = page.Title;
+            @:<li><a href="@Url">@Title</a></li>
+        }
+}

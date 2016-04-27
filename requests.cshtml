@@ -25,9 +25,7 @@
                 </select>
                 <label for="titleinput">Weeks</label>
                 <select multiple id="weeksinput" name="weeks">
-                    <option value="1">Week 1</option>
-                    <option value="2">Week 2</option>
-                    <option value="3">Week 3</option>
+                    @RequestForm.Weeks();
                 </select>
             </div>
             <div class="col s12 m12 l6" id="form_right">

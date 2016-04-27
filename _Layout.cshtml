@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Navigation
+<!DOCTYPE html>
 @if (!WebSecurity.IsAuthenticated)
 {
     Response.Redirect("~/Account/Login");
@@ -14,22 +15,16 @@
     <link rel="stylesheet" href="~/css/styles_main.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    @( 
-public class Page{
-        public Page(string Title, string Url)
-        {
-            this.Title = Title;
-            this.Url = Url;
-        }
-        string Title;
-        string Url;
+    @{
+List<Navigation.Page> pages = new List<Navigation.Page>();        
+    pages.Add(new Navigation.Page(".","Dashboard"));
+    pages.Add(new Navigation.Page("requests","Manage requests"));
+    pages.Add(new Navigation.Page("pastdata","Past data"));
+    pages.Add(new Navigation.Page("module","Modules"));
+    pages.Add(new Navigation.Page("rooms","Rooms"));
+    pages.Add(new Navigation.Page("javascript:loadHelp()","Help"));
+    pages.Add(new Navigation.Page("javascript:document.getElementById('logoutForm').submit()","Log out"));
 }
-
-List<Page> pages = new List<Page>();
-
-
-        
-    )
 </head>
 <body>
     <header>
@@ -45,21 +40,13 @@ List<Page> pages = new List<Page>();
             <li class="logo" id="logo">
                <img src="~/Images/LboroLogo.png"/>
             </li>
-            @Links.NavLink("Dashboard", "")
-            @Links.NavLink("Manage Requests", "requests")
-            @Links.NavLink("Past Submissions", "pastdata")
-            @Links.NavAction("Help", "loadHelp()")
-            @Links.NavFullLink("Log out", "javascript:document.getElementById('logoutForm').submit()")
+            @Links.NavList(pages)
         </ul>
         <ul class="side-nav hide-on-large-only" id="mobile_nav">
             <li class="logo" id="logo">
                 <img src="~/Images/LboroLogo.png" />
             </li>
-            @Links.NavLink("Dashboard", "")
-            @Links.NavLink("Manage Requests", "requests")
-            @Links.NavLink("Past Submissions", "pastdata")
-            @Links.NavAction("Help", "loadHelp()")
-            @Links.NavFullLink("Log out", "javascript:document.getElementById('logoutForm').submit()")
+            @Links.NavList(pages)
         </ul>
     </header>
 

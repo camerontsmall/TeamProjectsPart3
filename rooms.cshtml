@@ -3,31 +3,19 @@
     Page.Title = "Rooms";
 
     var DB = Database.Open("dbConnectionString");
-    var Data = DB.Query("SELECT room_code AS 'Code', park, capacity, type, dept_id FROM room");
+    var Data = DB.Query("SELECT room_code AS 'Code', park as 'Park', capacity as 'Capacity', type as 'Type', dept_id AS 'Department ID' FROM room");
     var JSON = Json.Encode(Data);    
 }
 
 <h3>Rooms</h3>
 <div id="requestForm">
-    <form method="post" action="./requests.cshtml">
+    <form method="post" action="./rooms.cshtml?add">
         <div class="row">
             <div class="col s12 m12 l6" id="form_left">
-                <label for="titleinput">Module Code</label>
-                <input type="text" id="moduleinput" name="modulecode" value="" />
-                <label for="titleinput">Periods</label>
-                <select multiple id="periodinput" name="period" value="">
-                    <option value="green">09:00-10:00</option>
-                </select>
-                <label for="titleinput">Weeks</label>
-                <select multiple id="weeksinput" name="weeks">
-                    <option value="1">Week 1</option>
-                    <option value="2">Week 2</option>
-                    <option value="3">Week 3</option>
-                </select>
+                <!-- left part of form -->
             </div>
             <div class="col s12 m12 l6" id="form_right">
-                <label for="titleinput">Title</label>
-                <input type="text" id="titleinput" name="title" value="" />
+                <!-- right part of form -->
             </div>
         </div>
         <div class="row">
