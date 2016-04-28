@@ -48,6 +48,14 @@ List<Navigation.Page> pages = new List<Navigation.Page>();
             </li>
             @Links.NavList(pages, Page.Path)
         </ul>
+        
+        <nav id="current_location_bar" class="show-on-large-only top-nav blue darken-1">
+            <div class="container" id="current_location_bar_inner">
+                <span>Home</span>
+                <i class="material-icons">chevron_right</i>
+                <span>@Page.Title</span>
+            </div>
+        </nav>
     </header>
 
     <div id='wrapper' class="container">

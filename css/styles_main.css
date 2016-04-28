@@ -51,6 +51,29 @@ select {
     left:0;
 }
 
+#current_location_bar{
+  height:45px;
+  line-height:45px;
+  white-space:nowrap;
+}
+
+#current_location_bar i{
+  display:inline-block;
+  line-height:45px;
+  font-size:1.5em;
+  float:left;
+}
+
+#current_location_bar span{
+  display:inline-block;
+  line-height:45px;
+  float:left; 
+}
+
+#current_location_bar_inner{
+  white-space:nowrap;
+}
+
 #help_backdrop{
     position:fixed;
     top:0;
