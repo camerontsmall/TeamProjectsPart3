@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Rooms";
-
+    Page.Path = "rooms";
     var DB = Database.Open("dbConnectionString");
     var Data = DB.Query("SELECT room_code AS 'Code', park as 'Park', capacity as 'Capacity', type as 'Type', dept_id AS 'Department ID' FROM room");
     var JSON = Json.Encode(Data);    
