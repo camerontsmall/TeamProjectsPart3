@@ -12,10 +12,11 @@
     <li onclick="@action"><a href="javascript:void(0);">@name</a></li>
 }
 
-@helper NavList(List<Navigation.Page> pages){
+@helper NavList(List<Navigation.Page> pages, string pagePath = ""){
         foreach(Navigation.Page page in pages){
             string Url = page.Url;
             string Title = page.Title;
-            @:<li><a href="@Url">@Title</a></li>
+            string active = (pagePath == page.Url)? "active" : "";
+            @:<li class="@active"><a href="@Url">@Title</a></li>
         }
 }

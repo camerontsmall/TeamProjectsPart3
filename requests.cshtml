@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Lboro Timetable";
+    Page.Path = "requests";
     var DB = Database.Open("dbConnectionString");
     var Data = DB.Query("SELECT * FROM request");
     var JSON = Json.Encode(Data);
@@ -12,25 +13,26 @@
     }
 }
 
-<h3>Requests - @title</h3>
+<h3>Requests @title</h3>
 <div id="requestForm">
     <form method="post" action="./requests.cshtml">
         <div class="row">
             <div class="col s12 m12 l6" id="form_left">
                 <label for="titleinput">Module Code</label>
                 <input type="text" id="moduleinput" name="modulecode" value="@title" />
-                <label for="titleinput">Periods</label>
+                <label for="periodinput">Period(s)</label>
                 <select multiple id="periodinput" name="period" value="@title" >
                     <option value="green">09:00-10:00</option>
                 </select>
-                <label for="titleinput">Weeks</label>
+                <br />
+                <label for="weeksinnput" class="active">Week(s)</label>
                 <select multiple id="weeksinput" name="weeks">
                     @RequestForm.Weeks();
                 </select>
             </div>
             <div class="col s12 m12 l6" id="form_right">
-                <label for="titleinput">Title</label>
-                <input type="text" id="titleinput" name="title" value="@title" />
+                <label for="roomtypeinput">Preferred room type</label>
+                <input type="text" id="roomtypeinput" name="roomtype" value="@title" />
             </div>
         </div>
         <div class="row">

@@ -17,3 +17,28 @@ namespace Navigation{
     }
 
 }
+/*
+namespace Facilities{
+    
+    public class Room{
+        public static Dictionary Types(){
+            var types = new Dictionary<string,string>();
+            types["lt"] = "Lecture theatre, tiered";
+            types["lc"] = "Lecture theatre, circular";
+            return types;
+        }
+    }
+    
+    public class Park{
+        public static Dictionary Parks(){
+            var parks = new Dictionary<string,string>();
+            parks["w"] = "West";
+            parks["c"] = "Central";
+            parks["e"] = "East";
+            parks["h"] = "Holywell";
+            parks["v"] = "Village";
+            parks["l"] = "London Campus";
+            return parks;
+        }
+    }
+}*/

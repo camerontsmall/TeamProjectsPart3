@@ -40,13 +40,13 @@ List<Navigation.Page> pages = new List<Navigation.Page>();
             <li class="logo" id="logo">
                <img src="~/Images/LboroLogo.png"/>
             </li>
-            @Links.NavList(pages)
+            @Links.NavList(pages, Page.Path)
         </ul>
         <ul class="side-nav hide-on-large-only" id="mobile_nav">
             <li class="logo" id="logo">
                 <img src="~/Images/LboroLogo.png" />
             </li>
-            @Links.NavList(pages)
+            @Links.NavList(pages, Page.Path)
         </ul>
     </header>
 
