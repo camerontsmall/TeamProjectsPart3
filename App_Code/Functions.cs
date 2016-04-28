@@ -31,7 +31,7 @@ namespace Bookings{
             statuses["w"] = "Withdrawn";
             return statuses;
         }
-    }
+}
 
 
     public class Module{
