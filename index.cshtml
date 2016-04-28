@@ -1,94 +1,152 @@
-﻿
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Team 11 // Login</title>
-    <link href="css/normalize.css" rel="stylesheet">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link rel="shortcut icon" href="favicon.ico">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script>
-	$(document).ready(function(){ //contributions by: Jake
-		var x = '<?php if(isset($login)){echo $login;}?>';
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Home";
+    Page.Path = ".";
+    var DB = Database.Open("dbConnectionString");
+    string sqlString = "SELECT [request_id] AS [Request ID], [module_code] AS [Module Code], [booking_round] AS [Booking Round], [priority] AS Priority, [status] AS Status, [day] AS Day, [period] AS Period, [week] As Week, [owner] As Owner, CONVERT(VARCHAR, [last_changed], 120) as [Last Changed] FROM [team15].[team15].[request] WHERE status='c'";
+    var data = DB.Query(sqlString); ///= Functions.cleanRequestData(DB.Query(sqlString));
+    
+    string stemp = "";
+    string period = "";
+    string ctemp;
+    bool lastIsComma = true;
 
-		if(x == 'false'){
-			$('#myModal').modal('show');
-		}
-	});
-    </script>
-</head>
-<body style="background: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/kindajean.png);">
-    <div class="container">
-        <div class="jumbotron">
-            <img src="http://www.lboro.ac.uk/media/wwwlboroacuk/external/content/abouttheuniversity/visual-identity/lu-logo-proposed.png" alt="logo" height="20%" width="20%">
-            <h1 class="text-center">Login</h1>
-            <hr>
+    foreach (var d in data) {
+        period = "";
+        ctemp = d.Status;
+        switch (ctemp) {
+            case "c": d.Status = "Confirmed"; break;
+            case "p": d.Status = "Pending"; break;
+            case "r": d.Status = "Rejected"; break;
+            case "w": d.Status = "Withdrawn"; break;
+        }
+        for (int i = 0; i < d.Period.length(); i++) {
+            if (lastIsComma == true && d.Period[i] != ',') {
+                stemp = "";
+                stemp = d.Period[i];
+                lastIsComma = false;
+            } else if (lastIsComma == false && d.Period[i] != ',') {
+                stemp = stemp + d.Period[i];
+            } else if (d.Period[i] == ',') {
+                lastIsComma = true;
+                switch (stemp) {
+                    case "1": period = period + "1(09:00)"; break;
+                    case "2": period = period + "2(10:00)"; break;
+                    case "3": period = period + "3(11:00)"; break;
+                    case "4": period = period + "4(12:00)"; break;
+                    case "5": period = period + "5(13:00)"; break;
+                    case "6": period = period + "6(14:00)"; break;
+                    case "7": period = period + "7(15:00)"; break;
+                    case "8": period = period + "8(16:00)"; break;
+                    case "9": period = period + "9(17:00)"; break;
+                    case "10": period = period + "10(18:00)"; break;
+                    case "11": period = period + "11(19:00)"; break;
+                    case "12": period = period + "12(20:00)"; break;
+                    case "13": period = period + "13(21:00)"; break;
+                    case "14": period = period + "14(22:00)"; break;
+                    case "15": period = period + "15(23:00)"; break;
+                }
+                if (i < (d.Period.length() - 1)) {
+                    period = period + ", ";
+                }
+            }
+        }
+        lastIsComma = true;
+        d.Period = period;
+    }
+    var JSON = Json.Encode(data);
+}
 
-            <!-- Hidden until login is incorrect -->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Incorrect Login</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>The username and/or password you entered is incorrect!</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<h3>Dashboard</h3>
+<div>
+    @JsonList.PrintList("requestlist", JSON, "Approved requests")
+</div>
+@functions {
+    /*public static IEnumerable<object> cleanRequestData(IEnumerable<object> data)
+    {
+        string stemp;
+        string period = "";
+        bool lastIsComma = true;
 
-
-            <form name="form1" method="post" action="checklogin.php">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon" id="sizing-addon1">Username</span>
-                            <input type="text" class="form-control" aria-describedby="sizing-addon1" name="username" id="username" value="">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon" id="sizing-addon1">Password</span>
-                            <input type="password" class="form-control" aria-describedby="sizing-addon1" name="password" id="password" value="">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <b>For the best user experience, we recommend that you enable Javascript. Without this enabled, some features may not work as properly intended.</b>
-                                <br>
-                                <br>
-                                <b>For security purposes, Cookies MUST be enabled on your browser. No personal information is stored within a session created once logged in. </b>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-4 text-center">
-                        <input class="btn btn-primary btn-block" type="submit" name="Submit" id="loginButton" value="Login">
-                        <a href="http://learn.lboro.ac.uk/mod/forum/post.php?forum=16238" target="_blank"><i>Having trouble logging in? Contact us</i> </a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <br><br><br>
-</body>
-</html>
+        foreach (var d in data)
+        {
+            period = "";
+            switch (d.Status)
+            {
+                case "c": d.Status = "Confirmed"; break;
+                case "p": d.Status = "Pending"; break;
+                case "r": d.Status = "Rejected"; break;
+                case "w": d.Status = "Withdrawn"; break;
+            }
+            for (int i = 0; i < d.Period.length(); i++)
+            {
+                if (lastIsComma == true && d.Period[i] != ',')
+                {
+                    stemp = "";
+                    stemp = d.Period[i];
+                    lastIsComma = false;
+                }
+                else if (lastIsComma == false && d.Period[i] != ',')
+                {
+                    stemp = stemp + d.Period[i];
+                }
+                else if (d.Period[i] == ',')
+                {
+                    lastIsComma = true;
+                    switch (stemp)
+                    {
+                        case "1": period = period + "1(09:00)"; break;
+                        case "2": period = period + "2(10:00)"; break;
+                        case "3": period = period + "3(11:00)"; break;
+                        case "4": period = period + "4(12:00)"; break;
+                        case "5": period = period + "5(13:00)"; break;
+                        case "6": period = period + "6(14:00)"; break;
+                        case "7": period = period + "7(15:00)"; break;
+                        case "8": period = period + "8(16:00)"; break;
+                        case "9": period = period + "9(17:00)"; break;
+                        case "10": period = period + "10(18:00)"; break;
+                        case "11": period = period + "11(19:00)"; break;
+                        case "12": period = period + "12(20:00)"; break;
+                        case "13": period = period + "13(21:00)"; break;
+                        case "14": period = period + "14(22:00)"; break;
+                        case "15": period = period + "15(23:00)"; break;
+                    }
+                    if (i < (d.Period.length() - 1))
+                    {
+                        period = period + ", ";
+                    }
+                }
+            }
+            lastIsComma = true;
+            d.Period = period;
+        }
+        return data;
+    }*/
+    /*foreach (var row in result) {
+        WriteLiteral(row.Columns[0]);
+        WriteLiteral("<tr>");
+        WriteLiteral("<td>" + row.RequestNo + "</td>");
+        WriteLiteral("<td></td>");
+        WriteLiteral("<td>" + row.ModuleCode + "</td>");
+        WriteLiteral("<td>" + row.Semester + "</td>");
+        WriteLiteral("<td>" + row.StartWeek + "</td>");
+        WriteLiteral("<td>" + row.EndWeek + "</td>");
+        WriteLiteral("<td>" + row.Day + "</td>");
+        WriteLiteral("<td>" + row.Period + "</td>");
+        WriteLiteral("<td>" + row.Length + "</td>");
+        WriteLiteral("<td>" + row.Priority + "</td>");
+        WriteLiteral("<td>" + row.NoOfStudents + "</td>");
+        WriteLiteral("<td>" + row.Park + "</td>");
+        WriteLiteral("<td>" + row.NoOfRooms + "</td>");
+        WriteLiteral("<td>" + row.Preference + "</td>");
+        WriteLiteral("<td>" + row.LecSem + "</td>");
+        WriteLiteral("<td>" + row.FixedDataProjector + "</td>");
+        WriteLiteral("<td>" + row.NoOfProjectors + "</td>");
+        WriteLiteral("<td>" + row.Visualiser + "</td>");
+        WriteLiteral("<td>" + row.SpecialRequirements + "</td>");
+        WriteLiteral("<td>" + row.GroupNo + "</td>");
+        WriteLiteral("<td></td>");
+        WriteLiteral("</tr>");
+     }
+     */
+}

@@ -1,235 +1,34 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = "Contact";
-
+    Page.Title = "Rooms";
+    Page.Path = "rooms";
+    var DB = Database.Open("dbConnectionString");
+    var Data = DB.Query("SELECT room_code AS 'Code', park as 'Park', capacity as 'Capacity', type as 'Type', dept_id AS 'Department ID' FROM room");
+    var JSON = Json.Encode(Data);    
 }
 
-
-<div id='main-content' class="container-fluid">
-    <div class="container-fluid">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <span class="h2">Available Rooms</span> <span class="h4">- <a href="help.php">Click for help on this page!</a></span>
-                <hr>
-
-                <div class="radio">
-                    <label><input id='rdioS' type="radio" name="optradio" onchange='resetTable();'>Search</label>
-                </div>
-                <div class="radio">
-                    <label><input id='rdioF' type="radio" name="optradio" onchange='resetTable();'>Filter By Category</label>
-                </div>
-
-
-
-
-
-
-                <div id='search-select' class="row" hidden>
-                    <div class='col-lg-6'>
-                        <div class='input-group'>
-                            <span class='input-group-btn'>
-                                <label class='btn btn-secondary' disabled>SEARCH</label>
-                            </span>
-                            <input id='searchString' maxlength='10' type='text' class='form-control' placeholder='Check Room Availability'></input>
-                            <span class='input-group-btn'>
-                                <!--<button class = 'btn btn-secondary' type = 'button'><span class = 'glyphicon glyphicon-search'><span></button> -->
-                                <button class='btn btn-secondary' id='removebtn' type='button'><span class='glyphicon glyphicon-remove'><span></button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <div id='category-select1' class="row" hidden>
-                        <div class="col-md-1">
-                            <!-- For each select button, various functions are called when values are selected -->
-                            Park<br>
-                            <select id="park" name="park" class="form-control" onchange="showTable(this.value, document.getElementById('capacity').value, document.getElementById('lectureStyle').value, document.getElementById('roomStyle').value, document.getElementById('projector').value, document.getElementById('projectorCount').value, document.getElementById('visualiser').value, document.getElementById('board').value, document.getElementById('boardArea').value, document.getElementById('wheelchair').value)">
-                                <option value="">-</option>
-                                <option value="C">C</option>
-                                <option value="E">E</option>
-                                <option value="W">W</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Minimum Capacity<br>
-                            <select id="capacity" name="park" class="form-control" onchange="showTable(document.getElementById('park').value, this.value, document.getElementById('lectureStyle').value, document.getElementById('roomStyle').value, document.getElementById('projector').value, document.getElementById('projectorCount').value, document.getElementById('visualiser').value, document.getElementById('board').value, document.getElementById('boardArea').value, document.getElementById('wheelchair').value)">
-                                <option value="">-</option>
-                                <option value="20">20</option>
-                                <option value="40">40</option>
-                                <option value="60">60</option>
-                                <option value="80">80</option>
-                                <option value="100">100</option>
-                                <option value="200">200</option>
-                                <option value="400">400</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            Lecture / Seminar Style (L/S)<br>
-                            <select id="lectureStyle" name="lectureStyle" class="form-control" onchange="showTable(document.getElementById('park').value, document.getElementById('capacity').value, this.value, document.getElementById('roomStyle').value, document.getElementById('projector').value, document.getElementById('projectorCount').value, document.getElementById('visualiser').value, document.getElementById('board').value, document.getElementById('boardArea').value, document.getElementById('wheelchair').value)">
-                                <option value="">-</option>
-                                <option value="L">L</option>
-                                <option value="S">S</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Tiered or Flat (T/F)<br>
-                            <select id="roomStyle" name="roomStyle" class="form-control" onchange="showTable(document.getElementById('park').value, document.getElementById('capacity').value, document.getElementById('lectureStyle').value, this.value, document.getElementById('projector').value, document.getElementById('projectorCount').value, document.getElementById('visualiser').value, document.getElementById('board').value, document.getElementById('boardArea').value, document.getElementById('wheelchair').value)">
-                                <option value="">-</option>
-                                <option value="T">T</option>
-                                <option value="F">F</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Fixed data projector<br>
-                            <select id="projector" name="projector" class="form-control" onchange="showTable(document.getElementById('park').value, document.getElementById('capacity').value, document.getElementById('lectureStyle').value, document.getElementById('roomStyle').value, this.value, document.getElementById('projectorCount').value, document.getElementById('visualiser').value, document.getElementById('board').value, document.getElementById('boardArea').value, document.getElementById('wheelchair').value)">
-                                <option value="">-</option>
-                                <option value="Y">Yes</option>
-                                <option value="N">No</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            No Of Projectors<br>
-                            <select id="projectorCount" name="projectCount" class="form-control" onchange="showTable(document.getElementById('park').value, document.getElementById('capacity').value, document.getElementById('lectureStyle').value, document.getElementById('roomStyle').value, document.getElementById('projector').value, this.value, document.getElementById('visualiser').value, document.getElementById('board').value, document.getElementById('boardArea').value, document.getElementById('wheelchair').value)">
-                                <option value="">-</option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Visualiser<br>
-                            <select id="visualiser" name="visualiser" class="form-control" onchange="showTable(document.getElementById('park').value, document.getElementById('capacity').value, document.getElementById('lectureStyle').value, document.getElementById('roomStyle').value,  document.getElementById('projector').value, document.getElementById('projectorCount').value, this.value, document.getElementById('board').value, document.getElementById('boardArea').value, document.getElementById('wheelchair').value)">
-                                <option value="">-</option>
-                                <option value="Y">Yes</option>
-                                <option value="N">No</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            Whiteboard or Chalk (W/C)<br>
-                            <select id="board" name="board" class="form-control" onchange="showTable(document.getElementById('park').value, document.getElementById('capacity').value, document.getElementById('lectureStyle').value, document.getElementById('roomStyle').value, document.getElementById('projector').value, document.getElementById('projectorCount').value, document.getElementById('visualiser').value, this.value, document.getElementById('boardArea').value, document.getElementById('wheelchair').value)">
-                                <option value="">-</option>
-                                <option value="W">W</option>
-                                <option value="C">C</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Large Board Area<br>
-                            <select id="boardArea" name="boardArea" class="form-control" onchange="showTable(document.getElementById('park').value, document.getElementById('capacity').value, document.getElementById('lectureStyle').value, document.getElementById('roomStyle').value,  document.getElementById('projector').value, document.getElementById('projectorCount').value, document.getElementById('visualiser').value, document.getElementById('board').value, this.value, document.getElementById('wheelchair').value)">
-                                <option value="">-</option>
-                                <option value="Y">Yes</option>
-                                <option value="N">No</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Wheelchair Access<br>
-                            <select id="wheelchair" name="wheelchair" class="form-control" onchange="showTable(document.getElementById('park').value, document.getElementById('capacity').value, document.getElementById('lectureStyle').value, document.getElementById('roomStyle').value, document.getElementById('projector').value, document.getElementById('projectorCount').value, document.getElementById('visualiser').value, document.getElementById('board').value, document.getElementById('boardArea').value, this.value)">
-                                <option value="">-</option>
-                                <option value="Y">Yes</option>
-                                <option value="N">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id='category-select2' class="row" hidden>
-                        <div class="col-md-1">
-                            Semester<br>
-                            <select id="semester" name="semester" class="form-control" onchange="submitData(this.value,0,0,0,0,0); submitVals()">
-                                <option value="">-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Start Week<br>
-                            <select id="startWeek" name="startWeek" class="form-control" onchange="displayEndWeek(this.value); submitData(this.value,0,0,0,0,0); submitVals()">
-                                <option value="">-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            End Week<br>
-                            <select id="endWeek" name="endWeek" class="form-control" disabled onchange="submitData(this.value,0,0,0,0,0); submitVals()">
-                                <option value="">-</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Day<br>
-                            <select id="day" name="day" class="form-control" onchange="submitData(this.value,0,0,0,0,0); submitVals()">
-                                <option value="">-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Period<br>
-                            <select id="period" name="park" class="form-control" onchange="displayLength(this.value); submitData(this.value,0,0,0,0,0); submitVals()">
-                                <option value="">-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            Length<br>
-                            <select id="length" name="park" class="form-control" disabled onchange="submitVals()">
-                                <option value="">-</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="table-responsive" id="getTable">
-                    <table class="table table-bordered table-condensed">
-                        <thead>
-                            <tr>
-                                <!-- Display table headers and change mouse pointer when mouse hovers over -->
-                                <th style="cursor: pointer;" class='' onclick=''>Park <span></span></th>
-                                <th style="cursor: pointer;" id='roomCode' class='' onclick=''>Room Code <span></span></th>
-                                <th style="cursor: pointer;" class='' onclick=''>Capacity <span></span></th>
-                                <th style="cursor: pointer;" class='' onclick=''>Lecture/Seminar Style (L/S)<span></span></th>
-                                <th style="cursor: pointer;" class='' onclick=''>Tiered or Flat (T/F) <span></span></th>
-                                <th style="cursor: pointer;" class='' onclick=''>Fixed Data Projector <span></span></th>
-                                <th style="cursor: pointer;" class='' onclick=''>Number Of Projectors <span></span></th>
-                                <th style="cursor: pointer;" class='' onclick=''>Visualiser <span></span></th>
-                                <th style="cursor: pointer;" class='' onclick=''>Chalk or White Board (C/W) <span></span></th>
-                                <th style="cursor: pointer;" class='' onclick=''>Large Board Area <span></span></th>
-                                <th style="cursor: pointer;" class='' onclick=''>Wheelchair Access <span></span></th>
-                                <th id='tv'>Timetable View</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody"></tbody>
-                    </table>
-                </div>
+<h3>Rooms</h3>
+<div id="requestForm">
+    <form method="post" action="./rooms.cshtml?add">
+        <div class="row">
+            <div class="col s12 m12 l6" id="form_left">
+                <!-- left part of form -->
+            </div>
+            <div class="col s12 m12 l6" id="form_right">
+                <!-- right part of form -->
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col s12" id="form_buttons">
+                <input class="btn waves-effect" type="submit" value="Submit" />
+            </div>
+        </div>
+    </form>
 </div>
-
-
-<div id="displayTable">
-    <!-- Div for table data to be displayed in, used in AJAX queries -->
+<div>
+    @JsonList.PrintList("requestlist", JSON, "All requests")
 </div>
+<script>
+    $('select').material_select();
+    Materialize.updateTextFields();
+</script>

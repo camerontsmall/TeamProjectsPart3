@@ -1,0 +1,83 @@
+﻿@helper PrintList(string id, string JsonString, string title) {
+    <!-- jsonList @id begins -->
+    <div class='form listWrapper'>
+        @{
+            string data_id = id + "_data";
+            string body_id = id + "_body";
+            string search_id = id + "_search";
+            string pagenumber = id + "_pagenumber";
+            Array data = Json.Decode(JsonString);
+
+            int count = data.Length;
+            int numpages = (count - 1) / 10 + 1;
+
+
+        }
+        <script type="application/json" id="@data_id">
+            @Html.Raw(JsonString)
+    </script>
+    <h4 class="listtitle">@title</h4>
+
+    @if (count > 10)
+    {
+        string back, next;
+
+        string back_id = id + "_back";
+        string next_id = id + "_next";
+        next = "<i class='material-icons>chevron_right</i>";
+        string number_class = id + "_pagebtn";
+        <input onkeyup="list_search('@id','@data_id',this.value);" placeholder='Search' type='text' id='$search_id' />
+            <ul class="pagination">
+                <li onclick="list_change_page('@id','@data_id'',0);" id='@back_id' class='disabled'>
+                    <a href="javascript:void(0);">
+                        <i class='material-icons'>chevron_left</i>
+                    </a>
+                </li>
+                @for (int i = 0; i < numpages; i++)
+                {
+                    string number_id = id + "_page" + i;
+                    int ii = i + 1;
+                    string active = (i == 0) ? "active" : "";
+                    <li onclick="list_change_page('@id','@data_id',@i);" class="waves-effect @active @number_class" id="@number_id">@ii</li>
+                }
+                <li onclick="list_change_page('@id','@data_id',1);" id='@next_id' class=''>
+                    <a href="javascript:void(0);">
+                        <i class='material-icons'>chevron_right</i>
+                    </a>
+                </li>
+            </ul>
+    }
+
+
+
+    @{
+        string listStyle = (count > 10) ? "longList" : "shortList";
+        string responsive = (count > 4) ? "responsive-table" : "";
+    }
+        <div class="tablecontainer">
+            <table class="objectList bordered higlight @responsive @listStyle" id="@id">
+                <thead>
+                    <tr>
+
+                        @{
+                            dynamic first = data.GetValue(0);
+
+                            foreach (KeyValuePair<string,object> element in first)
+                            {
+                                if (element.Key != "onclick" && element.Key != "action")
+                                {
+                                    <th>@element.Key</th>
+                                }
+                            }
+                        }
+                    </tr>
+                </thead>
+
+
+                <tbody id='@body_id'></tbody>
+            </table>
+        </div>
+    <script>list_change_page('@id', '@data_id', 0);</script>
+</div>
+    <!-- jsonList ends -->
+}

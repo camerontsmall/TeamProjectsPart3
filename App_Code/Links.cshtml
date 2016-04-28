@@ -1,0 +1,23 @@
+﻿@using Navigation
+@using Facilities
+
+@helper NavLink(string name, string url) {
+    <li><a href="~/@url">@name</a></li>
+}
+
+@helper NavFullLink(string name, string url){
+    <li><a href="@url">@name</a></li>
+}
+
+@helper NavAction(string name, string action) {
+    <li onclick="@action"><a href="javascript:void(0);">@name</a></li>
+}
+
+@helper NavList(List<Navigation.Page> pages, string pagePath = ""){
+        foreach(Navigation.Page page in pages){
+            string Url = page.Url;
+            string Title = page.Title;
+            string active = (pagePath == page.Url)? "active" : "";
+            @:<li class="@active"><a href="@Url">@Title</a></li>
+        }
+}

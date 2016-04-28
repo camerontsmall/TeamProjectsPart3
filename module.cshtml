@@ -1,0 +1,11 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Modules";
+    Page.Path = "module";
+    var DB = Database.Open("dbConnectionString");
+    var Data = DB.Query("SELECT module_code AS 'Module code', module_title as 'Module title', dept_id as 'Department ID' FROM module");
+    var JSON = Json.Encode(Data);
+}
+<div>
+    @JsonList.PrintList("requestlist", JSON, "Modules")
+</div>
