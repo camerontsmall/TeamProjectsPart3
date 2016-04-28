@@ -28,3 +28,12 @@
         <option value="@code">@nice</option>
     }
 }
+
+@helper Modules() {
+    foreach (var module in Bookings.Module.AllCodes())
+    {
+        string code = @module.Key;
+        string nice = @module.Value;
+        <option value="@code">@code - @nice</option>
+    }
+}

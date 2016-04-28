@@ -2,8 +2,9 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Web;
+using WebMatrix.Data;
 using System.Collections.Generic;
-
+using System.Web.Helpers;
 
 namespace Navigation{
 
@@ -19,6 +20,35 @@ namespace Navigation{
 
 }
 
+namespace Bookings{
+    
+    public class Request{
+        public static Dictionary<string,string> Statuses(){
+            var statuses = new Dictionary<string, string>();
+            statuses["c"] = "Confirmed";
+            statuses["r"] = "Rejected";
+            statuses["p"] = "Pending";
+            statuses["w"] = "Withdrawn";
+            return statuses;
+        }
+    }
+
+
+    public class Module{
+        public static Dictionary<string,string> AllCodes(string dept_id = "CO")
+        {
+            var modules = new Dictionary<string, string>();
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT module_code, module_title FROM module WHERE dept_id LIKE '%" + dept_id + "%';");
+            foreach(var item in list)
+            {
+                modules.Add(item["module_code"], item["module_title"]);
+            }
+            return modules;
+        }
+    }
+}
+
 namespace Facilities{
     
     public class Room{
@@ -28,6 +58,9 @@ namespace Facilities{
             types["lf"] = "Lecture theatre, flat";
             types["lc"] = "Lecture theatre, circular";
             types["sf"] = "Seminar room, flat";
+            types["cm"] = "Computer lab, Mac";
+            types["cw"] = "Computer lab, Windows";
+            types["cd"] = "Computer lab, multiboot";
             return types;
         }
     }
