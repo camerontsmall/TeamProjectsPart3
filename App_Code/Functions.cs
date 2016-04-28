@@ -47,6 +47,30 @@ namespace Bookings{
             return modules;
         }
     }
+
+    public class Period
+    {
+        public static Dictionary<int,string> All()
+        {
+            var periods = new Dictionary<int, string>();
+            periods[1] = "09:00-10:00";
+            periods[2] = "10:00-11:00";
+            periods[3] = "11:00-12:00";
+            periods[4] = "12:00-13:00";
+            periods[5] = "13:00-14:00";
+            periods[6] = "14:00-15:00";
+            periods[7] = "15:00-16:00";
+            periods[8] = "16:00-17:00";
+            periods[9] = "17:00-18:00";
+            periods[10] = "18:00-19:00";
+            periods[11] = "19:00-20:00";
+            periods[12] = "20:00-21:00";
+            periods[13] = "21:00-22:00";
+            periods[14] = "22:00-23:00";
+            periods[15] = "23:00-24:00";
+            return periods;
+        }
+    }
 }
 
 namespace Facilities{

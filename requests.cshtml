@@ -25,7 +25,7 @@
                 <br />  
                 <label for="periodinput">Period(s)</label>
                 <select multiple id="periodinput" name="period">
-                    <option value="green">09:00-10:00</option>
+                    @RequestForm.Periods()
                 </select>
                 <br />
                 <label for="weeksinnput" class="active">Week(s)</label>

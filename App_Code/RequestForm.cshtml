@@ -2,8 +2,10 @@
 
 
 @helper Periods(){
-    for(int i=1; i <= 13; i++){
-        
+    foreach(var period in Bookings.Period.All()){
+        var num = period.Key;
+        var val = period.Value;
+        <option value="@num">@num - @val</option>
     }
 }
 
