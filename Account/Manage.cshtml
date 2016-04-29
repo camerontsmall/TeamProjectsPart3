@@ -106,7 +106,7 @@
     }
 }
 <hgroup class="title">
-    <h1>@Page.Title.</h1>
+    <h3>@Page.Title.</h3>
 </hgroup>
 
 @if (!successMessage.IsEmpty()) {
@@ -118,7 +118,7 @@
 <p>You're logged in as <strong>@WebSecurity.CurrentUserName</strong>.</p>
 
 @if (hasLocalAccount) {
-    <h3>Change password</h3>
+    <h4>Change password</h4>
 } else {
     <p>
         You do not have a local password for this site. Add a local password so you can log in without an external login.
@@ -128,48 +128,34 @@
 <form method="post">
     @AntiForgery.GetHtml()
     @Html.ValidationSummary(excludeFieldErrors: true)
-
-    <fieldset>
-        <legend>
-        @if (hasLocalAccount) {
-            <text>Change Password Form</text>
-        } else {
-            <text>Set Password Form</text>
-        }
-        </legend>
-        <ol>
-            @if (hasLocalAccount) {
-                <li class="current-password">
-                    <label for="currentPassword" @if (!ModelState.IsValidField("currentPassword")) {<text>class="error-label"</text>}>Current password</label>
-                    <input type="password" id="currentPassword" name="currentPassword" @Validation.For("currentPassword")/>
-                    @Html.ValidationMessage("currentPassword")
-                </li>
-            }
-            <li class="new-password">
-                <label for="newPassword" @if (!ModelState.IsValidField("newPassword")) {<text>class="error-label"</text>}>New password</label>
-                <input type="password" id="newPassword" name="newPassword" @Validation.For("newPassword")/>
-                @Html.ValidationMessage("newPassword")
-            </li>
-            <li class="confirm-password">
-                <label for="confirmPassword" @if (!ModelState.IsValidField("confirmPassword")) {<text>class="error-label"</text>}>Confirm new password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" @Validation.For("confirmPassword")/>
-                @Html.ValidationMessage("confirmPassword")
-            </li>
-        </ol>
-        @if (hasLocalAccount) {
-            <button type="submit" name="action" value="password">Change Password</button>
-            <p>
-                Click <a href="~/Account/ForgotPassword" title="Forgot password page">here</a> if you've forgotten your password.
-            </p>
-        } else {
-            <button type="submit" name="action" value="password">Set Password</button>
-        }
-    </fieldset>
+    @if (hasLocalAccount) {
+                
+        <label for="currentPassword" @if (!ModelState.IsValidField("currentPassword")) {<text>class="error-label"</text>}>Current password</label>
+        <input type="password" id="currentPassword" name="currentPassword" @Validation.For("currentPassword")/>
+        @Html.ValidationMessage("currentPassword")
+                
+    }
+    <label for="newPassword" @if (!ModelState.IsValidField("newPassword")) {<text>class="error-label"</text>}>New password</label>
+    <input type="password" id="newPassword" name="newPassword" @Validation.For("newPassword")/>
+    @Html.ValidationMessage("newPassword")
+            
+            
+    <label for="confirmPassword" @if (!ModelState.IsValidField("confirmPassword")) {<text>class="error-label"</text>}>Confirm new password</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" @Validation.For("confirmPassword")/>
+    @Html.ValidationMessage("confirmPassword")
+    @if (hasLocalAccount) {
+        <button type="submit" name="action" value="password">Change Password</button>
+       <!--<p>
+            Click <a href="~/Account/ForgotPassword" title="Forgot password page">here</a> if you've forgotten your password.
+        </p> -->
+    } else {
+        <button class="waves-effect waves-light" type="submit" name="action" value="password">Set Password</button>
+    }
 </form>
 
 <section id="externalLogins">
     @if (externalLogins.Count > 0) {
-        <h3>Registered external logins</h3>
+        <h4>Registered external logins</h4>
         <table>
             <tbody>
             @foreach (var externalLogin in externalLogins) {
@@ -195,7 +181,4 @@
             </tbody>
         </table>
     }
-
-    <h3>Add an external login</h3>
-    @RenderPage("~/Account/_ExternalLoginsList.cshtml")
 </section>
