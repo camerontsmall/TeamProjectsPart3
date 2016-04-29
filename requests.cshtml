@@ -3,7 +3,7 @@
     Page.Title = "Manage Requests";
     Page.Path = "requests";
     var DB = Database.Open("dbConnectionString");
-    var Data = DB.Query("SELECT * FROM request");
+    var Data = DB.Query("SELECT module_code as 'Module Code', status as 'Status', day as 'Day', period as 'Period(s)', week as 'Week(s)' FROM request");
     var JSON = Json.Encode(Data);
 
     string title = "";
@@ -13,17 +13,19 @@
     }
 }
 
-<h3>Requests @title</h3>
+<h4>Add request</h4>
 <div id="requestForm">
     <form method="post" action="./requests.cshtml">
         <div class="row">
             <div class="col s12 m12 l6" id="form_left">
                 <label for="titleinput">Module Code</label>
-                <input type="text" id="moduleinput" name="modulecode"/>
+                <select id="moduleinput" name="modulecode">
+                    @RequestForm.Modules()
+                </select>
                 <br />  
                 <label for="periodinput">Period(s)</label>
                 <select multiple id="periodinput" name="period">
-                    <option value="green">09:00-10:00</option>
+                    @RequestForm.Periods()
                 </select>
                 <br />
                 <label for="weeksinnput" class="active">Week(s)</label>
@@ -41,6 +43,11 @@
                 <select id="parkinput" name="roompark">
                     @RequestForm.Parks();
                 </select>
+                <br />
+                <label for="specialinput">Special requirements</label>
+                <textarea id="specialinput" name="special" class="materialize-textarea" length="200">
+
+                </textarea>
             </div>
         </div>
         <div class="row">

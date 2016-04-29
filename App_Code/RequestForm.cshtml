@@ -2,8 +2,10 @@
 
 
 @helper Periods(){
-    for(int i=1; i <= 13; i++){
-        
+    foreach(var period in Bookings.Period.All()){
+        var num = period.Key;
+        var val = period.Value;
+        <option value="@num">@num - @val</option>
     }
 }
 
@@ -26,5 +28,14 @@
         string code = @park.Key;
         string nice = @park.Value;
         <option value="@code">@nice</option>
+    }
+}
+
+@helper Modules() {
+    foreach (var module in Bookings.Module.AllCodes())
+    {
+        string code = @module.Key;
+        string nice = @module.Value;
+        <option value="@code">@code - @nice</option>
     }
 }
