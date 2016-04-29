@@ -5,7 +5,9 @@
     var DB = Database.Open("dbConnectionString");
     string sqlString = "SELECT [request_id] AS [Request ID], [module_code] AS [Module Code], [booking_round] AS [Booking Round], [priority] AS Priority, [status] AS Status, [day] AS Day, [period] AS Period, [week] As Week, [owner] As Owner, CONVERT(VARCHAR, [last_changed], 120) as [Last Changed] FROM [team15].[team15].[request] WHERE status='c'";
     var data = DB.Query(sqlString); ///= Functions.cleanRequestData(DB.Query(sqlString));
+    var cleanData = new List<object> {};
     
+    string nStatus = "";
     string stemp = "";
     string period = "";
     string ctemp;
@@ -15,15 +17,19 @@
         period = "";
         ctemp = d.Status;
         switch (ctemp) {
-            case "c": d.Status = "Confirmed"; break;
-            case "p": d.Status = "Pending"; break;
-            case "r": d.Status = "Rejected"; break;
-            case "w": d.Status = "Withdrawn"; break;
+            case "c": nStatus = "Confirmed"; break;
+            case "p": nStatus = "Pending"; break;
+            case "r": nStatus = "Rejected"; break;
+            case "w": nStatus = "Withdrawn"; break;
+            default : nStatus = "Unkown"; break;
         }
-        for (int i = 0; i < d.Period.length(); i++) {
+        ///cleanData.Where(x => x.RequestID == d.RequestID)
+        //cleanData.ElementAt(counter).Status = nStatus;
+        
+        for (int i = 0; i < d.Period.Length; i++) {
             if (lastIsComma == true && d.Period[i] != ',') {
                 stemp = "";
-                stemp = d.Period[i];
+                stemp = d.Period[i].ToString();
                 lastIsComma = false;
             } else if (lastIsComma == false && d.Period[i] != ',') {
                 stemp = stemp + d.Period[i];
@@ -46,13 +52,15 @@
                     case "14": period = period + "14(22:00)"; break;
                     case "15": period = period + "15(23:00)"; break;
                 }
-                if (i < (d.Period.length() - 1)) {
+                if (i < (d.Period.Length - 1)) {
                     period = period + ", ";
                 }
             }
         }
         lastIsComma = true;
-        d.Period = period;
+        cleanData.Add(new object { });
+        ///d.Period = period;
+        ///d.Status = nStatus;
     }
     var JSON = Json.Encode(data);
 }
