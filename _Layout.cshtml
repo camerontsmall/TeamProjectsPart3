@@ -6,7 +6,7 @@
 }
 else
 {
-    int UserId = WebSecurity.CurrentUserId;
+    Page.UserId = WebSecurity.CurrentUserId;
 }
 <html lang="en">
 <head>
@@ -20,7 +20,7 @@ else
     <link rel="stylesheet" href="~/css/styles_list.css" />
     <link rel="stylesheet" href="~/css/styles_main.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    <meta name="user_id" value="@Page.UserId" />
     @{
 List<Navigation.Page> pages = new List<Navigation.Page>();        
     pages.Add(new Navigation.Page(".","Dashboard"));
@@ -73,7 +73,7 @@ List<Navigation.Page> pages = new List<Navigation.Page>();
     <div id="help_backdrop" onclick="hideHelp();">
     </div>
 
-    <iframe class="card-panel hoverable" id="help_screen">
+    <iframe class="card-panel hoverable" src="~/Help/index.cshtml" id="help_screen">
     </iframe>
 
     <script>
