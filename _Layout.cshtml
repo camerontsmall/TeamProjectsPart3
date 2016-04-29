@@ -4,6 +4,10 @@
 {
     Response.Redirect("~/Account/Login");
 }
+else
+{
+    int UserId = WebSecurity.CurrentUserId;
+}
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +28,7 @@ List<Navigation.Page> pages = new List<Navigation.Page>();
     pages.Add(new Navigation.Page("pastdata","Past data"));
     pages.Add(new Navigation.Page("module","Modules"));
     pages.Add(new Navigation.Page("rooms","Rooms"));
-    pages.Add(new Navigation.Page("javascript:loadHelp()","Help"));
+    pages.Add(new Navigation.Page("javascript:showHelp()","Help"));
     pages.Add(new Navigation.Page("javascript:document.getElementById('logoutForm').submit()","Log out"));
 }
 </head>
@@ -66,7 +70,7 @@ List<Navigation.Page> pages = new List<Navigation.Page>();
     </div>
 
     
-    <div id="help_backdrop">
+    <div id="help_backdrop" onclick="hideHelp();">
     </div>
 
     <iframe class="card-panel hoverable" id="help_screen">
@@ -74,6 +78,7 @@ List<Navigation.Page> pages = new List<Navigation.Page>();
 
     <script>
         $(".button-collapse").sideNav();
+        $('select').material_select();
     </script>
 
 </body>
