@@ -60,6 +60,7 @@ namespace Models{
             d["Day"] = Life.Calendar.Days()[day];
             d["Period(s)"] = period;
             d["Week(s)"] = week;
+            d["action"] = "./requests?edit=" + request_id;
             return d;
         }
 
