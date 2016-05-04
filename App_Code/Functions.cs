@@ -90,6 +90,18 @@ namespace Facilities{
             types["cd"] = "Computer lab, multiboot";
             return types;
         }
+
+        public static List<string> Codes(){
+            List<string> codes = new List<string>();
+
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT room_code FROM room;");
+            foreach (var item in list)
+            {
+                codes.Add(item["room_code"]);
+            }
+            return codes;
+        }
     }
     
     public class Park{

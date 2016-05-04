@@ -39,3 +39,9 @@
         <option value="@code">@code - @nice</option>
     }
 }
+
+@helper Rooms() { 
+        foreach(var code in Facilities.Room.Codes()){
+            <option>@code</option>
+        }
+    }

@@ -24,25 +24,28 @@
                 </select>
                 <br />  
                 <label for="periodinput">Period(s)</label>
-                <select multiple id="periodinput" name="period">
+                <select multiple id="periodinput" class="browser-default" name="period">
                     @RequestForm.Periods()
                 </select>
                 <br />
                 <label for="weeksinnput" class="active">Week(s)</label>
-                <select multiple id="weeksinput" name="weeks">
-                    @RequestForm.Weeks();
+                <select multiple id="weeksinput" class="browser-default" name="weeks">
+                    @RequestForm.Weeks()
                 </select>
             </div>
             <div class="col s12 m12 l6" id="form_right">
                 <label for="roomtypeinput">Preferred room type</label>
                 <select id="roomtypeinput" name="roomtype">
-                    @RequestForm.RoomTypes();
+                    @RequestForm.RoomTypes()
                 </select>
                 <br />
                 <label for="parkinput">Preferred park</label>
                 <select id="parkinput" name="roompark">
-                    @RequestForm.Parks();
+                    @RequestForm.Parks()
                 </select>
+                <datalist id="roominput" name="room">
+                    @RequestForm.Rooms()
+                </datalist>
                 <br />
                 <label for="specialinput">Special requirements</label>
                 <textarea id="specialinput" name="special" class="materialize-textarea" length="200">

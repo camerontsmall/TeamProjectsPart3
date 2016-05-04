@@ -72,6 +72,7 @@ select {
 
 #current_location_bar_inner{
   white-space:nowrap;
+  margin-left:310px;
 }
 
 #help_backdrop{
@@ -98,6 +99,14 @@ select {
     height:50vh;
     display:none;
     z-index:1001;
+}
+
+#periodinput{
+    height:180px;
+}
+
+#weeksinput{
+    height:240px;
 }
 
 /* Media queries */
