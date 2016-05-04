@@ -74,12 +74,6 @@
 <br />
 
 
-@{
-    var dataB = Database.Open("dbConnectionString");
-    var selectCommand = "SELECT module_code FROM module WHERE dept_id='CO'";
-    var selectedData = dataB.Query(selectCommand);
-}
-
 <form method="post">
    
 
@@ -87,13 +81,9 @@
         <label for="moduleTitle">Module Details <span style="font-size:1.25em;color:red;">*</span></label>
         <div>
 
-            <select name="module">
+            <select class="browser-default" name="module">
                 
-                @foreach (var row in selectedData)
-                {
-                    WriteLiteral("<option value='" + row.module_code + "'>" + row.module_code + "</option>");
-                    
-                }
+               @RequestForm.Modules()
             </select>
 
 </div>

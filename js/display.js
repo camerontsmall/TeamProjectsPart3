@@ -14,3 +14,18 @@ function hideHelp() {
     backdrop.style.display = 'none';
     backdrop.style.opacity = 0;
 }
+
+function loadRooms(type, park) {
+    var api_url  = "./api/rooms.php";
+    if(type && park){
+        api_url = "./api/rooms.php?type=" + type + "&park=" + park;
+    }
+    $.ajax({
+        url : api_url,
+        method: 'GET',
+        content-type : 'application/json',
+        success : function(data){
+
+        }
+    });
+}
