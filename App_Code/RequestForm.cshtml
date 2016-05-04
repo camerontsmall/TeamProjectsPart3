@@ -31,17 +31,18 @@
     }
 }
 
+
 @helper Modules() {
     foreach (var module in Bookings.Module.AllCodes())
     {
         string code = @module.Key;
         string nice = @module.Value;
-        <option value="@code">@code - @nice</option>
+            <option value="@code">@code - @nice</option>
     }
 }
 
 @helper Rooms() { 
-        foreach(var code in Facilities.Room.Codes()){
-            <option>@code</option>
+        foreach (var code in Facilities.Room.Codes()) {
+               <option value="@code"></option>
         }
     }

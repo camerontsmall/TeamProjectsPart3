@@ -40,10 +40,13 @@
                 </select>
                 <br />
                 <label for="parkinput">Preferred park</label>
-                <select id="parkinput" name="roompark">
+                <select id="parkinput" name="roompark" onchange="loadRooms()">
                     @RequestForm.Parks()
                 </select>
-                <datalist id="roominput" name="room">
+                <br />
+                <label for="roominput">Preferred room</label>
+                <input list="roomlist" id="roominput" class="active"/>
+                <datalist id="roomlist" name="room">
                     @RequestForm.Rooms()
                 </datalist>
                 <br />
