@@ -1,176 +1,23 @@
-﻿@{
+﻿@using Models
+@{ 
     Layout = "~/_Layout.cshtml";
     Page.Title = "Home";
     Page.Path = ".";
     var DB = Database.Open("dbConnectionString");
-    string sqlString = "SELECT [request_id] AS [Request ID], [module_code] AS [Module Code], [booking_round] AS [Booking Round], [priority] AS Priority, [status] AS Status, [day] AS Day, [period] AS Period, [week] As Week, [owner] As Owner, CONVERT(VARCHAR, [last_changed], 120) as [Last Changed] FROM [team15].[team15].[request] WHERE status='c'";
+    string sqlString = "SELECT * FROM request WHERE status='c'";
     var data = DB.Query(sqlString); ///= Functions.cleanRequestData(DB.Query(sqlString));
-    IEnumerable<Bookings.requestTable> cleanData;
-    Bookings.requestTable temp = new Bookings.requestTable;
-    
-    foreach (var d in data) {
-        temp.requestID = d.RequestID;
-        temp.moduleCode = d.ModuleCode;
-        temp.bookingRound = d.BookingRound;
-        temp.priority = d.Priority;
-        temp.status = d.Status;
-        temp.day = d.Day;
-        temp.period = d.Period;
-        temp.week = d.Week;
-        temp.owner = d.Owner;
-        temp.lastChanged = d.LastChanged;
-        
-                
-    }
-    
-    /*string nStatus = "";
-    string stemp = "";
-    string period = "";
-    string ctemp;
-    bool lastIsComma = true;
 
-    foreach (var d in data) {
-        period = "";
-        ctemp = d.Status;
-        switch (ctemp) {
-            case "c": nStatus = "Confirmed"; break;
-            case "p": nStatus = "Pending"; break;
-            case "r": nStatus = "Rejected"; break;
-            case "w": nStatus = "Withdrawn"; break;
-            default : nStatus = "Unkown"; break;
-        }
-        ///cleanData.Where(x => x.RequestID == d.RequestID)
-        //cleanData.ElementAt(counter).Status = nStatus;
-        
-        for (int i = 0; i < d.Period.Length; i++) {
-            if (lastIsComma == true && d.Period[i] != ',') {
-                stemp = "";
-                stemp = d.Period[i].ToString();
-                lastIsComma = false;
-            } else if (lastIsComma == false && d.Period[i] != ',') {
-                stemp = stemp + d.Period[i];
-            } else if (d.Period[i] == ',') {
-                lastIsComma = true;
-                switch (stemp) {
-                    case "1": period = period + "1(09:00)"; break;
-                    case "2": period = period + "2(10:00)"; break;
-                    case "3": period = period + "3(11:00)"; break;
-                    case "4": period = period + "4(12:00)"; break;
-                    case "5": period = period + "5(13:00)"; break;
-                    case "6": period = period + "6(14:00)"; break;
-                    case "7": period = period + "7(15:00)"; break;
-                    case "8": period = period + "8(16:00)"; break;
-                    case "9": period = period + "9(17:00)"; break;
-                    case "10": period = period + "10(18:00)"; break;
-                    case "11": period = period + "11(19:00)"; break;
-                    case "12": period = period + "12(20:00)"; break;
-                    case "13": period = period + "13(21:00)"; break;
-                    case "14": period = period + "14(22:00)"; break;
-                    case "15": period = period + "15(23:00)"; break;
-                }
-                if (i < (d.Period.Length - 1)) {
-                    period = period + ", ";
-                }
-            }
-        }
-        lastIsComma = true;
-        cleanData.Add(new object { });
-        ///d.Period = period;
-        ///d.Status = nStatus;
-    }*/
-    var JSON = Json.Encode(data);
+    var ldata = Models.Request.convertTo(data);
+
+    var tediousList = new List<Dictionary<string, string>>();
+    foreach(Request r in ldata) {
+        tediousList.Add(r.ToNiceList());
+    }
+
+    var JSON = Json.Encode(tediousList);
 }
 
 <h3>Dashboard</h3>
 <div>
     @JsonList.PrintList("requestlist", JSON, "Approved requests")
 </div>
-@functions {
-    /*public static IEnumerable<object> cleanRequestData(IEnumerable<object> data)
-    {
-        string stemp;
-        string period = "";
-        bool lastIsComma = true;
-
-        foreach (var d in data)
-        {
-            period = "";
-            switch (d.Status)
-            {
-                case "c": d.Status = "Confirmed"; break;
-                case "p": d.Status = "Pending"; break;
-                case "r": d.Status = "Rejected"; break;
-                case "w": d.Status = "Withdrawn"; break;
-            }
-            for (int i = 0; i < d.Period.length(); i++)
-            {
-                if (lastIsComma == true && d.Period[i] != ',')
-                {
-                    stemp = "";
-                    stemp = d.Period[i];
-                    lastIsComma = false;
-                }
-                else if (lastIsComma == false && d.Period[i] != ',')
-                {
-                    stemp = stemp + d.Period[i];
-                }
-                else if (d.Period[i] == ',')
-                {
-                    lastIsComma = true;
-                    switch (stemp)
-                    {
-                        case "1": period = period + "1(09:00)"; break;
-                        case "2": period = period + "2(10:00)"; break;
-                        case "3": period = period + "3(11:00)"; break;
-                        case "4": period = period + "4(12:00)"; break;
-                        case "5": period = period + "5(13:00)"; break;
-                        case "6": period = period + "6(14:00)"; break;
-                        case "7": period = period + "7(15:00)"; break;
-                        case "8": period = period + "8(16:00)"; break;
-                        case "9": period = period + "9(17:00)"; break;
-                        case "10": period = period + "10(18:00)"; break;
-                        case "11": period = period + "11(19:00)"; break;
-                        case "12": period = period + "12(20:00)"; break;
-                        case "13": period = period + "13(21:00)"; break;
-                        case "14": period = period + "14(22:00)"; break;
-                        case "15": period = period + "15(23:00)"; break;
-                    }
-                    if (i < (d.Period.length() - 1))
-                    {
-                        period = period + ", ";
-                    }
-                }
-            }
-            lastIsComma = true;
-            d.Period = period;
-        }
-        return data;
-    }*/
-    /*foreach (var row in result) {
-        WriteLiteral(row.Columns[0]);
-        WriteLiteral("<tr>");
-        WriteLiteral("<td>" + row.RequestNo + "</td>");
-        WriteLiteral("<td></td>");
-        WriteLiteral("<td>" + row.ModuleCode + "</td>");
-        WriteLiteral("<td>" + row.Semester + "</td>");
-        WriteLiteral("<td>" + row.StartWeek + "</td>");
-        WriteLiteral("<td>" + row.EndWeek + "</td>");
-        WriteLiteral("<td>" + row.Day + "</td>");
-        WriteLiteral("<td>" + row.Period + "</td>");
-        WriteLiteral("<td>" + row.Length + "</td>");
-        WriteLiteral("<td>" + row.Priority + "</td>");
-        WriteLiteral("<td>" + row.NoOfStudents + "</td>");
-        WriteLiteral("<td>" + row.Park + "</td>");
-        WriteLiteral("<td>" + row.NoOfRooms + "</td>");
-        WriteLiteral("<td>" + row.Preference + "</td>");
-        WriteLiteral("<td>" + row.LecSem + "</td>");
-        WriteLiteral("<td>" + row.FixedDataProjector + "</td>");
-        WriteLiteral("<td>" + row.NoOfProjectors + "</td>");
-        WriteLiteral("<td>" + row.Visualiser + "</td>");
-        WriteLiteral("<td>" + row.SpecialRequirements + "</td>");
-        WriteLiteral("<td>" + row.GroupNo + "</td>");
-        WriteLiteral("<td></td>");
-        WriteLiteral("</tr>");
-     }
-     */
-}
