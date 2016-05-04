@@ -73,6 +73,9 @@ namespace Bookings{
     }
 }
 
+/**
+Stuff the university has
+*/
 namespace Facilities{
     
     public class Room{
@@ -90,15 +93,37 @@ namespace Facilities{
     }
     
     public class Park{
-        public static Dictionary<string,string> Parks(){
-            var parks = new Dictionary<string,string>();
-            parks["w"] = "West";
-            parks["c"] = "Central";
-            parks["e"] = "East";
-            parks["h"] = "Holywell";
-            parks["v"] = "Village";
-            parks["l"] = "London Campus";
+        public static Dictionary<char,string> Parks(){
+            var parks = new Dictionary<char,string>();
+            parks['w'] = "West";
+            parks['c'] = "Central";
+            parks['e'] = "East";
+            parks['h'] = "Holywell";
+            parks['v'] = "Village";
+            parks['l'] = "London Campus";
             return parks;
+        }
+    }
+}
+
+/**
+Things that happen in life, man
+*/
+
+namespace Life {
+
+    public class Calendar {
+
+        public static Dictionary<int, string> Days() {
+            var days = new Dictionary<int, string>();
+            days[1] = "Monday";
+            days[2] = "Tuesday";
+            days[3] = "Wednesday";
+            days[4] = "Thursday";
+            days[5] = "Friday";
+            days[6] = "Saturday";
+            days[7] = "Sunday";
+            return days;
         }
     }
 }

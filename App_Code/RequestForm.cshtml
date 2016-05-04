@@ -25,7 +25,7 @@
 
 @helper Parks(){
     foreach(var park in Facilities.Park.Parks()){
-        string code = @park.Key;
+        char code = @park.Key;
         string nice = @park.Value;
         <option value="@code">@nice</option>
     }
