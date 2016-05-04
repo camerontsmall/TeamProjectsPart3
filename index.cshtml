@@ -5,9 +5,25 @@
     var DB = Database.Open("dbConnectionString");
     string sqlString = "SELECT [request_id] AS [Request ID], [module_code] AS [Module Code], [booking_round] AS [Booking Round], [priority] AS Priority, [status] AS Status, [day] AS Day, [period] AS Period, [week] As Week, [owner] As Owner, CONVERT(VARCHAR, [last_changed], 120) as [Last Changed] FROM [team15].[team15].[request] WHERE status='c'";
     var data = DB.Query(sqlString); ///= Functions.cleanRequestData(DB.Query(sqlString));
-    var cleanData = new List<object> {};
+    IEnumerable<Bookings.requestTable> cleanData;
+    Bookings.requestTable temp = new Bookings.requestTable;
     
-    string nStatus = "";
+    foreach (var d in data) {
+        temp.requestID = d.RequestID;
+        temp.moduleCode = d.ModuleCode;
+        temp.bookingRound = d.BookingRound;
+        temp.priority = d.Priority;
+        temp.status = d.Status;
+        temp.day = d.Day;
+        temp.period = d.Period;
+        temp.week = d.Week;
+        temp.owner = d.Owner;
+        temp.lastChanged = d.LastChanged;
+        
+                
+    }
+    
+    /*string nStatus = "";
     string stemp = "";
     string period = "";
     string ctemp;
@@ -61,7 +77,7 @@
         cleanData.Add(new object { });
         ///d.Period = period;
         ///d.Status = nStatus;
-    }
+    }*/
     var JSON = Json.Encode(data);
 }
 

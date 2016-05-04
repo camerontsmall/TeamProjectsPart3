@@ -31,7 +31,7 @@ namespace Bookings{
             statuses["w"] = "Withdrawn";
             return statuses;
         }
-}
+    }
 
 
     public class Module{
@@ -70,6 +70,19 @@ namespace Bookings{
             periods[15] = "23:00-24:00";
             return periods;
         }
+    }
+
+    public class requestTable {
+        public int requestID { get; set; }
+        public string moduleCode { get; set; }
+        public int bookingRound { get; set; }
+        public char priority { get; set; }
+        public string status { get; set; }
+        public string day { get; set; }
+        public string period { get; set; }
+        public int week { get; set; }
+        public string owner { get; set; }
+        public string lastChanged { get; set; }
     }
 }
 
