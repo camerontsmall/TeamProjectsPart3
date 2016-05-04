@@ -1,39 +1,49 @@
+
 <html>
-    <head> 
-        <script src="~/js/materialize.js" ></script>
-        <link rel="stylesheet" href="~/css/materialize.css" />
-    <body>
-<div class="Helpbar"> 
-	  <button class="HelpbarButtons" id="Dashboardbutton" onclick="myFunction()">Dashboard</button> 
-      <button class="HelpbarButtons" id="Manage Requests" onclick="myFunction2()">Manage Requests</button>
-      <button class="HelpbarButtons" id="Past Data" onclick="myFunction3()">Past Data</button>
-      <button class="HelpbarButtons" id="Modules" onclick= "myFunction4()">Modules</button>
-      <button class="HelpbarButtons" id="Rooms" onclick="myFunction5()">Rooms</button>
-      
-      <script>
-function myFunction() {
-    alert("The dashboard enables you to navigate around the site.");
+     <head> 
+         <script src="~/js/materialize.js" ></script>
+         <link rel="stylesheet" href="~/css/materialize.css" />
+     <body>
+ <div class="Helpbar"> 
+ 	  <button class="HelpbarButtons" id="Dashboardbutton" onclick="myFunction()">Dashboard</button> 
+       <button class="HelpbarButtons" id="Manage Requests" onclick="myFunction2()">Manage Requests</button>
+       <button class="HelpbarButtons" id="Past Data" onclick="myFunction3()">Past Data</button>
+       <button class="HelpbarButtons" id="Modules" onclick= "myFunction4()">Modules</button>
+       <button class="HelpbarButtons" id="Rooms" onclick="myFunction5()">Rooms</button>
+       
+ 
+ 
+<script>
+function myFunction()
+{
+ document.getElementById('DashText').innerHTML = "The dashboard enables you to navigate around the site.";
 }
 
-function myFunction2(){
-    alert("The Manage Requests page enables you to...")
+function myFunction2()
+{
+ document.getElementById('DashText').innerHTML = "The Manage Request Page enables you to...";
 }
-
-function myFunction3(){
-    alert("Past data enables you to see previously requested data.")
+function myFunction3()
+{
+ document.getElementById('DashText').innerHTML = "Past Data enables you to see previously requested data";
 }
-
-function myFunction4(){
-    alert("The Modules pages allows you to view...")
+function myFunction4()
+{
+ document.getElementById('DashText').innerHTML = "The Module Page enales you to view..";
 }
-
-function myFunction5(){
-    alert("The Rooms page enables you to view all rooms in the form of a list or timetable view, with the ability to add rooms.")
+function myFunction5()
+{
+ document.getElementById('DashText').innerHTML = "The Rooms page enables you to view all rooms in form on a list or a timetable view. Also has the ability to add rooms";
 }
-
-
 </script>
-      
-      </body>
-      </head>
-      </html>
+
+
+<p><b id='DashText'>Welcome to the site </b> </p> 
+
+
+
+ 
+       
+       </body>
+       </head>
+       </html>
