@@ -21,7 +21,7 @@ namespace Models{
         public int day;
         public string period;
         public string week;
-        public string owner;
+        public int owner;
         public DateTime last_changed;
 
         public void addData(dynamic data)
@@ -34,7 +34,7 @@ namespace Models{
             this.day = (int)data["day"];
             this.period = (string)data["period"];
             this.week = (string)data["week"];
-            this.owner = (string)data["owner"];
+            this.owner = (int)data["owner"];
             this.last_changed = (DateTime)data["last_changed"];
         }
 
@@ -64,7 +64,7 @@ namespace Models{
             return d;
         }
 
-        public Request(int request_id, string module_code, int booking_round, string priority, string status, int day, string period, string week, string owner, DateTime last_changed)
+        public Request(int request_id, string module_code, int booking_round, string priority, string status, int day, string period, string week, int owner, DateTime last_changed)
         {
             this.request_id = request_id;
             this.module_code = module_code;

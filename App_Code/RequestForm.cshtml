@@ -9,6 +9,17 @@
     }
 }
 
+@helper Days() {
+foreach (var day in Life.Calendar.Days()) {
+        var num = day.Key;
+        var name = day.Value;
+        <option value="@num">@name</option>
+}
+{
+
+}
+    }
+
 @helper Weeks(){
     for(int i=1; i <= 12; i++){
         <option selected    value="@i">Week @i</option>
