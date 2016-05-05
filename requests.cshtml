@@ -1,10 +1,20 @@
-﻿@{
+﻿@using Models
+@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Manage Requests";
     Page.Path = "requests";
     var DB = Database.Open("dbConnectionString");
-    var Data = DB.Query("SELECT module_code as 'Module Code', status as 'Status', day as 'Day', period as 'Period(s)', week as 'Week(s)' FROM request");
-    var JSON = Json.Encode(Data);
+    var Data = DB.Query("SELECT * FROM request");
+
+    var ldata = Models.Request.convertTo(Data);
+
+    var tediousList = new List<Dictionary<string, string>>();
+    foreach (Request r in ldata)
+    {
+        tediousList.Add(r.ToNiceList());
+    }
+
+    var JSON = Json.Encode(tediousList);
 
     string title = "";
 
@@ -17,6 +27,7 @@
         string roompark = Request.Form["roompark"];
         string roompref = Request.Form["roompref"];
         <p>Booking for @module on @day</p>
+        string insert_query = "INSERT INTO module (module_code, day, periods, weeks) VALUES (@0, @1, 'CO')";
 
     }
 }
