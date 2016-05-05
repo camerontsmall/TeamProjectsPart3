@@ -1,0 +1,59 @@
+@using Facilities
+
+
+@helper Periods(){
+    foreach(var period in Bookings.Period.All()){
+        var num = period.Key;
+        var val = period.Value;
+        <option value="@num">@num - @val</option>
+    }
+}
+
+@helper Days() {
+foreach (var day in Life.Calendar.Days()) {
+        var num = day.Key;
+        var name = day.Value;
+        <option value="@num">@name</option>
+}
+{
+
+}
+    }
+
+@helper Weeks(){
+    for(int i=1; i <= 12; i++){
+        <option selected    value="@i">Week @i</option>
+    }
+}
+
+@helper RoomTypes(){
+    foreach(var type in Facilities.Room.Types()){
+        string code = @type.Key;
+        string nice = @type.Value;
+        <option value="@code">@nice</option>
+    }
+}
+
+@helper Parks(){
+    foreach(var park in Facilities.Park.Parks()){
+        char code = @park.Key;
+        string nice = @park.Value;
+        <option value="@code">@nice</option>
+    }
+}
+
+
+@helper Modules() {
+    foreach (var module in Bookings.Module.AllCodes())
+    {
+        string code = @module.Key;
+        string nice = @module.Value;
+            <option value="@code">@code - @nice</option>
+    }
+}
+
+@helper Rooms() { 
+        foreach (var code in Facilities.Room.Codes()) {
+               <option value="@code"></option>
+        }
+    }

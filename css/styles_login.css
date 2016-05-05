@@ -5,7 +5,6 @@
 #background{
     z-index:-100;
     position:fixed;
-    -webkit-filter: blur(130px);
     top:0;
     right:0;
     bottom:0;

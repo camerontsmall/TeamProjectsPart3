@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = "Past Submissions";
+    Page.Title = "Past data";
+    Page.Path = "pastdata";
     var DB = Database.Open("dbConnectionString");
     var Data = DB.Query("SELECT * FROM pastsubmissions WHERE ModuleCode LIKE 'CO%'");
     var JSON = Json.Encode(Data);

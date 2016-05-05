@@ -1,7 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Navigation
+<!DOCTYPE html>
 @if (!WebSecurity.IsAuthenticated)
 {
     Response.Redirect("~/Account/Login");
+}
+else
+{
+    Page.UserId = WebSecurity.CurrentUserId;
 }
 <html lang="en">
 <head>
@@ -10,14 +15,22 @@
     <script src="~/Scripts/jquery-1.8.2.js"></script>
     <script src="~/js/materialize.js" ></script>
     <script src="~/js/JsonList.js"></script>
+    <script src="~/js/display.js"></script>
     <link rel="stylesheet" href="~/css/materialize.css" />
+    <link rel="stylesheet" href="~/css/styles_list.css" />
     <link rel="stylesheet" href="~/css/styles_main.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    @{ 
-       
-
-    }
+    <meta name="user_id" value="@Page.UserId" />
+    @{
+List<Navigation.Page> pages = new List<Navigation.Page>();        
+    pages.Add(new Navigation.Page(".","Dashboard"));
+    pages.Add(new Navigation.Page("requests","Manage requests"));
+    pages.Add(new Navigation.Page("pastdata","Past data"));
+    pages.Add(new Navigation.Page("module","Modules"));
+    pages.Add(new Navigation.Page("rooms","Rooms"));
+    pages.Add(new Navigation.Page("javascript:showHelp()","Help"));
+    pages.Add(new Navigation.Page("javascript:document.getElementById('logoutForm').submit()","Log out"));
+}
 </head>
 <body>
     <header>
@@ -33,37 +46,40 @@
             <li class="logo" id="logo">
                <img src="~/Images/LboroLogo.png"/>
             </li>
-            @Links.NavLink("Dashboard", "")
-            @Links.NavLink("Manage Requests", "requests")
-            @Links.NavLink("Past Submissions", "pastdata")
-            @Links.NavAction("Help", "loadHelp()")
-            @Links.NavFullLink("Log out", "javascript:document.getElementById('logoutForm').submit()")
+            @Links.NavList(pages, Page.Path)
+            <li>@Department.User.departmentID()</li>
         </ul>
         <ul class="side-nav hide-on-large-only" id="mobile_nav">
             <li class="logo" id="logo">
                 <img src="~/Images/LboroLogo.png" />
             </li>
-            @Links.NavLink("Dashboard", "")
-            @Links.NavLink("Manage Requests", "requests")
-            @Links.NavLink("Past Submissions", "pastdata")
-            @Links.NavAction("Help", "loadHelp()")
-            @Links.NavFullLink("Log out", "javascript:document.getElementById('logoutForm').submit()")
+            @Links.NavList(pages, Page.Path)
         </ul>
+        @if(Page.Title != "Home"){
+            <nav id="current_location_bar" class="hide-on-med-and-down top-nav blue darken-1">
+                <div class="container" id="current_location_bar_inner">
+                    <span>Home</span>
+                        <i class="material-icons">chevron_right</i>
+                        <span>@Page.Title</span>
+                </div>
+            </nav>
+        }
     </header>
 
     <div id='wrapper' class="container">
         @RenderBody()
     </div>
 
-    <!--
-    <div id="help_backdrop">
+    
+    <div id="help_backdrop" onclick="hideHelp();">
     </div>
 
-    <iframe class="card-panel hoverable" id="help_screen">
-    </iframe> -->
+    <iframe class="card-panel hoverable" src="~/Help/index.cshtml" id="help_screen">
+    </iframe>
 
     <script>
         $(".button-collapse").sideNav();
+        $('select').material_select();
     </script>
 
 </body>

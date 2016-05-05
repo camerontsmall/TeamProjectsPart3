@@ -1,9 +1,20 @@
-﻿@{
+﻿@using Models
+@{ 
     Layout = "~/_Layout.cshtml";
-    Page.Title = "Lboro Timetable";
-    Page.Name = "dashboard";
+    Page.Title = "Home";
+    Page.Path = ".";
     var DB = Database.Open("dbConnectionString");
-    var JSON = Json.Encode(DB.Query("SELECT * FROM request WHERE status='c'"));
+    string sqlString = "SELECT * FROM request WHERE status='c'";
+    var data = DB.Query(sqlString); ///= Functions.cleanRequestData(DB.Query(sqlString));
+
+    var ldata = Models.Request.convertTo(data);
+
+    var tediousList = new List<Dictionary<string, string>>();
+    foreach(Request r in ldata) {
+        tediousList.Add(r.ToNiceList());
+    }
+
+    var JSON = Json.Encode(tediousList);
 }
 
 <h3>Dashboard</h3>

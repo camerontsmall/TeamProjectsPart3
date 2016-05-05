@@ -1,0 +1,194 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Modules";
+    Page.Path = "module";
+    var DB = Database.Open("dbConnectionString");
+    var Data = DB.Query("SELECT module_code AS 'Module code', module_title as 'Module title', dept_id as 'Department ID' FROM module");
+    var JSON = Json.Encode(Data);
+}
+
+<script>
+    $(document).ready(function(){//enables and disables fields on document load to prevent input
+        $("#newModuleCode").prop('disabled',true);
+        $("#newModuleTitle").prop('disabled',true);
+        $("#module-details").change(function(){ //on change of module details, extract code and title and place in new module fields.
+ 
+            $("#newModuleCode").prop('disabled',false);
+            $("#newModuleTitle").prop('disabled',false);
+ 
+            var option = $(this).find('option:selected').text();
+ 
+            var optstr = option.split(" - ");
+            var modulecode = optstr[0];
+            var moduletitle = optstr[1];
+ 
+            $("#newModuleCode").val(modulecode);
+            $("#newModuleTitle").val(moduletitle);
+ 
+        });
+    });
+    </script>
+    
+    
+<!--MODULE TABLE-->
+
+<div>
+    @JsonList.PrintList("requestlist", JSON, "Modules")
+</div>
+
+<br />
+
+<!--ADD MODULE-->
+
+<label style="font-size:2.5em;color:black;">Add Module</label>
+
+<br />
+<form method="post" action="?add=true">
+    <div>
+        <label  for="moduleCode">Module Code <span style="font-size:1.25em;color:red;">*</span></label>
+        <div class="col-md-4">
+            <input id="moduleCode" name="code" type="text" value="@Request.Form["code"]" class="form-control input-md">
+        </div>
+    </div>
+
+    <div>
+        <label for="moduleTitle">Module Title <span style="font-size:1.25em;color:red;">*</span></label>
+        <div class="col-md-4">
+            <input id="moduleTitle" name="title" type="text" value="@Request.Form["title"]" class="form-control input-md">
+        </div>
+    </div>
+
+    <div>
+        <label for="submit"></label>
+        <div >
+            <input type="submit"  class="btn waves-effect"  name="buttonSubmit" value="Add">
+        </div>
+    </div>
+</form>
+
+<br />
+
+@{
+    var code = "";
+    var title = "";
+
+    if(IsPost && (Request.QueryString["add"]=="true")){
+        
+        code = Request.Form["code"];
+        title = Request.Form["title"];
+
+        var db = Database.Open("dbConnectionString");
+        var insertCommand = "INSERT INTO module (module_code, module_title, dept_id) VALUES (@0, @1, 'CO')";
+        db.Execute(insertCommand, code, title);
+        Response.Redirect("~/module");
+    }
+
+    
+}
+
+<!--EDIT MODULE-->
+
+<label style="font-size:2.5em;color:black;">Edit Module</label>
+
+<br />
+
+<label style="font-size:1.5em;color:black;">Current Module Details</label>
+
+<br />
+
+
+<form method="post" action="?edit=true">
+   
+
+    <div>
+        <label for="moduleTitle">Module Details <span style="font-size:1.25em;color:red;">*</span></label>
+        <div>
+
+            <select class="browser-default" name="module" id="module-details" value=" ">
+                
+               @RequestForm.Modules()
+            </select>
+
+        </div>
+    </div>
+    <br />
+    
+    <label style="font-size:1.5em;color:black;">New Module Details</label>
+
+    <br />
+    
+    <div>
+        <label for="moduleTitle">Module Title <span style="font-size:1.25em;color:red;">*</span></label>
+        <div>
+
+            <input id="newModuleTitle" name="newModuleTitle" type="text" value="New Module Title">
+
+        </div>
+    </div>
+    
+    <div>
+        <label for="moduleTitle">Module Code <span style="font-size:1.25em;color:red;">*</span></label>
+        <div>
+
+            <input id="newModuleCode" name="newModuleCode" type="text" value="New Module Code">
+        
+        </div>
+    </div>
+    
+
+    <div>
+        <label for="submit"></label>
+        <div>
+            <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Save">
+        </div>
+    </div>
+</form>
+
+@{
+    var code_edit = "";
+    var title_edit = "";
+    var original_code = "";
+    
+    if(IsPost && (Request.QueryString["edit"]=="true")){
+        
+        code_edit = Request.Form["newModuleCode"];
+        title_edit = Request.Form["newModuleTitle"];
+        original_code = Request.Form["module"];
+
+        var db = Database.Open("dbConnectionString");
+        //var updateCommand = "UPDATE module SET (module_code, module_title, dept_id) VALUES (@0, @1, 'CO') WHERE module_code=@2";
+        var updateCommand = "UPDATE module SET module_code = @0, module_title = @1, dept_id='CO' WHERE module_code=@2;";
+        
+        db.Execute(updateCommand, code_edit, title_edit, original_code);
+        Response.Redirect("~/module");
+    }
+
+    
+}
+
+<script>
+function allowInput(){
+    if(document.getElementById("firstSelect").value != ""){
+        document.getElementById("moduleCode").disabled = false;
+        document.getElementById("moduleCode").value = document.getElementById("firstSelect").value;
+        document.getElementById("moduleTitle").disabled = false;
+        document.getElementById("secondSelect").value = document.getElementById("firstSelect").value;
+        document.getElementById("newModuleCode").disabled = false;
+        document.getElementById("newModuleCode").value = document.getElementById("firstSelect").value;
+        document.getElementById("newModuleTitle").disabled = false;
+    }
+}
+function newInput(){
+    if(document.getElementById("secondSelect").value != ""){
+        document.getElementById("firstSelect").value = document.getElementById("secondSelect").value;
+        document.getElementById("newModuleCode").disabled = false;
+        document.getElementById("newModuleCode").value = document.getElementById("secondSelect").value;
+        document.getElementById("newModuleTitle").disabled = false;
+        document.getElementById("moduleCode").disabled = false;
+        document.getElementById("moduleCode").value = document.getElementById("firstSelect").value;
+        document.getElementById("moduleTitle").disabled = false;
+    }
+}
+</script>
+
+<br />

@@ -51,6 +51,30 @@ select {
     left:0;
 }
 
+#current_location_bar{
+  height:45px;
+  line-height:45px;
+  white-space:nowrap;
+}
+
+#current_location_bar i{
+  display:inline-block;
+  line-height:45px;
+  font-size:1.5em;
+  float:left;
+}
+
+#current_location_bar span{
+  display:inline-block;
+  line-height:45px;
+  float:left; 
+}
+
+#current_location_bar_inner{
+  white-space:nowrap;
+  margin-left:310px;
+}
+
 #help_backdrop{
     position:fixed;
     top:0;
@@ -70,7 +94,19 @@ select {
     left:50%;
     transform:translate(-50%,-50%);
     background-color:white;
+    border:none;
+    width:60vw;
+    height:50vh;
+    display:none;
     z-index:1001;
+}
+
+#periodinput{
+    height:180px;
+}
+
+#weeksinput{
+    height:240px;
 }
 
 /* Media queries */
