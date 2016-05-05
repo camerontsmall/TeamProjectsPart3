@@ -1,39 +1,42 @@
 
 <html>
      <head> 
+    
+    
          <script src="~/js/materialize.js" ></script>
          <link rel="stylesheet" href="~/css/materialize.css" />
      <body>
- <div class="Helpbar"> 
- 	  <button class="HelpbarButtons" id="Dashboardbutton" onclick="myFunction()">Dashboard</button> 
+ <div class="Helpbar" align="center"> 
+ 	   <button class="HelpbarButtons" id="Dashboardbutton" onclick="myFunction()">Dashboard</button> 
        <button class="HelpbarButtons" id="Manage Requests" onclick="myFunction2()">Manage Requests</button>
        <button class="HelpbarButtons" id="Past Data" onclick="myFunction3()">Past Data</button>
        <button class="HelpbarButtons" id="Modules" onclick= "myFunction4()">Modules</button>
        <button class="HelpbarButtons" id="Rooms" onclick="myFunction5()">Rooms</button>
        
  
- 
+ <br>
+ <br>
 <script>
 function myFunction()
 {
- document.getElementById('DashText').innerHTML = "The dashboard enables you to navigate around the site.";
+ document.getElementById('DashText').innerHTML = "The dashboard enables you to see details of the approved requests, and to navigate around the site using the navigation bar on the left.";
 }
 
 function myFunction2()
 {
- document.getElementById('DashText').innerHTML = "The Manage Request Page enables you to...";
+ document.getElementById('DashText').innerHTML = "The Manage Request Page enables you to add new requests to the timetabling system, as well as to search through and to view previous requests.";
 }
 function myFunction3()
 {
- document.getElementById('DashText').innerHTML = "Past Data enables you to see previously requested data";
+ document.getElementById('DashText').innerHTML = "Past Data enables you to see requests from previous years";
 }
 function myFunction4()
 {
- document.getElementById('DashText').innerHTML = "The Module Page enales you to view..";
+ document.getElementById('DashText').innerHTML = "The Module Page enables you to view, edit and add new modules to the database";
 }
 function myFunction5()
 {
- document.getElementById('DashText').innerHTML = "The Rooms page enables you to view all rooms in form on a list or a timetable view. Also has the ability to add rooms";
+ document.getElementById('DashText').innerHTML = "The Rooms page enables you to view all rooms in list format or by timetable view. Also lets you add new private department rooms";
 }
 </script>
 
@@ -47,3 +50,11 @@ function myFunction5()
        </body>
        </head>
        </html>
+       
+<style type="text/css">
+.Helpbar {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+}
+</style>
