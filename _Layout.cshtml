@@ -47,6 +47,7 @@ List<Navigation.Page> pages = new List<Navigation.Page>();
                <img src="~/Images/LboroLogo.png"/>
             </li>
             @Links.NavList(pages, Page.Path)
+            <li>@Department.User.departmentID()</li>
         </ul>
         <ul class="side-nav hide-on-large-only" id="mobile_nav">
             <li class="logo" id="logo">

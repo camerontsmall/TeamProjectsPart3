@@ -5,6 +5,7 @@ using System.Web;
 using WebMatrix.Data;
 using System.Collections.Generic;
 using System.Web.Helpers;
+using WebMatrix.WebData;
 
 namespace Navigation{
 
@@ -18,6 +19,28 @@ namespace Navigation{
             public string Url;
     }
 
+}
+
+namespace Department
+{
+    public class User
+    {
+        public static dynamic departmentID()
+        {
+            int user_id = WebSecurity.CurrentUserId;
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT dept_id FROM user_department WHERE user_id=@0;", user_id);
+            if (list.Count() > 0)
+            {
+                var first = list.ElementAt(0);
+                return first["dept_id"];
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }
 
 namespace Bookings{
