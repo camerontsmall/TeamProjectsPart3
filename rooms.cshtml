@@ -32,7 +32,7 @@
     $('select').material_select();
     Materialize.updateTextFields();
 </script>
-
+<script>
 <form method="post" action="?add=true">
     <div>
         <label  for="moduleCode">Module Code <span style="font-size:1.25em;color:red;">*</span></label>
@@ -47,3 +47,4 @@
             <input id="moduleTitle" name="title" type="text" value="@Request.Form["title"]" class="form-control input-md">
         </div>
     </div>
+    </script>
