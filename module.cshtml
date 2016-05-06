@@ -166,6 +166,76 @@
     
 }
 
+
+<!-- ADD LECTURER -->
+
+<label style="font-size:2.5em;color:black;">Assign lecturer to module</label>
+
+<br />
+
+<label style="font-size:1.5em;color:black;">Details</label>
+
+<br />
+
+<form method="post" action="?lecturer=true">
+   
+
+    <div>
+        <label for="moduleTitle">Module Details <span style="font-size:1.25em;color:red;">*</span></label>
+        <div>
+
+            <select class="browser-default" name="module_lecturer" id="module-details-lecturer" value=" ">
+                
+               @RequestForm.Modules()
+            </select>
+
+        </div>
+    </div>
+    <br />
+    
+    <div>
+        <label for="moduleTitle">Lecturer Details <span style="font-size:1.25em;color:red;">*</span></label>
+        <div>
+
+            <input id="lecturer_details" name="lecturer_details" type="text" value="New Module Title">
+
+        </div>
+    </div>
+    
+
+    <div>
+        <label for="submit"></label>
+        <div>
+            <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Assign">
+        </div>
+    </div>
+</form>
+
+@{
+    
+    var lecturer_info = "";
+    var original_code_lecturer = "";
+    
+    if(IsPost && (Request.QueryString["lecturer"]=="true")){
+        
+        lecturer_info = Request.Form["lecturer_details"];
+        original_code_lecturer = Request.Form["module_lecturer"];
+
+        var db = Database.Open("dbConnectionString");
+        var addLecturer = "INSERT INTO lecturer_module (module_code, lecturer_id) VALUES (@0, @1)";
+       
+        
+        db.Execute(addLecturer, original_code_lecturer, lecturer_info);
+        Response.Redirect("~/module");
+    }
+
+    
+}
+
+
+
+
+
 <script>
 function allowInput(){
     if(document.getElementById("firstSelect").value != ""){
