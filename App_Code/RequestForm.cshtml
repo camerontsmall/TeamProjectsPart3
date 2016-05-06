@@ -43,8 +43,8 @@ foreach (var day in Life.Calendar.Days()) {
 }
 
 
-@helper Modules() {
-    foreach (var module in Bookings.Module.AllCodes())
+@helper Modules(string dept_id = "CO") {
+    foreach (var module in Bookings.Module.AllCodes(dept_id))
     {
         string code = @module.Key;
         string nice = @module.Value;

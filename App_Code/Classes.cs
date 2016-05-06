@@ -79,4 +79,17 @@ namespace Models{
         }
     }
 
+    public class Module
+    {
+        public static Dictionary<string, string> ToNiceList(DynamicRecord data)
+        {
+            var d = new Dictionary<string, string>();
+            d["Module Code"] = (string)data["module_code"];
+            d["Module Title"] = (string)data["module_title"];
+            d["Department"] = Department.Department.AllDepts()[(string) data["dept_id"]];
+            d["action"] = "./module?edit=" + (string)data["module_code"];
+            return d;
+        }
+    }
+
 }

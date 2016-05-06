@@ -3,8 +3,15 @@
     Page.Title = "Modules";
     Page.Path = "module";
     var DB = Database.Open("dbConnectionString");
-    var Data = DB.Query("SELECT module_code AS 'Module code', module_title as 'Module title', dept_id as 'Department ID' FROM module");
-    var JSON = Json.Encode(Data);
+    var Data = DB.Query("SELECT * FROM module");
+
+    List<Dictionary<string, string>> modules = new List<Dictionary<string, string>>();
+    foreach(dynamic item in Data)
+    {
+        modules.Add(Models.Module.ToNiceList(item));
+    }
+
+    var JSON = Json.Encode(modules);
 }
 
 <script>
@@ -106,7 +113,7 @@
 
             <select class="browser-default" name="module" id="module-details" value=" ">
                 
-               @RequestForm.Modules()
+               @RequestForm.Modules(Department.User.departmentID())
             </select>
 
         </div>
@@ -186,7 +193,7 @@
 
             <select class="browser-default" name="module_lecturer" id="module-details-lecturer" value=" ">
                 
-               @RequestForm.Modules()
+               @RequestForm.Modules(Department.User.departmentID())
             </select>
 
         </div>

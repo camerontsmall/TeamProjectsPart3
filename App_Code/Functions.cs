@@ -46,7 +46,7 @@ namespace Department
     {
         public static dynamic lecturerByDept(string dept_id)
         {
-            ;
+            
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM lecturer WHERE dept_id=@0;", dept_id);
             if (list.Count() > 0)
@@ -57,6 +57,36 @@ namespace Department
             {
                 return false;
             }
+        }
+
+        public static string lecturerById(int id)
+        {
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT * FROM lecturer WHERE lecturer_id=@0;", id);
+            if (list.Count() > 0)
+            {
+                var one = list.ElementAt(0)["full_name"];
+                return one;
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+    }
+    public class Department
+    {
+        public static Dictionary<string, string> AllDepts()
+        {
+            var depts = new Dictionary<string, string>();
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT * FROM dept");
+            foreach (var item in list)
+            {
+                depts.Add(item["dept_id"], item["dept_name"]);
+            }
+            return depts;
         }
     }
 }
@@ -80,7 +110,7 @@ namespace Bookings{
         {
             var modules = new Dictionary<string, string>();
             var DB = Database.Open("dbConnectionString");
-            var list = DB.Query("SELECT module_code, module_title FROM module WHERE dept_id LIKE '%" + dept_id + "%';");
+            var list = DB.Query("SELECT module_code, module_title FROM module WHERE dept_id LIKE '%@0%';", dept_id);
             foreach(var item in list)
             {
                 modules.Add(item["module_code"], item["module_title"]);
