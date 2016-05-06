@@ -57,3 +57,14 @@ foreach (var day in Life.Calendar.Days()) {
                <option value="@code">@code</option>
         }
     }
+
+@helper Lecturer(string dept_id) { 
+    <option value="">--</option>
+foreach(dynamic lect in Department.Lecturer.lecturerByDept(dept_id))
+{
+        int id = lect["lecturer_id"];
+        string fullname = lect["full_name"];
+        string username = lect["username"];
+        <option value="@id">@fullname (@username)</option>
+}
+    }

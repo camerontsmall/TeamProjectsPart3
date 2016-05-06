@@ -41,6 +41,24 @@ namespace Department
             }
         }
     }
+
+    public class Lecturer
+    {
+        public static dynamic lecturerByDept(string dept_id)
+        {
+            ;
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT * FROM lecturer WHERE dept_id=@0;", dept_id);
+            if (list.Count() > 0)
+            {
+                return list;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }
 
 namespace Bookings{
