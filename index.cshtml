@@ -1,4 +1,18 @@
 ﻿<body>
+    <div class="AccessabilityBar"> 
+	  <button class="AccessabilityBarButtons" id="Helpbutton" 
+	  onclick="myFunction()">Help</button> 
+      <button class="AccessabilityBarButtons" id="plustext" 
+      onclick="zoomIn()">+</button>
+      <button class="AccessabilityBarButtons" id="minustext" 
+      onclick="zoomOut()">-</button>
+      <button class="AccessabilityBarButtons" id="reset" 
+      onclick="reset()">Reset Font Size</button>
+      <button class="AccessabilityBarButtons" id="Invert" 
+      onclick="invert()">Invert</button>
+      <button class="AccessabilityBarButtons" id="reinvert" 
+      onclick="reinvert()">Reinvert</button>
+</div>
 @using Models
 @{ 
     Layout = "~/_Layout.cshtml";
@@ -57,19 +71,6 @@ function reinvert(){
     document.getElementById("body").style.webkitFilter = "initial";
 }
 </script>
-<div class="AccessabilityBar"> 
-	  <button class="AccessabilityBarButtons" id="Helpbutton" 
-	  onclick="myFunction()">Help</button> 
-      <button class="AccessabilityBarButtons" id="plustext" 
-      onclick="zoomIn()">+</button>
-      <button class="AccessabilityBarButtons" id="minustext" 
-      onclick="zoomOut()">-</button>
-      <button class="AccessabilityBarButtons" id="reset" 
-      onclick="reset()">Reset Font Size</button>
-      <button class="AccessabilityBarButtons" id="Invert" 
-      onclick="invert()">Invert</button>
-      <button class="AccessabilityBarButtons" id="reinvert" 
-      onclick="reinvert()">Reinvert</button>
-</div>
+
 
 </body>
