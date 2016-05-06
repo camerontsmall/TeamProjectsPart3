@@ -21,3 +21,37 @@
 <div>
     @JsonList.PrintList("requestlist", JSON, "Approved requests")
 </div>
+
+<script type="text/javascript">
+
+var fontSize = 1;
+function zoomIn() {
+	/* Button to make the font size bigger using JavaScript */
+    fontSize += 0.1;
+    document.body.style.fontSize = fontSize + "em";
+    document.getElementById("NewInfo").style.fontSize = fontSize + "em";
+    document.getElementById("Button").style.fontSize = fontSize + "em";
+}
+function zoomOut() {
+	/* Button to make the font size smaller using JavaScript */
+    fontSize -= 0.1;
+    document.body.style.fontSize = fontSize + "em";
+    document.getElementById("NewInfo").style.fontSize = fontSize + "em";
+    document.getElementById("Button").style.fontSize = fontSize + "em";
+}
+
+function reset(){
+	/* Button to reset the font size using JavaScript */
+     document.getElementById("body").style.fontSize = "initial";
+
+} 
+
+function invert(){
+	/* Javascript for inverting page colours */
+    document.getElementById("body").style.webkitFilter = "invert(100%)";
+}
+
+function reinvert(){
+	/* Javascript for re-inverting page colours */
+    document.getElementById("body").style.webkitFilter = "initial";
+}
