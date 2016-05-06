@@ -157,9 +157,9 @@
 
         var db = Database.Open("dbConnectionString");
         //var updateCommand = "UPDATE module SET (module_code, module_title, dept_id) VALUES (@0, @1, 'CO') WHERE module_code=@2";
-        var updateCommand = "UPDATE module SET module_code = @0, module_title = @1, dept_id='CO' WHERE module_code=@2;";
+        var updateCommand = "UPDATE module SET module_code = @0, module_title = @1, dept_id=@2 WHERE module_code=@3;";
         
-        db.Execute(updateCommand, code_edit, title_edit, original_code);
+        db.Execute(updateCommand, code_edit, title_edit, Department.User.departmentID(), original_code);
         Response.Redirect("~/module");
     }
 
@@ -197,7 +197,12 @@
         <label for="moduleTitle">Lecturer Details <span style="font-size:1.25em;color:red;">*</span></label>
         <div>
 
-            <input id="lecturer_details" name="lecturer_details" type="text" value="New Module Title">
+            <!-- <input id="lecturer_details" name="lecturer_details" type="text" value="New Module Title"> -->
+            <select class="browser-default" name="lecturer_details" id="lecturer_details" value=" ">
+                
+               @RequestForm.Lecturer(dept_id)
+               
+            </select>
 
         </div>
     </div>
@@ -220,6 +225,9 @@
         
         lecturer_info = Request.Form["lecturer_details"];
         original_code_lecturer = Request.Form["module_lecturer"];
+        
+        //Department.User.departmentID()
+
 
         var db = Database.Open("dbConnectionString");
         var addLecturer = "INSERT INTO lecturer_module (module_code, lecturer_id) VALUES (@0, @1)";

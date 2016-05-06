@@ -33,7 +33,7 @@
 
 <!-- ADD LECTURER -->
 
-<label style="font-size:2.5em;color:black;">Assign private room your department</label>
+<label style="font-size:2.5em;color:black;">Assign private room to your department</label>
 
 
 <br />
@@ -45,7 +45,7 @@
         <label for="moduleTitle">Room Details <span style="font-size:1.25em;color:red;">*</span></label>
         <div>
 
-            <select class="browser-default" name="room_details" id="room_details" value=" ">
+            <select name="room_details" id="room_details" value=" ">
                 
                @RequestForm.Rooms()
             </select>
@@ -71,7 +71,7 @@
         room_details = Request.Form["room_details"];
 
         var db = Database.Open("dbConnectionString");
-        var addLecturer = "INSERT INTO room dept_id = 'co' WHERE room_code = room_details";
+        var addLecturer = "INSERT INTO room dept_id = 'CO' WHERE room_code = room_details";
        
         
         db.Execute(addLecturer, room_details);
