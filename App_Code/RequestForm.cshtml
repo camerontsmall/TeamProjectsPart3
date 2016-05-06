@@ -54,6 +54,6 @@ foreach (var day in Life.Calendar.Days()) {
 
 @helper Rooms() { 
         foreach (var code in Facilities.Room.Codes()) {
-               <option value="@code"></option>
+               <option value="@code">@code</option>
         }
     }
