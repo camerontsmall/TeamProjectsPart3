@@ -15,7 +15,10 @@ function hideHelp() {
     backdrop.style.opacity = 0;
 }
 
-function loadRooms(type, park) {
+function loadRooms(){
+    var type = document.getElementById('roomtypeinput').value;
+    var park = document.getElementById('parkinput').value;
+
     var api_url  = "./api/rooms.php";
     if(type && park){
         api_url = "./api/rooms.php?type=" + type + "&park=" + park;
@@ -23,9 +26,14 @@ function loadRooms(type, park) {
     $.ajax({
         url : api_url,
         method: 'GET',
-        content-type : 'application/json',
-        success : function(data){
-
+        contentType : 'application/json',
+        success: function (data) {
+            data = JSON.parse(data);
+            var list = document.getElementById('roomlist');
+            list.innerHTML = "";
+            for (n in data) { 
+                list.innerHTML += '<option value="' + data[n]['room_code'] + '"></option>';
+            }
         }
     });
 }

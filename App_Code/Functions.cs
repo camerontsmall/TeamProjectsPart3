@@ -5,6 +5,7 @@ using System.Web;
 using WebMatrix.Data;
 using System.Collections.Generic;
 using System.Web.Helpers;
+using WebMatrix.WebData;
 
 namespace Navigation{
 
@@ -18,6 +19,76 @@ namespace Navigation{
             public string Url;
     }
 
+}
+
+namespace Department
+{
+    public class User
+    {
+        public static dynamic departmentID()
+        {
+            int user_id = WebSecurity.CurrentUserId;
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT dept_id FROM user_department WHERE user_id=@0;", user_id);
+            if (list.Count() > 0)
+            {
+                var first = list.ElementAt(0);
+                return first["dept_id"];
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    public class Lecturer
+    {
+        public static dynamic lecturerByDept(string dept_id)
+        {
+            
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT * FROM lecturer WHERE dept_id=@0;", dept_id);
+            if (list.Count() > 0)
+            {
+                return list;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static string lecturerById(int id)
+        {
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT * FROM lecturer WHERE lecturer_id=@0;", id);
+            if (list.Count() > 0)
+            {
+                var one = list.ElementAt(0)["full_name"];
+                return one;
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+    }
+    public class Department
+    {
+        public static Dictionary<string, string> AllDepts()
+        {
+            var depts = new Dictionary<string, string>();
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT * FROM dept");
+            foreach (var item in list)
+            {
+                depts.Add(item["dept_id"], item["dept_name"]);
+            }
+            return depts;
+        }
+    }
 }
 
 namespace Bookings{
@@ -39,7 +110,7 @@ namespace Bookings{
         {
             var modules = new Dictionary<string, string>();
             var DB = Database.Open("dbConnectionString");
-            var list = DB.Query("SELECT module_code, module_title FROM module WHERE dept_id LIKE '%" + dept_id + "%';");
+            var list = DB.Query("SELECT module_code, module_title FROM module WHERE dept_id LIKE '%@0%';", dept_id);
             foreach(var item in list)
             {
                 modules.Add(item["module_code"], item["module_title"]);
@@ -124,8 +195,9 @@ namespace Facilities{
             parks['c'] = "Central";
             parks['e'] = "East";
             parks['h'] = "Holywell";
+            /*
             parks['v'] = "Village";
-            parks['l'] = "London Campus";
+            parks['l'] = "London Campus"; */
             return parks;
         }
     }

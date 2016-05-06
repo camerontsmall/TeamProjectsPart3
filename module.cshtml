@@ -3,10 +3,40 @@
     Page.Title = "Modules";
     Page.Path = "module";
     var DB = Database.Open("dbConnectionString");
-    var Data = DB.Query("SELECT module_code AS 'Module code', module_title as 'Module title', dept_id as 'Department ID' FROM module");
-    var JSON = Json.Encode(Data);
+    var Data = DB.Query("SELECT * FROM module");
+
+    List<Dictionary<string, string>> modules = new List<Dictionary<string, string>>();
+    foreach(dynamic item in Data)
+    {
+        modules.Add(Models.Module.ToNiceList(item));
+    }
+
+    var JSON = Json.Encode(modules);
 }
 
+<script>
+    $(document).ready(function(){//enables and disables fields on document load to prevent input
+        $("#newModuleCode").prop('disabled',true);
+        $("#newModuleTitle").prop('disabled',true);
+        $("#module-details").change(function(){ //on change of module details, extract code and title and place in new module fields.
+ 
+            $("#newModuleCode").prop('disabled',false);
+            $("#newModuleTitle").prop('disabled',false);
+ 
+            var option = $(this).find('option:selected').text();
+ 
+            var optstr = option.split(" - ");
+            var modulecode = optstr[0];
+            var moduletitle = optstr[1];
+ 
+            $("#newModuleCode").val(modulecode);
+            $("#newModuleTitle").val(moduletitle);
+ 
+        });
+    });
+    </script>
+    
+    
 <!--MODULE TABLE-->
 
 <div>
@@ -20,7 +50,7 @@
 <label style="font-size:2.5em;color:black;">Add Module</label>
 
 <br />
-<form method="post">
+<form method="post" action="?add=true">
     <div>
         <label  for="moduleCode">Module Code <span style="font-size:1.25em;color:red;">*</span></label>
         <div class="col-md-4">
@@ -49,7 +79,7 @@
     var code = "";
     var title = "";
 
-    if(IsPost){
+    if(IsPost && (Request.QueryString["add"]=="true")){
         
         code = Request.Form["code"];
         title = Request.Form["title"];
@@ -74,27 +104,176 @@
 <br />
 
 
-<form method="post">
+<form method="post" action="?edit=true">
    
 
     <div>
         <label for="moduleTitle">Module Details <span style="font-size:1.25em;color:red;">*</span></label>
         <div>
 
-            <select class="browser-default" name="module">
+            <select class="browser-default" name="module" id="module-details" value=" ">
                 
-               @RequestForm.Modules()
+               @RequestForm.Modules(Department.User.departmentID())
             </select>
 
-</div>
+        </div>
     </div>
+    <br />
+    
+    <label style="font-size:1.5em;color:black;">New Module Details</label>
+
+    <br />
+    
+    <div>
+        <label for="moduleTitle">Module Title <span style="font-size:1.25em;color:red;">*</span></label>
+        <div>
+
+            <input id="newModuleTitle" name="newModuleTitle" type="text" value="New Module Title">
+
+        </div>
+    </div>
+    
+    <div>
+        <label for="moduleTitle">Module Code <span style="font-size:1.25em;color:red;">*</span></label>
+        <div>
+
+            <input id="newModuleCode" name="newModuleCode" type="text" value="New Module Code">
+        
+        </div>
+    </div>
+    
 
     <div>
         <label for="submit"></label>
         <div>
-            <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Edit">
+            <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Save">
         </div>
     </div>
 </form>
+
+@{
+    var code_edit = "";
+    var title_edit = "";
+    var original_code = "";
+    
+    if(IsPost && (Request.QueryString["edit"]=="true")){
+        
+        code_edit = Request.Form["newModuleCode"];
+        title_edit = Request.Form["newModuleTitle"];
+        original_code = Request.Form["module"];
+
+        var db = Database.Open("dbConnectionString");
+        //var updateCommand = "UPDATE module SET (module_code, module_title, dept_id) VALUES (@0, @1, 'CO') WHERE module_code=@2";
+        var updateCommand = "UPDATE module SET module_code = @0, module_title = @1, dept_id=@2 WHERE module_code=@3;";
+        
+        db.Execute(updateCommand, code_edit, title_edit, Department.User.departmentID(), original_code);
+        Response.Redirect("~/module");
+    }
+
+    
+}
+
+
+<!-- ADD LECTURER -->
+
+<label style="font-size:2.5em;color:black;">Assign lecturer to module</label>
+
+<br />
+
+<label style="font-size:1.5em;color:black;">Details</label>
+
+<br />
+
+<form method="post" action="?lecturer=true">
+   
+
+    <div>
+        <label for="moduleTitle">Module Details <span style="font-size:1.25em;color:red;">*</span></label>
+        <div>
+
+            <select class="browser-default" name="module_lecturer" id="module-details-lecturer" value=" ">
+                
+               @RequestForm.Modules(Department.User.departmentID())
+            </select>
+
+        </div>
+    </div>
+    <br />
+    
+    <div>
+        <label for="moduleTitle">Lecturer Details <span style="font-size:1.25em;color:red;">*</span></label>
+        <div>
+
+            <!-- <input id="lecturer_details" name="lecturer_details" type="text" value="New Module Title"> -->
+            <select class="browser-default" name="lecturer_details" id="lecturer_details" value=" ">
+                
+               @RequestForm.Lecturer(Department.User.departmentID())
+               
+            </select>
+
+        </div>
+    </div>
+    
+
+    <div>
+        <label for="submit"></label>
+        <div>
+            <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Assign">
+        </div>
+    </div>
+</form>
+
+@{
+    
+    var lecturer_info = "";
+    var original_code_lecturer = "";
+    
+    if(IsPost && (Request.QueryString["lecturer"]=="true")){
+        
+        lecturer_info = Request.Form["lecturer_details"];
+        original_code_lecturer = Request.Form["module_lecturer"];
+        
+        //Department.User.departmentID()
+
+
+        var db = Database.Open("dbConnectionString");
+        var addLecturer = "INSERT INTO lecturer_module (module_code, lecturer_id) VALUES (@0, @1)";
+       
+        
+        db.Execute(addLecturer, original_code_lecturer, lecturer_info);
+        Response.Redirect("~/module");
+    }
+
+    
+}
+
+
+
+
+
+<script>
+function allowInput(){
+    if(document.getElementById("firstSelect").value != ""){
+        document.getElementById("moduleCode").disabled = false;
+        document.getElementById("moduleCode").value = document.getElementById("firstSelect").value;
+        document.getElementById("moduleTitle").disabled = false;
+        document.getElementById("secondSelect").value = document.getElementById("firstSelect").value;
+        document.getElementById("newModuleCode").disabled = false;
+        document.getElementById("newModuleCode").value = document.getElementById("firstSelect").value;
+        document.getElementById("newModuleTitle").disabled = false;
+    }
+}
+function newInput(){
+    if(document.getElementById("secondSelect").value != ""){
+        document.getElementById("firstSelect").value = document.getElementById("secondSelect").value;
+        document.getElementById("newModuleCode").disabled = false;
+        document.getElementById("newModuleCode").value = document.getElementById("secondSelect").value;
+        document.getElementById("newModuleTitle").disabled = false;
+        document.getElementById("moduleCode").disabled = false;
+        document.getElementById("moduleCode").value = document.getElementById("firstSelect").value;
+        document.getElementById("moduleTitle").disabled = false;
+    }
+}
+</script>
 
 <br />

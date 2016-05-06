@@ -144,13 +144,14 @@
     <input type="password" id="confirmPassword" name="confirmPassword" @Validation.For("confirmPassword")/>
     @Html.ValidationMessage("confirmPassword")
     @if (hasLocalAccount) {
-        <button type="submit" name="action" value="password">Change Password</button>
+        <button class="btn waves-effect waves-light" type="submit" name="action" value="password">Change Password</button>
        <!--<p>
             Click <a href="~/Account/ForgotPassword" title="Forgot password page">here</a> if you've forgotten your password.
         </p> -->
     } else {
-        <button class="waves-effect waves-light" type="submit" name="action" value="password">Set Password</button>
+        <button class="btn waves-effect waves-light" type="submit" name="action" value="password">Set Password</button>
     }
+    <button class="btn waves-effect waves-light" ><a style="color:inherit;"href="~/">Back to Home</a></button> 
 </form>
 
 <section id="externalLogins">

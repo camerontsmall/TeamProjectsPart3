@@ -1,15 +1,34 @@
-﻿@{
+﻿@using Models
+@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Manage Requests";
     Page.Path = "requests";
     var DB = Database.Open("dbConnectionString");
-    var Data = DB.Query("SELECT module_code as 'Module Code', status as 'Status', day as 'Day', period as 'Period(s)', week as 'Week(s)' FROM request");
-    var JSON = Json.Encode(Data);
+    var Data = DB.Query("SELECT * FROM request");
+
+    var ldata = Models.Request.convertTo(Data);
+
+    var tediousList = new List<Dictionary<string, string>>();
+    foreach (Request r in ldata)
+    {
+        tediousList.Add(r.ToNiceList());
+    }
+
+    var JSON = Json.Encode(tediousList);
 
     string title = "";
 
     if (IsPost){
-        title = Request.Form["title"];
+        string module = Request.Form["modulecode"];
+        string day = Request.Form["day"];
+        string periods = Request.Form["periods"];
+        string weeks = Request.Form["weeks"];
+        string roomtype = Request.Form["roomtype"];
+        string roompark = Request.Form["roompark"];
+        string roompref = Request.Form["roompref"];
+        <p>Booking for @module on @day</p>
+        string insert_query = "INSERT INTO module (module_code, day, periods, weeks) VALUES (@0, @1, 'CO')";
+
     }
 }
 
@@ -23,6 +42,11 @@
                     @RequestForm.Modules()
                 </select>
                 <br />  
+                <label for="dayinput">Day</label>
+                <select id="dayinput" name="day">
+                    @RequestForm.Days()
+                </select>
+                <br />
                 <label for="periodinput">Period(s)</label>
                 <select multiple id="periodinput" class="browser-default" name="period">
                     @RequestForm.Periods()
@@ -40,10 +64,13 @@
                 </select>
                 <br />
                 <label for="parkinput">Preferred park</label>
-                <select id="parkinput" name="roompark">
+                <select id="parkinput" name="roompark" onchange="loadRooms()">
                     @RequestForm.Parks()
                 </select>
-                <datalist id="roominput" name="room">
+                <br />
+                <label for="roominput">Preferred room</label>
+                <input list="roomlist" name="roompref" id="roominput" class="active"/>
+                <datalist id="roomlist" name="room">
                     @RequestForm.Rooms()
                 </datalist>
                 <br />
@@ -51,6 +78,7 @@
                 <textarea id="specialinput" name="special" class="materialize-textarea" length="200">
 
                 </textarea>
+                <input type="text" disabled name="owner" style="display:none;" value="@WebSecurity.CurrentUserId"/>
             </div>
         </div>
         <div class="row">

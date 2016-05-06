@@ -9,6 +9,17 @@
     }
 }
 
+@helper Days() {
+foreach (var day in Life.Calendar.Days()) {
+        var num = day.Key;
+        var name = day.Value;
+        <option value="@num">@name</option>
+}
+{
+
+}
+    }
+
 @helper Weeks(){
     for(int i=1; i <= 12; i++){
         <option selected    value="@i">Week @i</option>
@@ -31,17 +42,29 @@
     }
 }
 
-@helper Modules() {
-    foreach (var module in Bookings.Module.AllCodes())
+
+@helper Modules(string dept_id = "CO") {
+    foreach (var module in Bookings.Module.AllCodes(dept_id))
     {
         string code = @module.Key;
         string nice = @module.Value;
-        <option value="@code">@code - @nice</option>
+            <option value="@code">@code - @nice</option>
     }
 }
 
 @helper Rooms() { 
-        foreach(var code in Facilities.Room.Codes()){
-            <option>@code</option>
+        foreach (var code in Facilities.Room.Codes()) {
+               <option value="@code">@code</option>
         }
+    }
+
+@helper Lecturer(string dept_id) { 
+    <option value="">--</option>
+foreach(dynamic lect in Department.Lecturer.lecturerByDept(dept_id))
+{
+        int id = lect["lecturer_id"];
+        string fullname = lect["full_name"];
+        string username = lect["username"];
+        <option value="@id">@fullname (@username)</option>
+}
     }
