@@ -200,7 +200,7 @@
             <!-- <input id="lecturer_details" name="lecturer_details" type="text" value="New Module Title"> -->
             <select class="browser-default" name="lecturer_details" id="lecturer_details" value=" ">
                 
-               @RequestForm.Lecturer(dept_id)
+               @RequestForm.Lecturer(Department.User.departmentID())
                
             </select>
 
