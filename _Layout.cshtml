@@ -22,15 +22,15 @@ else
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="user_id" value="@Page.UserId" />
     @{
-        List<Navigation.Page> pages = new List<Navigation.Page>();
-        pages.Add(new Navigation.Page(".","Dashboard"));
-        pages.Add(new Navigation.Page("requests","Manage requests"));
-        pages.Add(new Navigation.Page("pastdata","Past data"));
-        pages.Add(new Navigation.Page("module","Modules"));
-        pages.Add(new Navigation.Page("rooms","Rooms"));
-        pages.Add(new Navigation.Page("javascript:$('#modal1').openModal();","Help"));
-        pages.Add(new Navigation.Page("Account/Manage", "Manage account"));
-        pages.Add(new Navigation.Page("javascript:document.getElementById('logoutForm').submit()","Log out"));
+List<Navigation.Page> pages = new List<Navigation.Page>();        
+    pages.Add(new Navigation.Page(".","Dashboard"));
+    pages.Add(new Navigation.Page("requests","Manage requests"));
+    pages.Add(new Navigation.Page("pastdata","Past data"));
+    pages.Add(new Navigation.Page("module","Modules"));
+    pages.Add(new Navigation.Page("rooms","Rooms"));
+    pages.Add(new Navigation.Page("timetable", "Timetable"));
+    pages.Add(new Navigation.Page("javascript:showHelp()","Help"));
+    pages.Add(new Navigation.Page("javascript:document.getElementById('logoutForm').submit()","Log out"));
 }
 </head>
 <body>
@@ -58,16 +58,10 @@ else
         </ul>
         @if(Page.Title != "Home"){
             <nav id="current_location_bar" class="hide-on-med-and-down top-nav blue darken-1">
-                <div class="nav-wrapper">
-                    <div class="col s12" id="current_location_bar_inner">
-                        <a href="." class="breadcrumb">Home</a>
-                        @if(@Page.Parent != null){
-                        <a href="@Page.ParentPath" class="breadcrumb">@Page.Parent</a>
-                        <a href="@Page.Path" class="breadcrumb">@Page.Title</a>
-                        }else{
-                        <a href="@Page.Path" class="breadcrumb">@Page.Title</a>
-                        }
-                    </div>
+                <div class="container" id="current_location_bar_inner">
+                    <span>Home</span>
+                        <i class="material-icons">chevron_right</i>
+                        <span>@Page.Title</span>
                 </div>
             </nav>
         }
@@ -78,12 +72,11 @@ else
     </div>
 
     
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <iframe src="~/Help/index.cshtml" id="help_screen"></iframe>
-        </div>
+    <div id="help_backdrop" onclick="hideHelp();">
     </div>
 
+    <iframe class="card-panel hoverable" src="~/Help/index.cshtml" id="help_screen">
+    </iframe>
 
     <script>
         $(".button-collapse").sideNav();

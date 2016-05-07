@@ -162,11 +162,11 @@
         title_edit = Request.Form["newModuleTitle"];
         original_code = Request.Form["module"];
 
-        var db = Database.Open("dbConnectionString");
+        //var db = Database.Open("dbConnectionString");
         //var updateCommand = "UPDATE module SET (module_code, module_title, dept_id) VALUES (@0, @1, 'CO') WHERE module_code=@2";
         var updateCommand = "UPDATE module SET module_code = @0, module_title = @1, dept_id=@2 WHERE module_code=@3;";
         
-        db.Execute(updateCommand, code_edit, title_edit, Department.User.departmentID(), original_code);
+        DB.Execute(updateCommand, code_edit, title_edit, Department.User.departmentID(), original_code);
         Response.Redirect("~/module");
     }
 
@@ -277,3 +277,6 @@ function newInput(){
 </script>
 
 <br />
+@{
+    DB.Close();
+}
