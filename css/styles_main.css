@@ -113,5 +113,9 @@ select {
 
   }
 
+  #current_location_bar_inner{
+  margin-left:1rem;
+}
+
   .longList {
     min-height: 0; } }

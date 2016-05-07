@@ -79,6 +79,18 @@ namespace Models{
         }
     }
 
+    public class RoomRequest {
+        public static Dictionary<string, string> ToNiceList(DynamicRecord data) {
+            var d = new Dictionary<string, string>();
+            d["Room Code"] = (string)data["room_code"];
+            d["Park"] = Facilities.Park.Parks()[(char)((string)data["park"])[0]];
+            d["Required Capacity"] = data["capacity"].ToString();
+            d["Type"] = Facilities.Room.Types()[(string)data["type"]];
+            d["action"] = "./editroom?edit=" + data["room_request_id"].ToString();
+            return d;
+        }
+    }
+
     public class Module
     {
         public static Dictionary<string, string> ToNiceList(DynamicRecord data)
@@ -91,5 +103,6 @@ namespace Models{
             return d;
         }
     }
+
 
 }

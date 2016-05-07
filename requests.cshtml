@@ -23,12 +23,12 @@
         string facility = Request.Form["facility"];
 
         string insert_statement = "INSERT INTO request (module_code, day, period, week, owner, semester, status, last_changed, booking_round) VALUES (@0, @1, @2, @3, @4, @5, 'p', @6, 0)";
-        string room_statement = "INSERT INTO request_room (request_id, room_code, park, capacity, type, special, facility) VALUES (SCOPE_IDENTITY(), @0, @1,@2, @3, @4, @5)";
+        string room_statement = "INSERT INTO request_room (request_id, room_code, park, capacity, type, special, facility) VALUES (@@IDENTITY ,@0, @1,@2, @3, @4, @5)";
 
         if (module.Length > 0 && period.Length > 0) {
             try {
                 DB.Execute(insert_statement, module, day, period, week, WebSecurity.CurrentUserId, semester, System.DateTime.Now);
-                DB.Execute(room_statement, roompref, roompark, roomtype, capacity, roomtype, special, facility);
+                DB.Execute(room_statement, roompref, roompark, capacity, roomtype, special, facility);
 
             <div class="card-panel green">
                Succesfully added request for @module
@@ -48,7 +48,7 @@
 
     }
 
-    var Data = DB.Query("SELECT * FROM request");
+    var Data = DB.Query("SELECT * FROM request ORDER BY last_changed DESC");
 
     var ldata = Models.Request.convertTo(Data);
 
