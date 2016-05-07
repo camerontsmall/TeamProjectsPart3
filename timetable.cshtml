@@ -1,10 +1,9 @@
-﻿@using Models
-@{
+﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "Timetable";
     Page.Path = "timetable";
     var DB = Database.Open("dbConnectionString");
-    string sqlBaseString = "SELECT module.module_code, module.module_title, request.day, request.status, request.period, request.semester, request.week, request_room.room_code FROM request INNER JOIN request_room ON request.request_id = request_room.request_id INNER JOIN module ON request.module_code = module.module_code";
+    string sqlBaseString = "SELECT module.module_code, module.module_title, request.request_id, request.day, request.status, request.period, request.semester, request.week, request_room.room_code FROM request INNER JOIN request_room ON request.request_id = request_room.request_id INNER JOIN module ON request.module_code = module.module_code";
     string sqlString = sqlBaseString + " WHERE semester LIKE '%1%' AND week LIKE '%1%'";
     var data = DB.Query(sqlString);
     
@@ -21,6 +20,7 @@
         semester = 1;
         week = 1;
     }
+    var jsondata = Json.Encode(data);
 }
 
 <h3>Timetable</h3>
@@ -96,9 +96,9 @@
                     foreach (var r in temp) {
                         char tChar = r.status[0];
                         switch (tChar) {
-                            case 'c': WriteLiteral("<div style='background-color:#3ADF00;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
-                            case 'r': WriteLiteral("<div style='background-color:red;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
-                            case 'p': WriteLiteral("<div style='background-color:orange;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'c': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:#3ADF00;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'r': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:red;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'p': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:orange;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
                             default: break;
                         }
                     }
@@ -110,10 +110,20 @@
         }
     </table>
 </div>
+<div id="modal1" class="modal">
+    <div id="extrainfo" class="modal-content">
+        
+    </div>
+</div>
+<div hidden>
+    <p id="jsondata">
+        @Html.Raw(jsondata)
+    </p>
+</div>
 <script>
-    runonchange();
-    $("#semester").on("change", runonchange);
-    function runonchange() {
+
+    $("#semester").on("change", runOnChange());
+    function runOnChange() {
         if ($("#semester").find(":selected").val() == 2) {
             $("#last").prop("disabled", false);
         } else {
@@ -122,6 +132,34 @@
             }
             $("#last").prop("disabled", true);
         }
+    }
+    function openExtraInfo(requestID) {
+        var table = JSON.parse(document.getElementById("jsondata").innerHTML);
+        var htmlstring = "";
+        var codeexists = false;
+        var nameexists = false;
+        var roomentered = false;
+
+        for (var i = 0; i < table.length; i++) {
+            if (requestID == table[i]["request_id"]) {
+                if (codeexists == false) {
+                    htmlstring = htmlstring + "Module Code: " + table[i]["module_code"] + "<br>";
+                    codeexists = true;
+                }
+                if (nameexists == false) {
+                    htmlstring = htmlstring + "Module Name: " + table[i]["module_title"] + "<br>";
+                    nameexists = true;
+                }
+                if (roomentered) {
+                    htmlstring = htmlstring + ", " + table[i]["room_code"];
+                } else {
+                    htmlstring = htmlstring + "Room: " + table[i]["room_code"];
+                    roomentered = true;
+                }
+            }
+        }
+        document.getElementById("extrainfo").innerHTML = htmlstring;
+        $('#modal1').openModal();
     }
 </script>
 @{
