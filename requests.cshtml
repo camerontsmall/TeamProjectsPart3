@@ -59,6 +59,24 @@
 
     var JSON = Json.Encode(tediousList);
 
+    string newmodule_code = "";
+    int newday = 1;
+    string newperiods = "";
+    string newweek = "";
+    int newcapacity = 0;
+    string newtype = "";
+    string newpark = "";
+    string newroom = "";
+
+    if (Request.QueryString["copy"] != null) {
+        string past_id = Request.QueryString["copy"].ToString();
+        var past = DB.QuerySingle("SELECT * FROM pastsubmissions WHERE RequestNo = @0", past_id);
+        newmodule_code = past["ModuleCode"];
+        newday = past["Day"];
+        <div class="card-panel blue">
+            Copying previous request @past_id
+        </div>
+    }
 }
 
 <h4>Add request</h4>
@@ -67,12 +85,12 @@
         <div class="row">
             <div class="col s12 m12 l6" id="form_left">
                 <label for="titleinput">Module Code</label>
-                <select id="moduleinput" class="browser-default" name="modulecode">
+                <select id="moduleinput" class="browser-default" name="modulecode" value="@newmodule_code">
                     @RequestForm.Modules()
                 </select>
                 <br />
                 <label for="dayinput">Day</label>
-                <select id="dayinput" class="browser-default" name="day">
+                <select id="dayinput" class="browser-default" name="day" value="@newday">
                     @RequestForm.Days()
                 </select>
                 <br />
@@ -87,24 +105,26 @@
                 </select>
             </div>
             <div class="col s12 m12 l6" id="form_right">
-                <label for="capacityinput">Capacity</label>
+                <label for="capacityinput">Capacity required</label>
                 <input id="capacityinput" type="number" name="capacity" min="0" max="400"/>
                 <br />
                 <label for="roomtypeinput">Preferred room type</label>
-                <select id="roomtypeinput"  name="roomtype">
+                <select id="roomtypeinput" class="browser-default" name="roomtype" >
                     @RequestForm.RoomTypes()
                 </select>
                 <br />
                 <label for="parkinput">Preferred park</label>
-                <select id="parkinput" name="roompark" onchange="loadRooms()">
+                <select id="parkinput" name="roompark" class="browser-default">
                     @RequestForm.Parks()
                 </select>
                 <br />
+                <div onclick="loadRooms()" class="btn waves-effect">Update Room Suggestions</div>
+                <br />
                 <label for="roominput">Preferred room</label>
-                <input list="roomlist" name="roompref" id="roominput" class="active"/>
-                <datalist id="roomlist" name="room">
+                <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
+                <select id="roomlist" class="browser-default" name="roompref">
                     @RequestForm.Rooms()
-                </datalist>
+                </select>
                 <br />
                 <p>Required Facilities</p>
                 <div class="row">

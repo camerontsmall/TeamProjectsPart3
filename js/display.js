@@ -30,9 +30,9 @@ function loadRooms(){
         success: function (data) {
             data = JSON.parse(data);
             var list = document.getElementById('roomlist');
-            list.innerHTML = "";
+            list.innerHTML = "<option value=''>No preference</option>";
             for (n in data) { 
-                list.innerHTML += '<option value="' + data[n]['room_code'] + '"></option>';
+                list.innerHTML += '<option value="' + data[n]['room_code'] + '">' + data[n]['room_code'] + '</option>';
             }
         }
     });

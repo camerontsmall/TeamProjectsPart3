@@ -54,6 +54,7 @@
 }
 
 @helper Rooms() { 
+        <option value="">No preference</option>
         foreach (var code in Facilities.Room.Codes()) {
                <option value="@code">@code</option>
         }

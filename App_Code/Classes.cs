@@ -61,6 +61,7 @@ namespace Models{
             d["Period(s)"] = period;
             d["Week(s)"] = week;
             d["action"] = "./editrequest?id=" + request_id;
+            d[" "] = "<i class='material-icons red-text'>delete</i>";
             return d;
         }
 
@@ -82,7 +83,11 @@ namespace Models{
     public class RoomRequest {
         public static Dictionary<string, string> ToNiceList(DynamicRecord data) {
             var d = new Dictionary<string, string>();
-            d["Room Code"] = (string)data["room_code"];
+            if (data["room_code"].ToString().Length > 0) {
+                d["Room Code"] = (string)data["room_code"];
+            } else {
+                d["Room Code"] = "Any";
+            }
             d["Park"] = Facilities.Park.Parks()[(char)((string)data["park"])[0]];
             d["Required Capacity"] = data["capacity"].ToString();
             d["Type"] = Facilities.Room.Types()[(string)data["type"]];
@@ -104,5 +109,21 @@ namespace Models{
         }
     }
 
-
+    public class OldRequest {
+        public static Dictionary<string, string> ToNiceList(DynamicRecord row) {
+            var d = new Dictionary<string, string>();
+            d["Module Code"] = (string)row["ModuleCode"];
+            d["Day"] = Life.Calendar.Days()[(int)row["Day"]];
+            d["Period"] = row["Period"].ToString();
+            try {
+                d["Park"] = Facilities.Park.Parks()[(char)(row["Park"].ToString()[0])];
+            }catch(Exception e) {
+                d["Park"] = (string)row["Park"];
+            }
+            d["Preferred Room"] = (string)row["Preference"];
+            int id = (int)row["RequestNo"];
+            d[" "] = "<a href='./requests?copy=" + id + "'><i class='material-icons green-text'>content_copy</i></a>";
+            return d;
+        }
+    }
 }

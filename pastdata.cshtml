@@ -4,7 +4,12 @@
     Page.Path = "pastdata";
     var DB = Database.Open("dbConnectionString");
     var Data = DB.Query("SELECT * FROM pastsubmissions WHERE ModuleCode LIKE 'CO%'");
-    var JSON = Json.Encode(Data);
+
+    List<dynamic> list = new List<dynamic>();
+    foreach(dynamic row in Data) {
+        list.Add(Models.OldRequest.ToNiceList(row));
+    }
+    var JSON = Json.Encode(list);
 }
 
 <div>
