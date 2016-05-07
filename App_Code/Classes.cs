@@ -60,7 +60,7 @@ namespace Models{
             d["Day"] = Life.Calendar.Days()[day];
             d["Period(s)"] = period;
             d["Week(s)"] = week;
-            d["action"] = "./requests?edit=" + request_id;
+            d["action"] = "./editrequest?id=" + request_id;
             return d;
         }
 
@@ -86,7 +86,7 @@ namespace Models{
             var d = new Dictionary<string, string>();
             d["Module Code"] = (string)data["module_code"];
             d["Module Title"] = (string)data["module_title"];
-            d["Department"] = Department.Department.AllDepts()[(string) data["dept_id"]];
+            d["Department"] = Department.Dept.AllDepts()[(string) data["dept_id"]];
             d["action"] = "./module?edit=" + (string)data["module_code"];
             return d;
         }

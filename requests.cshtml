@@ -74,10 +74,13 @@
                     @RequestForm.Rooms()
                 </datalist>
                 <br />
+                <p>Required Facilities</p>
+                <div class="row">
+                    @RequestForm.RoomFacilities()
+                </div>
+                <br />
                 <label for="specialinput">Special requirements</label>
-                <textarea id="specialinput" name="special" class="materialize-textarea" length="200">
-
-                </textarea>
+                <textarea id="specialinput" name="special" class="materialize-textarea" length="200"></textarea>
                 <input type="text" disabled name="owner" style="display:none;" value="@WebSecurity.CurrentUserId"/>
             </div>
         </div>
