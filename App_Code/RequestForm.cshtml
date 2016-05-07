@@ -44,6 +44,7 @@
 
 
 @helper Modules(string dept_id = "CO") {
+    <option value="">--</option>
     foreach (var module in Bookings.Module.AllCodes(dept_id))
     {
         string code = @module.Key;
@@ -75,7 +76,7 @@ foreach(dynamic lect in Department.Lecturer.lecturerByDept(dept_id))
         string code_id = "facility_" + id.ToString();
         string name = fac.Value;
         <div class="col s6">
-            <input type="checkbox" name="@code_id" id="@code_id" />
+            <input type="checkbox" name="facility" value="@id" id="@code_id" />
             <label for="@code_id">@name</label>
         </div>
     }

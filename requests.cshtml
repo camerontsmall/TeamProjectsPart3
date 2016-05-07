@@ -4,32 +4,61 @@
     Page.Title = "Manage Requests";
     Page.Path = "requests";
     var DB = Database.Open("dbConnectionString");
+
+
+    string title = "";
+
+    if (IsPost) {
+        string module = Request.Form["modulecode"];
+        string day = Request.Form["day"];
+        string period = Request.Form["period"];
+        string week = Request.Form["weeks"];
+        string semester = Request.Form["semester"];
+
+        string roomtype = Request.Form["roomtype"];
+        string roompark = Request.Form["roompark"];
+        string roompref = Request.Form["roompref"];
+        string capacity = Request.Form["capacity"];
+        string special = Request.Form["special"];
+        string facility = Request.Form["facility"];
+
+        string insert_statement = "INSERT INTO request (module_code, day, period, week, owner, semester, status, last_changed, booking_round) VALUES (@0, @1, @2, @3, @4, @5, 'p', @6, 0)";
+        string room_statement = "INSERT INTO request_room (request_id, room_code, park, capacity, type, special, facility) VALUES (SCOPE_IDENTITY(), @0, @1,@2, @3, @4, @5)";
+
+        if (module.Length > 0 && period.Length > 0) {
+            try {
+                DB.Execute(insert_statement, module, day, period, week, WebSecurity.CurrentUserId, semester, System.DateTime.Now);
+                DB.Execute(room_statement, roompref, roompark, roomtype, capacity, roomtype, special, facility);
+
+            <div class="card-panel green">
+               Succesfully added request for @module
+                @facility
+            </div>
+            } catch (Exception e) {
+            <div class="card-panel red">
+                Add request failed: @e.ToString()
+            </div>
+            }
+        } else {
+            <div class="card-panel orange">
+                Please pick a module and time slot
+            </div>
+
+        }
+
+    }
+
     var Data = DB.Query("SELECT * FROM request");
 
     var ldata = Models.Request.convertTo(Data);
 
     var tediousList = new List<Dictionary<string, string>>();
-    foreach (Request r in ldata)
-    {
+    foreach (Request r in ldata) {
         tediousList.Add(r.ToNiceList());
     }
 
     var JSON = Json.Encode(tediousList);
 
-    string title = "";
-
-    if (IsPost){
-        string module = Request.Form["modulecode"];
-        string day = Request.Form["day"];
-        string periods = Request.Form["periods"];
-        string weeks = Request.Form["weeks"];
-        string roomtype = Request.Form["roomtype"];
-        string roompark = Request.Form["roompark"];
-        string roompref = Request.Form["roompref"];
-        <p>Booking for @module on @day</p>
-        string insert_query = "INSERT INTO module (module_code, day, periods, weeks) VALUES (@0, @1, 'CO')";
-
-    }
 }
 
 <h4>Add request</h4>
@@ -38,12 +67,12 @@
         <div class="row">
             <div class="col s12 m12 l6" id="form_left">
                 <label for="titleinput">Module Code</label>
-                <select id="moduleinput" name="modulecode">
+                <select id="moduleinput" class="browser-default" name="modulecode">
                     @RequestForm.Modules()
                 </select>
-                <br />  
+                <br />
                 <label for="dayinput">Day</label>
-                <select id="dayinput" name="day">
+                <select id="dayinput" class="browser-default" name="day">
                     @RequestForm.Days()
                 </select>
                 <br />
@@ -58,8 +87,11 @@
                 </select>
             </div>
             <div class="col s12 m12 l6" id="form_right">
+                <label for="capacityinput">Capacity</label>
+                <input id="capacityinput" type="number" name="capacity" min="0" max="400"/>
+                <br />
                 <label for="roomtypeinput">Preferred room type</label>
-                <select id="roomtypeinput" name="roomtype">
+                <select id="roomtypeinput"  name="roomtype">
                     @RequestForm.RoomTypes()
                 </select>
                 <br />
