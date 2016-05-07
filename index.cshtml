@@ -1,16 +1,4 @@
-﻿<body id="body">
-    <div class="AccessabilityBar" style= text-align: center;>
-      <button class="AccessabilityBarButtons" id="plustext" 
-      onclick="zoomIn()">+</button>
-      <button class="AccessabilityBarButtons" id="minustext" 
-      onclick="zoomOut()">-</button>
-      <button class="AccessabilityBarButtons" id="reset" 
-      onclick="reset()">Reset Font Size</button>
-      <button class="AccessabilityBarButtons" id="Invert" 
-      onclick="invert()">Invert</button>
-      <button class="AccessabilityBarButtons" id="reinvert" 
-      onclick="reinvert()">Reinvert</button>
-</div>
+﻿
 @using Models
 @{ 
     Layout = "~/_Layout.cshtml";
@@ -30,12 +18,12 @@
     var JSON = Json.Encode(tediousList);
 }
 
-<h3>Dashboard</h3>
-<div>
-    @JsonList.PrintList("requestlist", JSON, "Approved requests")
-</div>
+    <h3>Dashboard</h3>
+    <div>
+        @JsonList.PrintList("requestlist", JSON, "Approved requests")
+    </div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
 var fontSize = 1;
 function zoomIn() {
@@ -57,7 +45,7 @@ function reset(){
 	/* Button to reset the font size using JavaScript */
      document.getElementById("body").style.fontSize = "initial";
 
-} 
+}
 
 function invert(){
 	/* Javascript for inverting page colours */
@@ -68,7 +56,7 @@ function reinvert(){
 	/* Javascript for re-inverting page colours */
     document.getElementById("body").style.webkitFilter = "initial";
 }
-</script>
+    </script>
 
 
 </body>

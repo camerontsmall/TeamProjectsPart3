@@ -21,69 +21,55 @@ namespace Navigation{
 
 }
 
-namespace Department
-{
-    public class User
-    {
-        public static dynamic departmentID()
-        {
+namespace Department {
+
+    public class User {
+
+        public static dynamic departmentID() {
             int user_id = WebSecurity.CurrentUserId;
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT dept_id FROM user_department WHERE user_id=@0;", user_id);
-            if (list.Count() > 0)
-            {
+            if (list.Count() > 0) {
                 var first = list.ElementAt(0);
                 return first["dept_id"];
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
     }
 
-    public class Lecturer
-    {
-        public static dynamic lecturerByDept(string dept_id)
-        {
-            
+    public class Lecturer {
+
+        public static dynamic lecturerByDept(string dept_id) {
+
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM lecturer WHERE dept_id=@0;", dept_id);
-            if (list.Count() > 0)
-            {
+            if (list.Count() > 0) {
                 return list;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
 
-        public static string lecturerById(int id)
-        {
+        public static string lecturerById(int id) {
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM lecturer WHERE lecturer_id=@0;", id);
-            if (list.Count() > 0)
-            {
+            if (list.Count() > 0) {
                 var one = list.ElementAt(0)["full_name"];
                 return one;
-            }
-            else
-            {
+            } else {
                 return "";
             }
 
         }
     }
-    public class Department
-    {
-        public static Dictionary<string, string> AllDepts()
-        {
+    public class Dept {
+
+        public static Dictionary<string, string> AllDepts() {
             var depts = new Dictionary<string, string>();
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM dept");
-            foreach (var item in list)
-            {
+            foreach (var item in list) {
                 depts.Add(item["dept_id"], item["dept_name"]);
             }
             return depts;
@@ -91,10 +77,10 @@ namespace Department
     }
 }
 
-namespace Bookings{
-    
-    public class Request{
-        public static Dictionary<string,string> Statuses(){
+namespace Bookings {
+
+    public class Request {
+        public static Dictionary<string, string> Statuses() {
             var statuses = new Dictionary<string, string>();
             statuses["c"] = "Confirmed";
             statuses["r"] = "Rejected";
@@ -102,27 +88,23 @@ namespace Bookings{
             statuses["w"] = "Withdrawn";
             return statuses;
         }
-}
+    }
 
 
-    public class Module{
-        public static Dictionary<string,string> AllCodes(string dept_id = "CO")
-        {
+    public class Module {
+        public static Dictionary<string, string> AllCodes(string dept_id = "CO") {
             var modules = new Dictionary<string, string>();
             var DB = Database.Open("dbConnectionString");
-            var list = DB.Query("SELECT module_code, module_title FROM module WHERE dept_id LIKE '%@0%';", dept_id);
-            foreach(var item in list)
-            {
+            var list = DB.Query("SELECT * FROM module WHERE dept_id = @0;", dept_id);
+            foreach (var item in list) {
                 modules.Add(item["module_code"], item["module_title"]);
             }
             return modules;
         }
     }
 
-    public class Period
-    {
-        public static Dictionary<int,string> All()
-        {
+    public class Period {
+        public static Dictionary<int, string> All() {
             var periods = new Dictionary<int, string>();
             periods[1] = "09:00-10:00";
             periods[2] = "10:00-11:00";
@@ -147,11 +129,11 @@ namespace Bookings{
 /**
 Stuff the university has
 */
-namespace Facilities{
-    
-    public class Room{
-        public static Dictionary<string,string> Types(){
-            var types = new Dictionary<string,string>();
+namespace Facilities {
+
+    public class Room {
+        public static Dictionary<string, string> Types() {
+            var types = new Dictionary<string, string>();
             types["lt"] = "Lecture theatre, tiered";
             types["lf"] = "Lecture theatre, flat";
             types["lc"] = "Lecture theatre, circular";
@@ -162,22 +144,21 @@ namespace Facilities{
             return types;
         }
 
-        public static List<string> Codes(){
+        public static List<string> Codes() {
             List<string> codes = new List<string>();
 
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT room_code FROM room;");
-            foreach (var item in list)
-            {
+            foreach (var item in list) {
                 codes.Add(item["room_code"]);
             }
             return codes;
         }
     }
-    
-    public class Park{
-        public static Dictionary<char,string> Parks(){
-            var parks = new Dictionary<char,string>();
+
+    public class Park {
+        public static Dictionary<char, string> Parks() {
+            var parks = new Dictionary<char, string>();
             parks['w'] = "West";
             parks['c'] = "Central";
             parks['e'] = "East";
@@ -188,6 +169,18 @@ namespace Facilities{
             return parks;
         }
     }
+
+    public class FacilityTypes {
+        public static Dictionary<int, string> PossibleFacilities() {
+            var facilities = new Dictionary<int, string>();
+            var DB = Database.Open("dbConnectionString");
+            var list = DB.Query("SELECT * FROM facility");
+            foreach (var item in list) {
+                facilities.Add(item["facility_id"], item["name"]);
+            }
+            return facilities;
+        }
+    }
 }
 
 /**
@@ -196,18 +189,18 @@ Things that happen in life, man
 
 namespace Life {
 
-    public class Calendar {
+public class Calendar {
 
-        public static Dictionary<int, string> Days() {
-            var days = new Dictionary<int, string>();
-            days[1] = "Monday";
-            days[2] = "Tuesday";
-            days[3] = "Wednesday";
-            days[4] = "Thursday";
-            days[5] = "Friday";
-            days[6] = "Saturday";
-            days[7] = "Sunday";
-            return days;
-        }
+    public static Dictionary<int, string> Days() {
+        var days = new Dictionary<int, string>();
+        days[1] = "Monday";
+        days[2] = "Tuesday";
+        days[3] = "Wednesday";
+        days[4] = "Thursday";
+        days[5] = "Friday";
+        days[6] = "Saturday";
+        days[7] = "Sunday";
+        return days;
     }
+}
 }
