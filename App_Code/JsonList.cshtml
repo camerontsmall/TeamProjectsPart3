@@ -38,7 +38,7 @@
                     string number_id = id + "_page" + i;
                     int ii = i + 1;
                     string active = (i == 0) ? "active" : "";
-                    <li onclick="list_change_page('@id','@data_id',@i);" class="waves-effect @active @number_class" id="@number_id">@ii</li>
+                    <li onclick="list_change_page('@id','@data_id',@i);" class="waves-effect page-btn @active @number_class" id="@number_id">@ii</li>
                 }
                 <li onclick="list_change_page('@id','@data_id',1);" id='@next_id' class=''>
                     <a href="javascript:void(0);">

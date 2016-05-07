@@ -8,3 +8,61 @@
 
 <h4>Edit Request</h4>
 <p>ID = @Request.QueryString["id"]</p>
+<div id="requestForm">
+    <form method="post" action="./requests.cshtml">
+        <div class="row">
+            <div class="col s12 m12 l6" id="form_left">
+                <label for="titleinput">Module Code</label>
+                <select id="moduleinput" name="modulecode">
+                    @RequestForm.Modules()
+                </select>
+                <br />
+                <label for="dayinput">Day</label>
+                <select id="dayinput" name="day">
+                    @RequestForm.Days()
+                </select>
+                <br />
+                <label for="periodinput">Period(s)</label>
+                <select multiple id="periodinput" class="browser-default" name="period">
+                    @RequestForm.Periods()
+                </select>
+                <br />
+                <label for="weeksinnput" class="active">Week(s)</label>
+                <select multiple id="weeksinput" class="browser-default" name="weeks">
+                    @RequestForm.Weeks()
+                </select>
+            </div>
+            <div class="col s12 m12 l6" id="form_right">
+                <label for="roomtypeinput">Preferred room type</label>
+                <select id="roomtypeinput" name="roomtype">
+                    @RequestForm.RoomTypes()
+                </select>
+                <br />
+                <label for="parkinput">Preferred park</label>
+                <select id="parkinput" name="roompark" onchange="loadRooms()">
+                    @RequestForm.Parks()
+                </select>
+                <br />
+                <label for="roominput">Preferred room</label>
+                <input list="roomlist" name="roompref" id="roominput" class="active" />
+                <datalist id="roomlist" name="room">
+                    @RequestForm.Rooms()
+                </datalist>
+                <br />
+                <p>Required Facilities</p>
+                <div class="row">
+                    @RequestForm.RoomFacilities()
+                </div>
+                <br />
+                <label for="specialinput">Special requirements</label>
+                <textarea id="specialinput" name="special" class="materialize-textarea" length="200"></textarea>
+                <input type="text" disabled name="owner" style="display:none;" value="@WebSecurity.CurrentUserId" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12" id="form_buttons">
+                <input class="btn waves-effect" type="submit" value="Submit" />
+            </div>
+        </div>
+    </form>
+</div>

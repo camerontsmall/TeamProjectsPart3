@@ -91,6 +91,10 @@ select {
     height:240px;
 }
 
+.active{
+    color:white;
+}
+
 /* Media queries */
 @media (min-width: 992px) {
   #central {
