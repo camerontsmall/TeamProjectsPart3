@@ -115,13 +115,7 @@
         
     </div>
 </div>
-<div hidden>
-    <p id="jsondata">
-        @Html.Raw(jsondata)
-    </p>
-</div>
 <script>
-
     $("#semester").on("change", runOnChange());
     function runOnChange() {
         if ($("#semester").find(":selected").val() == 2) {
@@ -134,7 +128,7 @@
         }
     }
     function openExtraInfo(requestID) {
-        var table = JSON.parse(document.getElementById("jsondata").innerHTML);
+        var table = @Html.Raw(jsondata);
         var htmlstring = "";
         var codeexists = false;
         var nameexists = false;
