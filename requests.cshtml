@@ -48,10 +48,10 @@
 
     }
 
-    if (Request.QueryString["delete"] != null)
+    if (Request.QueryString["message"] == "deleted")
     {
         <div class="card-panel green">
-            Deleted request @Request.QueryString["delete"]
+            Deleted request @Request.QueryString["id"]
         </div>
     }
 

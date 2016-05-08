@@ -60,14 +60,16 @@
                     <tr>
 
                         @{
-                            dynamic first = data.GetValue(0);
+                            try {
+                                dynamic first = data.GetValue(0);
 
-                            foreach (KeyValuePair<string,object> element in first)
-                            {
-                                if (element.Key != "onclick" && element.Key != "action")
-                                {
+                                foreach (KeyValuePair<string, object> element in first) {
+                                    if (element.Key != "onclick" && element.Key != "action") {
                                     <th>@element.Key</th>
+                                    }
                                 }
+                            } catch (Exception e) {
+                                <td>No data</td>
                             }
                         }
                     </tr>

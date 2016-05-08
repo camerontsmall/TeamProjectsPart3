@@ -16,7 +16,7 @@
         DB.Execute(reqquery, deleteId);
         DB.Execute(roomquery, deleteId);
 
-        Response.Redirect("~/requests?message=delete=" + deleteId);
+        Response.Redirect("~/requests?message=deleted&id=" + deleteId);
         Response.End();
 
     }catch(Exception e){

@@ -56,8 +56,7 @@ namespace Models{
             d["Period(s)"] = period;
             d["Week(s)"] = week;
             string statustag = "<p class='blue-text'>" + status + "</p>";
-            switch (status)
-            {
+            switch (status.ToString().ToLower()){
                 case "c":
                     statustag = "<p class='green-text'>Confirmed</p>";
                     break;
@@ -72,8 +71,13 @@ namespace Models{
                     break;
             }
             d["Status"] = statustag;
-            d["action"] = "./editrequest?id=" + request_id;
-            d[" "] = "<i class='material-icons red-text' onclick=\"deleteRequest(" + request_id + ");\">delete</i>";
+            //d["action"] = "./editrequest?id=" + request_id;
+            if (status.ToString().ToLower()[0] == 'c') {
+                d["Edit"] = "<i class='material-icons grey-text disabled'>create</i>";
+            } else {
+                d["Edit"] = "<i class='material-icons green-text'>create</i>";
+            }
+            d["Delete"] = "<i class='material-icons red-text' onclick=\"deleteRequest(" + request_id + ");\">delete</i>";
             return d;
         }
 

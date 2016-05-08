@@ -1,2 +1,10 @@
 ﻿body {
 }
+
+td i{
+    cursor:pointer;
+}
+
+td .disabled{
+    cursor:default;
+}

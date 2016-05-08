@@ -41,6 +41,6 @@ function loadRooms(){
 function deleteRequest(id) {
 
     if (confirm("Delete request " + id + "?")) {
-        window.location.href = "./editrequest&delete=" + id;
+        window.location.href = "./editrequest?delete=" + id;
     }
 }
