@@ -2,11 +2,52 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Edit Room Request";
     Page.Path = "editroom";
+
+    var id = Request.QueryString["id"];
+    var DB = Database.Open("dbConnectionString");
+    var data = DB.QuerySingle("SELECT * FROM request_room WHERE room_request_id = @0", id);
+
+    Page.Parent2 = "Manage Requests";
+    Page.Parent2Path = "requests";
     Page.Parent = "Edit Request";
-    Page.ParentPath = "editrequest";
+    Page.ParentPath = "editrequest?id=" + data["request_id"];
+
+    var capacity = data["capacity"];
 }
 
 
 <div>
-    
+    <div class="col s12 m12 l6" id="form_left>
+        <label for="capacityinput">Capacity required</label>
+        <input id="capacityinput" type="number" name="capacity" value="@capacity" min="0" max="400" />
+        <br />
+        <label for="roomtypeinput">Preferred room type</label>
+        <select id="roomtypeinput" class="browser-default" name="roomtype">
+            @RequestForm.RoomTypes()
+        </select>
+        <br />
+        <label for="parkinput">Preferred park</label>
+        <select id="parkinput" name="roompark" class="browser-default">
+            @RequestForm.Parks()
+        </select>
+        <br />
+        <div onclick="loadRooms()" class="btn waves-effect">Update Room Suggestions</div>
+        <br />
+        <label for="roominput">Preferred room</label>
+        <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
+        <select id="roomlist" class="browser-default" name="roompref">
+            @RequestForm.Rooms()
+        </select>
+        <br />
+        <p>Required Facilities</p>
+        <div class="row">
+            @RequestForm.RoomFacilities()
+        </div>
+        <br />
+        <label for="specialinput">Special requirements</label>
+        <textarea id="specialinput" name="special" class="materialize-textarea" length="200"></textarea>
+        <input type="text" disabled name="owner" style="display:none;" value="@WebSecurity.CurrentUserId" />
+
+
+    </div>
 </div>

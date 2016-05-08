@@ -1,15 +1,12 @@
 ﻿<?php
-//ini_set("display_errors",1);
-//error_reporting(E_ALL);
 
-header('Content-Type: application/json');
+//header('Content-Type: application/json');
 require('../connect.php');
-
-
 
 $array = array();
 
 $part = $_GET['part'];
+$dept = $_GET['dept'];
 
 if(strlen($part) > 0){
 	$searching = true;
@@ -17,7 +14,7 @@ if(strlen($part) > 0){
 	$searching = false;
 	}
 
-$query = "SELECT * FROM module;";
+$query = "SELECT * FROM module WHERE dept_id='$dept';";
 	
 if($result = sqlsrv_query($conn, $query)){
     while($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){
@@ -32,5 +29,5 @@ if($result = sqlsrv_query($conn, $query)){
 	$array = array_values($array);
 	echo json_encode($array);
 }else{
-    return false;
+	echo "{}";
 }

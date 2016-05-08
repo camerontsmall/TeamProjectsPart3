@@ -37,10 +37,10 @@ function loadRooms(){
     });
 }
 
-function loadModules() {
+function loadModules(dept_id) {
     var part = document.getElementById('partinput').value;
 
-    var api_url = "./api/modules.php?part=" + part;
+    var api_url = "./api/modules.php?part=" + part + "&dept=" + dept_id;
     $.ajax({
         url: api_url,
         method: 'GET',
@@ -51,7 +51,7 @@ function loadModules() {
             list.innerHTML = "<option value=''>--</option>";
             for (n in data) {
                 row = data[n];
-                list.innerHTML += '<option value="' + row['module_code'] + '">' + row['module_code'] + '-' + row['module_title'] + '</option>';
+                list.innerHTML += '<option value="' + row['module_code'] + '">' + row['module_code'] + ' - ' + row['module_title'] + '</option>';
             }
         }
     });
@@ -62,5 +62,13 @@ function deleteRequest(id) {
 
     if (confirm("Delete request " + id + "?")) {
         window.location.href = "./editrequest?delete=" + id;
+    }
+}
+
+
+function withdrawRequest(id) {
+
+    if (confirm("Withdraw request " + id + "?")) {
+        window.location.href = "./editrequest?withdraw=" + id;
     }
 }

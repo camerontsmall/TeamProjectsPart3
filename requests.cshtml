@@ -52,6 +52,10 @@
         <div class="card-panel green white-text">
             Deleted request @Request.QueryString["id"]
         </div>
+    }else if (Request.QueryString["message"] == "withdrawn") {
+        <div class="card-panel green white-text">
+            Withdrew request @Request.QueryString["id"]
+        </div>
     }
 
     var Data = DB.Query("SELECT * FROM request ORDER BY last_changed DESC");
@@ -69,7 +73,7 @@
     int newday = 1;
     string newperiods = "";
     string newweek = "";
-    int newcapacity = 0;
+    int newcapacity = 50;
     string newtype = "";
     string newpark = "";
     string newroom = "";
@@ -79,6 +83,11 @@
         var past = DB.QuerySingle("SELECT * FROM pastsubmissions WHERE RequestNo = @0", past_id);
         newmodule_code = past["ModuleCode"];
         newday = past["Day"];
+        newperiods = past["Period"].ToString();
+        int startperiod = past["Period"];
+        for (int i = 1; i < past["Length"]; i++) {
+            newperiods += ("," + (startperiod + i));
+        }
         <div class="card-panel blue">
             Copying previous request @past_id
         </div>
@@ -91,23 +100,24 @@
         <div class="row">
             <div class="col s12 m12 l6" id="form_left">
                 <label for="partinput">Degree Part</label>
-                <select id="partinput" class="browser-default" name="part" value="@newmodule_code">
+                <select id="partinput" class="browser-default" name="part" value="@newmodule_code" onchange="loadModules('@Department.User.departmentID()')">
                     @RequestForm.Parts()
                 </select>
                 <br />
                 <label for="moduleinput">Module Code</label>
                 <select id="moduleinput" class="browser-default" name="modulecode" value="@newmodule_code">
-                    @RequestForm.Modules()
+                    @RequestForm.Modules(Department.User.departmentID(), newmodule_code)
                 </select>
                 <br />
                 <label for="dayinput">Day</label>
                 <select id="dayinput" class="browser-default" name="day" value="@newday">
-                    @RequestForm.Days()
+                    @RequestForm.Days(newday)
                 </select>
                 <br />
                 <label for="periodinput">Period(s)</label>
                 <select multiple id="periodinput" class="browser-default" name="period">
-                    @RequestForm.Periods()
+                    <!-- @newperiods -->
+                    @RequestForm.Periods(newperiods)
                 </select>
                 <br />
                 <label for="weeksinnput" class="active">Week(s)</label>
@@ -117,7 +127,7 @@
             </div>
             <div class="col s12 m12 l6" id="form_right">
                 <label for="capacityinput">Capacity required</label>
-                <input id="capacityinput" type="number" name="capacity" min="0" max="400"/>
+                <input id="capacityinput" type="number" name="capacity" value="@newcapacity" min="0" max="400"/>
                 <br />
                 <label for="roomtypeinput">Preferred room type</label>
                 <select id="roomtypeinput" class="browser-default" name="roomtype" >
