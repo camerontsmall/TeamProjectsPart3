@@ -116,7 +116,7 @@ namespace Models{
             d["Day"] = Life.Calendar.Days()[(int)row["Day"]];
             d["Period"] = row["Period"].ToString();
             try {
-                d["Park"] = Facilities.Park.Parks()[(char)(row["Park"].ToString()[0])];
+                d["Park"] = Facilities.Park.Parks()[(char)(row["Park"].ToString().ToLower()[0])];
             }catch(Exception e) {
                 d["Park"] = (string)row["Park"];
             }

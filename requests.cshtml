@@ -84,7 +84,12 @@
     <form method="post" action="./requests.cshtml">
         <div class="row">
             <div class="col s12 m12 l6" id="form_left">
-                <label for="titleinput">Module Code</label>
+                <label for="partinput">Degree Part</label>
+                <select id="partinput" class="browser-default" name="part" value="@newmodule_code">
+                    @RequestForm.Parts()
+                </select>
+                <br />
+                <label for="moduleinput">Module Code</label>
                 <select id="moduleinput" class="browser-default" name="modulecode" value="@newmodule_code">
                     @RequestForm.Modules()
                 </select>
@@ -134,11 +139,18 @@
                 <label for="specialinput">Special requirements</label>
                 <textarea id="specialinput" name="special" class="materialize-textarea" length="200"></textarea>
                 <input type="text" disabled name="owner" style="display:none;" value="@WebSecurity.CurrentUserId"/>
+
+                
             </div>
         </div>
         <div class="row">
-            <div class="col s12" id="form_buttons">
+            <div class="col s12 l6">
+                <input type="checkbox" id="addrooms" name="addrooms" />
+                <label for="addrooms">Add additional rooms</label>
+            </div>
+            <div class="col s12 l6" id="form_buttons">
                 <input class="btn waves-effect" type="submit" value="Submit" />
+                <div onclick="window.location.reload()" class="btn waves-effect red">Clear</div>
             </div>
         </div>
     </form>

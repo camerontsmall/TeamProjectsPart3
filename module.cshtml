@@ -84,9 +84,8 @@
         code = Request.Form["code"];
         title = Request.Form["title"];
 
-        var db = Database.Open("dbConnectionString");
         var insertCommand = "INSERT INTO module (module_code, module_title, dept_id) VALUES (@0, @1, 'CO')";
-        db.Execute(insertCommand, code, title);
+        DB.Execute(insertCommand, code, title);
         Response.Redirect("~/module");
     }
 
@@ -113,7 +112,7 @@
 
             <select class="browser-default" name="module" id="module-details" value=" ">
                 
-               @RequestForm.Modules(Department.User.departmentID())
+               @RequestForm.Modules((string)Department.User.departmentID())
             </select>
 
         </div>
@@ -207,7 +206,7 @@
             <!-- <input id="lecturer_details" name="lecturer_details" type="text" value="New Module Title"> -->
             <select class="browser-default" name="lecturer_details" id="lecturer_details" value=" ">
                 
-               @RequestForm.Lecturer(Department.User.departmentID())
+               @RequestForm.Lecturer((string)Department.User.departmentID())
                
             </select>
 
@@ -236,11 +235,10 @@
         //Department.User.departmentID()
 
 
-        var db = Database.Open("dbConnectionString");
         var addLecturer = "INSERT INTO lecturer_module (module_code, lecturer_id) VALUES (@0, @1)";
        
         
-        db.Execute(addLecturer, original_code_lecturer, lecturer_info);
+        DB.Execute(addLecturer, original_code_lecturer, lecturer_info);
         Response.Redirect("~/module");
     }
 
