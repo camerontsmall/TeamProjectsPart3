@@ -1,28 +1,36 @@
 @using Facilities
 @using Department
 @using Bookings
-
+@using System.Linq
 
 @helper Periods(string periodval = ""){
-    foreach(var period in Bookings.Period.All()){
-        var num = period.Key;
-        var val = period.Value;
-        <option value="@num">@num - @val</option>
+string[] periods = periodval.Split(',');
+foreach(var period in Bookings.Period.All()){
+    string num = period.Key.ToString();
+    string val = period.Value;
+
+    string selected = ((Array.IndexOf(periods,num)) > -1) ? "selected" : "";
+        <option @selected value="@num">@num - @val</option>
     }
+
 }
 
 @helper Days(int val = 1) {
-    foreach (var day in Life.Calendar.Days()) {
-        var num = day.Key;
-        var name = day.Value;
-        <option value="@num">@name</option>
+foreach (var day in Life.Calendar.Days()) {
+    var num = day.Key;
+    var name = day.Value;
+    string selected = (num == val) ? "selected" : "";
+        <option @selected value="@num">@name</option>
     }
 
 }
 
-@helper Weeks(string weeks = ""){
-    for(int i=1; i <= 12; i++){
-        <option selected    value="@i">Week @i</option>
+@helper Weeks(string weekstr = "1,2,3,4,5,6,7,8,9,10,11,12"){
+    string[] weeks = weekstr.Split(',');
+for (int i=1; i <= 12; i++){
+        var istr = i.ToString();
+    string selected = ((Array.IndexOf(weeks, istr)) > -1) ? "selected" : "";
+        <option @selected value="@i">Week @i</option>
     }
 }
 
@@ -55,13 +63,14 @@
 
 }
 
-@helper Modules(string dept_id = "CO") {
+@helper Modules(string dept_id = "CO", string value = "") {
     <option value="">--</option>
-    foreach (var module in Bookings.Module.AllCodes(dept_id))
-    {
-        string code = @module.Key;
-        string nice = @module.Value;
-            <option value="@code">@code - @nice</option>
+foreach (var module in Bookings.Module.AllCodes(dept_id))
+{
+    string code = @module.Key;
+    string nice = @module.Value;
+    string selected = (value == code) ? "selected" : "";
+            <option @selected value="@code">@code - @nice</option>
     }
 }
 

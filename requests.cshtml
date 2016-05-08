@@ -30,12 +30,12 @@
                 DB.Execute(insert_statement, module, day, period, week, WebSecurity.CurrentUserId, semester, System.DateTime.Now);
                 DB.Execute(room_statement, roompref, roompark, capacity, roomtype, special, facility);
 
-            <div class="card-panel green">
+            <div class="card-panel green white-text">
                Succesfully added request for @module
                 @facility
             </div>
             } catch (Exception e) {
-            <div class="card-panel red">
+            <div class="card-panel red white-text">
                 Add request failed: @e.ToString()
             </div>
             }
@@ -50,7 +50,7 @@
 
     if (Request.QueryString["message"] == "deleted")
     {
-        <div class="card-panel green">
+        <div class="card-panel green white-text">
             Deleted request @Request.QueryString["id"]
         </div>
     }

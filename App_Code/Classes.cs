@@ -56,17 +56,17 @@ namespace Models{
             d["Period(s)"] = period;
             d["Week(s)"] = week;
             string statustag = "<p class='blue-text'>" + status + "</p>";
-            switch (status.ToString().ToLower()){
-                case "c":
+            switch (status.ToString().ToLower()[0]){
+                case 'c':
                     statustag = "<p class='green-text'>Confirmed</p>";
                     break;
-                case "p":
+                case 'p':
                     statustag = "<p class='orange-text'>Pending</p>";
                     break;
-                case "r":
+                case 'r':
                     statustag = "<p class='red-text'>Rejected</p>";
                     break;
-                case "w":
+                case 'w':
                     statustag = "<p class='brown-text'>Withdrawn</p>";
                     break;
             }

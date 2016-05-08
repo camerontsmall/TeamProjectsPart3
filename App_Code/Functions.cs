@@ -169,9 +169,8 @@ namespace Facilities {
             parks['c'] = "Central";
             parks['e'] = "East";
             parks['h'] = "Holywell";
-            /*
-            parks['v'] = "Village";
-            parks['l'] = "London Campus"; */
+            //parks['v'] = "Village";
+            parks['l'] = "London Campus"; 
             return parks;
         }
     }
