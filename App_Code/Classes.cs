@@ -75,7 +75,7 @@ namespace Models{
             if (status.ToString().ToLower()[0] == 'c') {
                 d["Edit"] = "<i class='material-icons grey-text disabled'>create</i>";
             } else {
-                d["Edit"] = "<i class='material-icons green-text'>create</i>";
+                d["Edit"] = "<a href='./editrequest?id=" + request_id + "'><i class='material-icons green-text'>create</i></a>";
             }
             d["Delete"] = "<i class='material-icons red-text' onclick=\"deleteRequest(" + request_id + ");\">delete</i>";
             return d;
@@ -139,6 +139,25 @@ namespace Models{
             d["Preferred Room"] = (string)row["Preference"];
             int id = (int)row["RequestNo"];
             d[" "] = "<a href='./requests?copy=" + id + "'><i class='material-icons green-text'>content_copy</i></a>";
+            return d;
+        }
+    }
+
+    public class Room {
+        public static Dictionary<string,string> ToNiceList(DynamicRecord row) {
+            var d = new Dictionary<string, string>();
+            d["Room Code"] = (string)row["room_code"];
+            try {
+                d["Park"] = Facilities.Park.Parks()[(char)(row["park"].ToString().ToLower()[0])];
+            } catch (Exception e) {
+                d["Park"] = (string)row["park"];
+            }
+            d["Capacity"] = row["capacity"].ToString();
+            try {
+                d["Type"] = Facilities.Room.Types()[(string)row["type"]];
+            }catch(Exception e) {
+                d["Type"] = (string)row["type"];
+            }
             return d;
         }
     }
