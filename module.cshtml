@@ -4,6 +4,7 @@
     Page.Path = "module";
     var DB = Database.Open("dbConnectionString");
     var Data = DB.Query("SELECT * FROM module");
+    DB.Close();
 
     List<Dictionary<string, string>> modules = new List<Dictionary<string, string>>();
     foreach(dynamic item in Data)
@@ -37,11 +38,7 @@
     </script>
     
     
-<!--MODULE TABLE-->
 
-<div>
-    @JsonList.PrintList("requestlist", JSON, "Modules")
-</div>
 
 <br />
 
@@ -80,16 +77,16 @@
     var title = "";
 
     if(IsPost && (Request.QueryString["add"]=="true")){
-        
+
         code = Request.Form["code"];
         title = Request.Form["title"];
-
         var insertCommand = "INSERT INTO module (module_code, module_title, dept_id) VALUES (@0, @1, 'CO')";
         DB.Execute(insertCommand, code, title);
+        DB.Close();
         Response.Redirect("~/module");
     }
 
-    
+
 }
 
 <!--EDIT MODULE-->
@@ -246,7 +243,11 @@
 }
 
 
+<!--MODULE TABLE-->
 
+<div>
+    @JsonList.PrintList("requestlist", JSON, "Modules")
+</div>
 
 
 <script>

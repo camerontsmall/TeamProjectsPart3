@@ -48,6 +48,13 @@
 
     }
 
+    if (Request.QueryString["delete"] != null)
+    {
+        <div class="card-panel green">
+            Deleted request @Request.QueryString["delete"]
+        </div>
+    }
+
     var Data = DB.Query("SELECT * FROM request ORDER BY last_changed DESC");
 
     var ldata = Models.Request.convertTo(Data);

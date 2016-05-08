@@ -52,16 +52,28 @@ namespace Models{
         public Dictionary<string,string> ToNiceList() {
             var d = new Dictionary<string, string>();
             d["Module Code"] = module_code;
-            try{
-                d["Status"] = Bookings.Request.Statuses()[status];
-            }catch(Exception e) {
-                Console.Write(e);
-            }
             d["Day"] = Life.Calendar.Days()[day];
             d["Period(s)"] = period;
             d["Week(s)"] = week;
+            string statustag = "<p class='blue-text'>" + status + "</p>";
+            switch (status)
+            {
+                case "c":
+                    statustag = "<p class='green-text'>Confirmed</p>";
+                    break;
+                case "p":
+                    statustag = "<p class='orange-text'>Pending</p>";
+                    break;
+                case "r":
+                    statustag = "<p class='red-text'>Rejected</p>";
+                    break;
+                case "w":
+                    statustag = "<p class='brown-text'>Withdrawn</p>";
+                    break;
+            }
+            d["Status"] = statustag;
             d["action"] = "./editrequest?id=" + request_id;
-            d[" "] = "<i class='material-icons red-text'>delete</i>";
+            d[" "] = "<i class='material-icons red-text' onclick=\"deleteRequest(" + request_id + ");\">delete</i>";
             return d;
         }
 

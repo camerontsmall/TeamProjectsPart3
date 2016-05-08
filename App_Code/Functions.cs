@@ -29,6 +29,7 @@ namespace Department {
             int user_id = WebSecurity.CurrentUserId;
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT dept_id FROM user_department WHERE user_id=@0;", user_id);
+            DB.Close();
             if (list.Count() > 0) {
                 var first = list.ElementAt(0);
                 return first["dept_id"];
@@ -44,6 +45,7 @@ namespace Department {
 
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM lecturer WHERE dept_id=@0;", dept_id);
+            DB.Close();
             if (list.Count() > 0) {
                 return list;
             } else {
@@ -54,6 +56,7 @@ namespace Department {
         public static string lecturerById(int id) {
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM lecturer WHERE lecturer_id=@0;", id);
+            DB.Close();
             if (list.Count() > 0) {
                 var one = list.ElementAt(0)["full_name"];
                 return one;
@@ -69,6 +72,7 @@ namespace Department {
             var depts = new Dictionary<string, string>();
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM dept");
+            DB.Close();
             foreach (var item in list) {
                 depts.Add(item["dept_id"], item["dept_name"]);
             }
@@ -96,6 +100,7 @@ namespace Bookings {
             var modules = new Dictionary<string, string>();
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM module WHERE dept_id = @0;", dept_id);
+            DB.Close();
             foreach (var item in list) {
                 modules.Add(item["module_code"], item["module_title"]);
             }
@@ -149,6 +154,7 @@ namespace Facilities {
 
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT room_code FROM room;");
+            DB.Close();
             foreach (var item in list) {
                 codes.Add(item["room_code"]);
             }
@@ -175,6 +181,7 @@ namespace Facilities {
             var facilities = new Dictionary<int, string>();
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM facility");
+            DB.Close();
             foreach (var item in list) {
                 facilities.Add(item["facility_id"], item["name"]);
             }

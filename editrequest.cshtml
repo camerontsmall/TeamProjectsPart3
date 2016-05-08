@@ -4,6 +4,26 @@
     Page.Path = "editrequest";
     Page.Parent = "Manage Requests";
     Page.ParentPath = "requests";
+    var DB = Database.Open("dbConnectionString");
+}
+@if(Request.QueryString["delete"] != null){
+    string deleteId = Request.QueryString["delete"];
+
+    string reqquery = "DELETE FROM request WHERE request_id=@0";
+    string roomquery = "DELETE FROM request_room WHERE request_id=@0";
+
+    try {
+        DB.Execute(reqquery, deleteId);
+        DB.Execute(roomquery, deleteId);
+
+        Response.Redirect("~/requests?message=delete=" + deleteId);
+        Response.End();
+
+    }catch(Exception e){
+        <div class="card-panel red">Error: @e.Message</div>
+    }
+
+
 }
 
 <h4>Edit Request @Request.QueryString["id"]</h4>
@@ -58,7 +78,6 @@
             </div>
             <div class="col s12 m12 l6" id="form-right">
                 @{ 
-                    var DB = Database.Open("dbConnectionString");
                     var data = DB.Query("SELECT * FROM request_room WHERE request_id = @0", Request.QueryString["id"]);
 
                     List<Dictionary<string, string>> items = new List<Dictionary<string, string>>();
