@@ -75,11 +75,11 @@ namespace Models{
             if (status.ToString().ToLower()[0] == 'c') {
                 d["Edit"] = "<i class='material-icons grey-text disabled'>lock</i>";
             } else if (status.ToString().ToLower()[0] == 'r') {
-                d["Edit"] = "<a href='./editrequest?id=" + request_id + "'><i class='material-icons orange-text'>refresh</i></a>";
+                d["Edit"] = "<a href='./editrequest?id=" + request_id + "'><i class='material-icons green-text'>refresh</i></a>";
             } else {
                 d["Edit"] = "<a href='./editrequest?id=" + request_id + "'><i class='material-icons green-text'>create</i></a>";
             }
-            if (status.ToString().ToLower()[0] == 'w') {
+            if (status.ToString().ToLower()[0] == 'w' || status.ToString().ToLower()[0] == 'r') {
                 d["Withdraw/Delete"] = "<i class='material-icons red-text' label='Withdraw' onclick=\"deleteRequest(" + request_id + ");\">delete</i>";
             } else {
                 d["Withdraw/Delete"] = "<i class='material-icons orange-text' label='Delete' onclick=\"withdrawRequest(" + request_id + ");\">undo</i>";

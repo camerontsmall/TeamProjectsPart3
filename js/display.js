@@ -28,6 +28,7 @@ function loadRooms(){
         method: 'GET',
         contentType : 'application/json',
         success: function (data) {
+            data = JSON.parse(data);
             var list = document.getElementById('roomlist');
             list.innerHTML = "<option value=''>No preference</option>";
             for (n in data) { 
