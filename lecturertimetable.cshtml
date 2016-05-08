@@ -1,0 +1,186 @@
+﻿@{
+    //Layout = "~/_Layout.cshtml";
+    Page.Title = "Lecturer Timetable";
+    Page.Path = "lecturertimetable";
+    string lecturer = "";
+    if (Request.Form["lecturer_fullname"] != null) {
+        lecturer = Request.Form["lecturer_fullname"];
+    } else {
+        lecturer = "Daniel Reidenbach";
+    }
+    var DB = Database.Open("dbConnectionString");
+    
+    string sqlBaseString = "SELECT request.status, request.day, request.period, request.week, request.semester, request_room.room_code, module.module_code, module.module_title, lecturer.full_name, request.request_id";
+    sqlBaseString = sqlBaseString + " FROM request INNER JOIN request_room ON request.request_id = request_room.request_id INNER JOIN module ON request.module_code = module.module_code";
+    sqlBaseString = sqlBaseString + " INNER JOIN lecturer_module ON module.module_code = lecturer_module.module_code INNER JOIN lecturer ON lecturer_module.lecturer_id = lecturer.lecturer_id";
+    
+    string sqlString = sqlBaseString + " WHERE semester LIKE '%1%' AND week LIKE '%1%' AND lecturer.full_name = '" + lecturer + "'";
+    var data = DB.Query(sqlString);
+    
+    int semester;
+    int week;
+
+    if (IsPost) {
+        semester = Int32.Parse(Request.Form["semester"]);
+        week = Int32.Parse(Request.Form["week"]);
+
+        sqlString = sqlBaseString + " WHERE semester LIKE '%" + semester + "%' AND week LIKE '%" + week + "%' AND lecturer.full_name = '" + lecturer + "'";
+        data = DB.Query(sqlString);
+    } else {
+        semester = 1;
+        week = 1;
+    }
+    var jsondata = Json.Encode(data);
+}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@Page.Title</title>
+    <script src="~/Scripts/jquery-1.8.2.js"></script>
+    <script src="~/js/materialize.js"></script>
+    <script src="~/js/JsonList.js"></script>
+    <script src="~/js/display.js"></script>
+    <link rel="stylesheet" href="~/css/materialize.css" />
+    <link rel="stylesheet" href="~/css/styles_list.css" />
+    <link rel="stylesheet" href="~/css/styles_main.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<h3>Timetable</h3>
+<div class="tablecontainer" style="padding:1px 1px 1px 1px;">
+    <table class="centered">
+        <thead>
+            <tr>
+                <th style='border:solid 1px white;'></th>
+                @{
+                    foreach (var period in Bookings.Period.All()) {
+                        WriteLiteral("<th style='border-bottom:solid lightgrey 3px;'>" + period.Value + "</th>");
+                    }
+                }
+            </tr>
+        </thead>
+        @{
+            int counter = 0;
+            foreach (var day in Life.Calendar.Days()) {
+                WriteLiteral("<tr>" + "<th style='border-right:solid lightgrey 3px;'>" + day.Value + "</th>");
+                foreach (var period in Bookings.Period.All()) {
+                    WriteLiteral("<td style='border:solid 1px #d0d0d0;'>");
+                    counter++;
+                    var temp = from d in data
+                               where d.period.Contains(counter.ToString()) 
+                               && d.day == day.Key
+                               select d;
+                    foreach (var r in temp) {
+                        char tChar = r.status[0];
+                        switch (tChar) {
+                            case 'c': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:#3ADF00;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'r': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:red;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'p': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:orange;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            default: break;
+                        }
+                    }
+                    WriteLiteral("</td>");
+                }
+                WriteLiteral("</tr>");
+                counter = 0;
+            }
+        }
+    </table>
+</div>
+<form id="dateSelect" method="post" action="./lecturertimetable.cshtml">
+    <div class="row">
+        <div class="col s12 m12 l6">
+            <div>
+                <label>Semester:</label>
+                <select id="semester" name="semester" class="browser-default">
+                    @{
+                        for (int i = 1; i < 3; i++) {
+                            if (i == semester) {
+                                WriteLiteral("<option value='" + i + "' selected>" + i + "</option>");
+                            } else {
+                                WriteLiteral("<option value='" + i + "'>" + i + "</option>");
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div>
+                <label for="submit"></label>
+                <div>
+                    <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Apply Filter">
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m12 l6">
+            <label>Week:</label>
+            <select id="week" name="week" class="browser-default">
+                @{
+                    for (int i = 1; i < 17; i++) {
+                        if (i == week) {
+                            if (i == 16) {
+                                WriteLiteral("<option  id='last' value='" + i + "' selected>" + i + "</option>");
+                            } else {
+                                WriteLiteral("<option value='" + i + "' selected>" + i + "</option>");
+                            }
+                        } else if (i == 16) {
+                            WriteLiteral("<option id='last' value='" + i + "'>" + i + "</option>");
+                        } else {
+                            WriteLiteral("<option value='" + i + "'>" + i + "</option>");
+                        }
+                    }
+                }
+            </select>
+            <div>
+                <label>Logged in as:</label>
+                <input disabled  value="@lecturer" id="lecturer_fullname" name="lecturer_fullname" type="text">
+            </div>
+        </div>
+    </div>
+</form>
+<div id="modalextrainfo" class="modal">
+    <div id="extrainfo" class="modal-content">
+        
+    </div>
+</div>
+<script>
+    $("#semester").on("change", runOnChange());
+    function runOnChange() {
+        if ($("#semester").find(":selected").val() == 2) {
+            $("#last").prop("disabled", false);
+        } else {
+            if ($("#week").find(":selected").val() == 16) {
+                $("#week option[value=15]").attr("selected","selected");
+            }
+            $("#last").prop("disabled", true);
+        }
+    }
+    function openExtraInfo(requestID) {
+        var table = @Html.Raw(jsondata);
+        var htmlstring = "";
+        var codeexists = false;
+        var nameexists = false;
+        var roomentered = false;
+
+        for (var i = 0; i < table.length; i++) {
+            if (requestID == table[i]["request_id"]) {
+                if (codeexists == false) {
+                    htmlstring = htmlstring + "Module Code: " + table[i]["module_code"] + "<br>";
+                    codeexists = true;
+                }
+                if (nameexists == false) {
+                    htmlstring = htmlstring + "Module Name: " + table[i]["module_title"] + "<br>";
+                    nameexists = true;
+                }
+                if (roomentered) {
+                    htmlstring = htmlstring + ", " + table[i]["room_code"];
+                } else {
+                    htmlstring = htmlstring + "Room: " + table[i]["room_code"];
+                    roomentered = true;
+                }
+            }
+        }
+        document.getElementById("extrainfo").innerHTML = htmlstring;
+        $('#modalextrainfo').openModal();
+    }
+</script>
+@{
+    DB.Close();
+}
