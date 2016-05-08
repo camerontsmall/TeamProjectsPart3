@@ -28,7 +28,6 @@ function loadRooms(){
         method: 'GET',
         contentType : 'application/json',
         success: function (data) {
-            data = JSON.parse(data);
             var list = document.getElementById('roomlist');
             list.innerHTML = "<option value=''>No preference</option>";
             for (n in data) { 
@@ -37,6 +36,27 @@ function loadRooms(){
         }
     });
 }
+
+function loadModules() {
+    var part = document.getElementById('partinput').value;
+
+    var api_url = "./api/modules.php?part=" + part;
+    $.ajax({
+        url: api_url,
+        method: 'GET',
+        contentType: 'application/json',
+        success: function (data) {
+            data = JSON.parse(data);
+            var list = document.getElementById('moduleinput');
+            list.innerHTML = "<option value=''>--</option>";
+            for (n in data) {
+                row = data[n];
+                list.innerHTML += '<option value="' + row['module_code'] + '">' + row['module_code'] + '-' + row['module_title'] + '</option>';
+            }
+        }
+    });
+}
+
 
 function deleteRequest(id) {
 
