@@ -53,9 +53,9 @@
                     foreach (var r in temp) {
                         char tChar = r.status[0];
                         switch (tChar) {
-                            case 'c': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' class='card-panel' style='background-color:#3ADF00;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
-                            case 'r': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' class='card-panel' style='background-color:red;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
-                            case 'p': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' class='card-panel' style='background-color:orange;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'c': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:#3ADF00;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'r': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:red;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'p': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:orange;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
                             default: break;
                         }
                     }
