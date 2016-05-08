@@ -49,7 +49,10 @@
     <table class="centered">
         <thead>
             <tr>
-                <th style='border:solid 1px white;'></th>
+                <th style='border:solid 1px white;'>
+                    Sem: @semester <br>
+                    Week: @week
+                </th>
                 @{
                     foreach (var period in Bookings.Period.All()) {
                         WriteLiteral("<th style='border-bottom:solid lightgrey 3px;'>" + period.Value + "</th>");
@@ -71,9 +74,9 @@
                     foreach (var r in temp) {
                         char tChar = r.status[0];
                         switch (tChar) {
-                            case 'c': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:#3ADF00;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
-                            case 'r': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:red;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
-                            case 'p': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' style='background-color:orange;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'c': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' class='card-panel' style='background-color:#3ADF00;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'r': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' class='card-panel' style='background-color:red;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
+                            case 'p': WriteLiteral("<div onclick='openExtraInfo(" + r.request_id + ")' class='card-panel' style='background-color:orange;border:solid lightgrey 1px;cursor:pointer;'>" + r.module_code + " " + r.room_code + "</div>"); break;
                             default: break;
                         }
                     }
@@ -103,7 +106,6 @@
                 </select>
             </div>
             <div>
-                <label for="submit"></label>
                 <div>
                     <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Apply Filter">
                 </div>
