@@ -24,52 +24,6 @@
 }
 
 <h3>Timetable</h3>
-<form id="dateSelect" method="post" action="./timetable.cshtml">
-    <div class="row">
-        <div class="col s12 m12 l6">
-            <div>
-                <label>Semester:</label>
-                <select id="semester" name="semester">
-                    @{
-                        for (int i = 1; i < 3; i++) {
-                            if (i == semester) {
-                                WriteLiteral("<option value='" + i + "' selected>" + i + "</option>");
-                            } else {
-                                WriteLiteral("<option value='" + i + "'>" + i + "</option>");
-                            }
-                        }
-                    }
-                </select>
-            </div>
-            <div>
-                <label for="submit"></label>
-                <div>
-                    <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Apply Filter">
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m12 l6">
-            <label>Week:</label>
-            <select id="week" name="week" class="browser-default">
-                @{
-                    for (int i = 1; i < 17; i++) {
-                        if (i == week) {
-                            if (i == 16) {
-                                WriteLiteral("<option  id='last' value='" + i + "' selected>" + i + "</option>");
-                            } else {
-                                WriteLiteral("<option value='" + i + "' selected>" + i + "</option>");
-                            }
-                        } else if (i == 16) {
-                            WriteLiteral("<option id='last' value='" + i + "'>" + i + "</option>");
-                        } else {
-                            WriteLiteral("<option value='" + i + "'>" + i + "</option>");
-                        }
-                    }
-                }
-            </select>
-        </div>
-    </div>
-</form>
 <div class="tablecontainer" style="padding:1px 1px 1px 1px;">
     <table class="centered">
         <thead>
@@ -110,6 +64,52 @@
         }
     </table>
 </div>
+<form id="dateSelect" method="post" action="./timetable.cshtml">
+    <div class="row">
+        <div class="col s12 m12 l6">
+            <div>
+                <label>Semester:</label>
+                <select id="semester" name="semester" class="browser-default">
+                    @{
+                        for (int i = 1; i < 3; i++) {
+                            if (i == semester) {
+                                WriteLiteral("<option value='" + i + "' selected>" + i + "</option>");
+                            } else {
+                                WriteLiteral("<option value='" + i + "'>" + i + "</option>");
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div>
+                <label for="submit"></label>
+                <div>
+                    <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Apply Filter">
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m12 l6">
+            <label>Week:</label>
+            <select id="week" name="week" class="browser-default">
+                @{
+                    for (int i = 1; i < 17; i++) {
+                        if (i == week) {
+                            if (i == 16) {
+                                WriteLiteral("<option  id='last' value='" + i + "' selected>" + i + "</option>");
+                            } else {
+                                WriteLiteral("<option value='" + i + "' selected>" + i + "</option>");
+                            }
+                        } else if (i == 16) {
+                            WriteLiteral("<option id='last' value='" + i + "'>" + i + "</option>");
+                        } else {
+                            WriteLiteral("<option value='" + i + "'>" + i + "</option>");
+                        }
+                    }
+                }
+            </select>
+        </div>
+    </div>
+</form>
 <div id="modal1" class="modal">
     <div id="extrainfo" class="modal-content">
         
