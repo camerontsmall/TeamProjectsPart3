@@ -45,7 +45,7 @@ select {
   color: inherit; }
 
 .longList {
-  min-height: 583px; }
+  /* min-height: 583px;  */}
 
 #mobile_nav{
     left:0;
