@@ -25,7 +25,7 @@ namespace Department {
 
     public class User {
 
-        public static dynamic departmentID() {
+        public static string departmentID() {
             int user_id = WebSecurity.CurrentUserId;
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT dept_id FROM user_department WHERE user_id=@0;", user_id);

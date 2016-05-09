@@ -3,9 +3,10 @@
     Page.Title = "Timetable";
     Page.Path = "timetable";
     var DB = Database.Open("dbConnectionString");
-    string sqlBaseString = "SELECT module.module_code, module.module_title, request.request_id, request.day, request.status, request.period, request.semester, request.week, request_room.room_code FROM request INNER JOIN request_room ON request.request_id = request_room.request_id INNER JOIN module ON request.module_code = module.module_code";
+    string sqlBaseString = "SELECT module.module_code, module.module_title, request.request_id, request.day, request.status, request.period, request.semester, request.week, request_room.room_code, request.dept_id FROM request INNER JOIN request_room ON request.request_id = request_room.request_id INNER JOIN module ON request.module_code = module.module_code";
     string sqlString = sqlBaseString + " WHERE semester LIKE '%1%' AND week LIKE '%1%'";
     var data = DB.Query(sqlString);
+    string user = Department.User.departmentID();
     
     int semester;
     int week;
@@ -145,6 +146,7 @@
         var htmlstring = "";
         var codeexists = false;
         var nameexists = false;
+        var deptexists = false;
         var roomentered = false;
 
         for (var i = 0; i < table.length; i++) {
@@ -156,6 +158,10 @@
                 if (nameexists == false) {
                     htmlstring = htmlstring + "Module Name: " + table[i]["module_title"] + "<br>";
                     nameexists = true;
+                }
+                if (deptexists == false) {
+                    htmlstring = htmlstring + "Department: " + table[i]["dept_id"] + "<br>";
+                    deptexists = true;
                 }
                 if (roomentered) {
                     htmlstring = htmlstring + ", " + table[i]["room_code"];
@@ -169,6 +175,7 @@
     }
     function getButtonHtmlString(requestID) {
         var table = @Html.Raw(jsondata);
+        var user = "@user";
         var htmlstring = "";
         var temp = "";
         var done = false;
@@ -179,37 +186,42 @@
             if (requestID == table[i]["request_id"]) {
                 htmlstring = "<div style='display:inline-block;width:50px;'>";
                 temp = table[i]["status"];
-                switch (temp.substring(0,1)) {
-                    case "c":
-                        htmlstring = htmlstring + "<a>";
-                        htmlstring = htmlstring + "<i class='material-icons grey-text disabled'>lock</i>";
-                        htmlstring = htmlstring + "</a>";
-                        htmlstring = htmlstring + "</div><div style='display:inline-block;'>";
-                        htmlstring = htmlstring + "<a>";
-                        htmlstring = htmlstring + "<i class='material-icons orange-text' label='Withdraw' onclick='withdrawRequest(" + requestID + ");'>undo</i>";
-                        htmlstring = htmlstring + "</a>";
-                        htmlstring = htmlstring + "</div>";
-                        break;
-                    case "r":
-                        htmlstring = htmlstring + "<a href='./editrequest?id=" + requestID + "'>";
-                        htmlstring = htmlstring + "<i class='material-icons green-text'>refresh</i>";
-                        htmlstring = htmlstring + "</a>";
-                        htmlstring = htmlstring + "</div><div style='display:inline-block;'>";
-                        htmlstring = htmlstring + "<a>";
-                        htmlstring = htmlstring + "<i class='material-icons red-text' label='Delete' onclick='deleteRequest(" + requestID + ");'>delete</i>";
-                        htmlstring = htmlstring + "</a>";
-                        htmlstring = htmlstring + "</div>"; 
-                        break;
-                    case "p":
-                        htmlstring = htmlstring + "<a href='./editrequest?id=" + requestID + "'>";
-                        htmlstring = htmlstring + "<i class='material-icons green-text'>create</i>";
-                        htmlstring = htmlstring + "</a>";
-                        htmlstring = htmlstring + "</div><div style='display:inline-block;'>";
-                        htmlstring = htmlstring + "<a>";
-                        htmlstring = htmlstring + "<i class='material-icons orange-text' label='Withdraw' onclick='withdrawRequest(" + requestID + ");'>undo</i>";
-                        htmlstring = htmlstring + "</a>";
-                        htmlstring = htmlstring + "</div>";
-                        break;
+                if ( user == table[i]["dept_id"]) {
+                    $("#buttons").show()
+                    switch (temp.substring(0,1)) {
+                        case "c":
+                            htmlstring = htmlstring + "<a>";
+                            htmlstring = htmlstring + "<i class='material-icons grey-text disabled'>lock</i>";
+                            htmlstring = htmlstring + "</a>";
+                            htmlstring = htmlstring + "</div><div style='display:inline-block;'>";
+                            htmlstring = htmlstring + "<a>";
+                            htmlstring = htmlstring + "<i class='material-icons orange-text' label='Withdraw' onclick='withdrawRequest(" + requestID + ");'>undo</i>";
+                            htmlstring = htmlstring + "</a>";
+                            htmlstring = htmlstring + "</div>";
+                            break;
+                        case "r":
+                            htmlstring = htmlstring + "<a href='./editrequest?id=" + requestID + "'>";
+                            htmlstring = htmlstring + "<i class='material-icons green-text'>refresh</i>";
+                            htmlstring = htmlstring + "</a>";
+                            htmlstring = htmlstring + "</div><div style='display:inline-block;'>";
+                            htmlstring = htmlstring + "<a>";
+                            htmlstring = htmlstring + "<i class='material-icons red-text' label='Delete' onclick='deleteRequest(" + requestID + ");'>delete</i>";
+                            htmlstring = htmlstring + "</a>";
+                            htmlstring = htmlstring + "</div>"; 
+                            break;
+                        case "p":
+                            htmlstring = htmlstring + "<a href='./editrequest?id=" + requestID + "'>";
+                            htmlstring = htmlstring + "<i class='material-icons green-text'>create</i>";
+                            htmlstring = htmlstring + "</a>";
+                            htmlstring = htmlstring + "</div><div style='display:inline-block;'>";
+                            htmlstring = htmlstring + "<a>";
+                            htmlstring = htmlstring + "<i class='material-icons orange-text' label='Withdraw' onclick='withdrawRequest(" + requestID + ");'>undo</i>";
+                            htmlstring = htmlstring + "</a>";
+                            htmlstring = htmlstring + "</div>";
+                            break;
+                    }
+                } else {
+                    $("#buttons").hide()
                 }
                 done = true;
             }
