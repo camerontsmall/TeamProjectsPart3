@@ -30,6 +30,13 @@
                 DB.Execute(insert_statement, module, day, period, week, WebSecurity.CurrentUserId, semester, System.DateTime.Now, Department.User.departmentID());
                 DB.Execute(room_statement, roompref, roompark, capacity, roomtype, special, facility);
 
+
+                if (Request.Form["addrooms"] == "on") {
+                    var last_id = DB.QuerySingle("SELECT TOP 1 request_id FROM request ORDER BY request_id DESC;")["request_id"];
+                    Response.Redirect("~/editrequest?id=" + last_id);
+                    Response.End();
+                }
+
             <div class="card-panel green white-text">
                Succesfully added request for @module
             </div>

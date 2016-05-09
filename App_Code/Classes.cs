@@ -73,16 +73,16 @@ namespace Models{
             d["Status"] = statustag;
             //d["action"] = "./editrequest?id=" + request_id;
             if (status.ToString().ToLower()[0] == 'c') {
-                d["Edit"] = "<i class='material-icons grey-text disabled'>lock</i>";
+                d["Edit"] = "<i class='material-icons grey-text disabled' title='Editing locked'>lock</i>";
             } else if (status.ToString().ToLower()[0] == 'r') {
-                d["Edit"] = "<a href='./editrequest?id=" + request_id + "'><i class='material-icons green-text'>refresh</i></a>";
+                d["Edit"] = "<a href='./editrequest?id=" + request_id + "' title='Resubmit'><i class='material-icons green-text'>refresh</i></a>";
             } else {
-                d["Edit"] = "<a href='./editrequest?id=" + request_id + "'><i class='material-icons green-text'>create</i></a>";
+                d["Edit"] = "<a href='./editrequest?id=" + request_id + "' title='Edit'><i class='material-icons green-text'>create</i></a>";
             }
             if (status.ToString().ToLower()[0] == 'w' || status.ToString().ToLower()[0] == 'r') {
-                d["Withdraw/Delete"] = "<i class='material-icons red-text' label='Withdraw' onclick=\"deleteRequest(" + request_id + ");\">delete</i>";
+                d["Withdraw/Delete"] = "<i class='material-icons red-text' title='Delete' onclick=\"deleteRequest(" + request_id + ");\">delete</i>";
             } else {
-                d["Withdraw/Delete"] = "<i class='material-icons orange-text' label='Delete' onclick=\"withdrawRequest(" + request_id + ");\">undo</i>";
+                d["Withdraw/Delete"] = "<i class='material-icons orange-text' title='Withdraw' onclick=\"withdrawRequest(" + request_id + ");\">undo</i>";
             }
             return d;
         }
