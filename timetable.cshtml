@@ -191,11 +191,11 @@
                     switch (temp.substring(0,1)) {
                         case "c":
                             htmlstring = htmlstring + "<a>";
-                            htmlstring = htmlstring + "<i class='material-icons grey-text disabled'>lock</i>";
+                            htmlstring = htmlstring + "<i style='cursor:pointer;' class='material-icons grey-text disabled'>lock</i>";
                             htmlstring = htmlstring + "</a>";
                             htmlstring = htmlstring + "</div><div style='display:inline-block;'>";
                             htmlstring = htmlstring + "<a>";
-                            htmlstring = htmlstring + "<i class='material-icons orange-text' label='Withdraw' onclick='withdrawRequest(" + requestID + ");'>undo</i>";
+                            htmlstring = htmlstring + "<i style='cursor:pointer;' class='material-icons orange-text' label='Withdraw' onclick='withdrawRequest(" + requestID + ");'>undo</i>";
                             htmlstring = htmlstring + "</a>";
                             htmlstring = htmlstring + "</div>";
                             break;
@@ -205,7 +205,7 @@
                             htmlstring = htmlstring + "</a>";
                             htmlstring = htmlstring + "</div><div style='display:inline-block;'>";
                             htmlstring = htmlstring + "<a>";
-                            htmlstring = htmlstring + "<i class='material-icons red-text' label='Delete' onclick='deleteRequest(" + requestID + ");'>delete</i>";
+                            htmlstring = htmlstring + "<i style='cursor:pointer;' class='material-icons red-text' label='Delete' onclick='deleteRequest(" + requestID + ");'>delete</i>";
                             htmlstring = htmlstring + "</a>";
                             htmlstring = htmlstring + "</div>"; 
                             break;
@@ -215,7 +215,7 @@
                             htmlstring = htmlstring + "</a>";
                             htmlstring = htmlstring + "</div><div style='display:inline-block;'>";
                             htmlstring = htmlstring + "<a>";
-                            htmlstring = htmlstring + "<i class='material-icons orange-text' label='Withdraw' onclick='withdrawRequest(" + requestID + ");'>undo</i>";
+                            htmlstring = htmlstring + "<i style='cursor:pointer;' class='material-icons orange-text' label='Withdraw' onclick='withdrawRequest(" + requestID + ");'>undo</i>";
                             htmlstring = htmlstring + "</a>";
                             htmlstring = htmlstring + "</div>";
                             break;
