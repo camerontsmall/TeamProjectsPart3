@@ -69,7 +69,11 @@
                 <select id="lecturer" name="lecturer" class="browser-default">
                     @{
                         foreach (var l in lecturersdata) {
-                            WriteLiteral("<option value='" + l.lecturer_id + "'>" + l.fullname + "</option>")
+                            if (l.lecturer_id == lecturer) {
+                                WriteLiteral("<option value='" + l.lecturer_id + "' selected>" + l.full_name + "</option>");
+                            } else {
+                                WriteLiteral("<option value='" + l.lecturer_id + "'>" + l.full_name + "</option>");
+                            }
                         }
                     }
                 </select>
