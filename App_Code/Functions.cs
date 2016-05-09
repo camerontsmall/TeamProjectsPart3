@@ -34,7 +34,7 @@ namespace Department {
                 var first = list.ElementAt(0);
                 return first["dept_id"];
             } else {
-                return false;
+                return "";
             }
         }
     }

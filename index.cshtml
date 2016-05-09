@@ -5,8 +5,9 @@
     Page.Title = "Home";
     Page.Path = ".";
     var DB = Database.Open("dbConnectionString");
+    string dept_id = Department.User.departmentID();
     string sqlString = "SELECT * FROM request WHERE status='c' AND dept_id = @0";
-    var data = DB.Query(sqlString, Department.User.departmentID()); ///= Functions.cleanRequestData(DB.Query(sqlString));
+    var data = DB.Query(sqlString, dept_id); ///= Functions.cleanRequestData(DB.Query(sqlString));
 
     var ldata = Models.Request.convertTo(data);
 
@@ -17,7 +18,7 @@
 
     var JSON = Json.Encode(tediousList);
 
-    var fdata = DB.Query("SELECT * FROM request WHERE status='r' AND dept_id = @0", Department.User.departmentID());
+    var fdata = DB.Query("SELECT * FROM request WHERE status='r' AND dept_id = @0", dept_id);
     var flist2 = Models.Request.convertTo(fdata);
     var flist3 = new List<Dictionary<string, string>>();
     foreach(Request r in flist2) {
