@@ -2,9 +2,45 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Edit Room Request";
     Page.Path = "editroom";
+    var DB = Database.Open("dbConnectionString");
+
+    if (Request.QueryString["delete"] != null) {
+        //Delete request and all room requests
+        string deleteId = Request.QueryString["delete"];
+        string reqid = Request.QueryString["reqid"];
+
+        string roomquery = "DELETE FROM request_room WHERE room_request_id=@0";
+
+        try {
+            DB.Execute(roomquery, deleteId);
+
+            Response.Redirect("~/editrequest?message=deleted&id=" + reqid);
+            Response.End();
+
+        } catch (Exception e) {
+            <div class="card-panel red">Error: @e.Message</div>
+        }
+    }
 
     var id = Request.QueryString["id"];
-    var DB = Database.Open("dbConnectionString");
+
+    if (IsPost) {
+        var newcapacity = Request.Form["capacity"];
+        var newtype = Request.Form["roomtype"];
+        var newpark = Request.Form["roompark"];
+        var newroom = Request.Form["roompref"];
+        var newfacility = Request.Form["facility"];
+        var newspecial = Request.Form["special"];
+
+        var query = "UPDATE request_room SET room_code=@0, capacity=@1, type=@2, park=@3, facility = @4, special = @5 WHERE room_request_id=@6";
+        try {
+            DB.Execute(query, newroom, newcapacity, newtype, newpark, newfacility, newspecial, id);
+            <div class="card-panel green white-text">Saved changes</div>
+        } catch (Exception e) {
+            <div class="card-panel red">Failed to edit request: @e.Message</div>
+        }
+    }
+
     var data = DB.QuerySingle("SELECT * FROM request_room WHERE room_request_id = @0", id);
     var req_id = data["request_id"];
 
@@ -23,6 +59,7 @@
 
 <h4>Edit Room Request for request @req_id</h4>
 <div class="row">   
+    <form method="post" action="?id=@id">
     <div class="col s12 m12 l6" id="form_left>
         <label for="capacityinput">Capacity required</label>
         <input id="capacityinput" type="number" name="capacity" value="@capacity" min="0" max="400" />
@@ -55,9 +92,6 @@
         <textarea id="specialinput" name="special" class="materialize-textarea" length="200">@special</textarea>
         <input type="text" disabled name="owner" style="display:none;" value="@WebSecurity.CurrentUserId" />
     </div>
-</div>
-<div class="row">
-    <div class="col s12">
-
-    </div>
+        <input type="submit" class="btn waves-effect green" value="Save changes" />
+        </form>
 </div>

@@ -117,7 +117,9 @@ namespace Models{
             }catch(Exception e) {
                 d["Type"] = (string)data["type"];
             }
-            d["action"] = "./editroom?id=" + data["room_request_id"].ToString();
+            //d["action"] = "./editroom?id=" + data["room_request_id"].ToString();
+            d["Edit"] = "<a href='./editroom?id=" + data["room_request_id"].ToString() + "'><i class='material-icons green-text'>create</i></a>";
+            d["Delete"] = "<i class='material-icons red-text' label='Delete' onclick=\"deleteRoomReq(" + data["room_request_id"].ToString() + "," + data["request_id"].ToString() + ");\">delete</i>";
             return d;
         }
     }
@@ -148,7 +150,7 @@ namespace Models{
             }
             d["Preferred Room"] = (string)row["Preference"];
             int id = (int)row["RequestNo"];
-            d[" "] = "<a href='./requests?copy=" + id + "'><i class='material-icons green-text'>content_copy</i></a>";
+            d["Copy"] = "<a href='./requests?copy=" + id + "'><i class='material-icons green-text'>content_copy</i></a>";
             return d;
         }
     }

@@ -73,3 +73,10 @@ function withdrawRequest(id) {
         window.location.href = "./editrequest?withdraw=" + id;
     }
 }
+
+function deleteRoomReq(id, reqid) {
+
+    if (confirm("Delete room request " + id + "?")) {
+        window.location.href = "./editroom?delete=" + id + "&reqid=" + reqid;
+    }
+}
