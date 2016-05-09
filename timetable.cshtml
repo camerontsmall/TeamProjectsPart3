@@ -26,7 +26,7 @@
 <h3>Timetable</h3>
 <form id="dateSelect" method="post" action="./timetable.cshtml">
     <div class="row">
-        <div class="col s12 m12 l6">
+        <div class="col s12 m12 l5">
             <div>
                 <label>Semester:</label>
                 <select id="semester" name="semester" class="browser-default">
@@ -42,12 +42,10 @@
                 </select>
             </div>
             <div>
-                <div>
-                    <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Apply Filter">
-                </div>
+                
             </div>
         </div>
-        <div class="col s12 m12 l6">
+        <div class="col s12 m12 l5">
             <label>Week:</label>
             <select id="week" name="week" class="browser-default">
                 @{
@@ -66,6 +64,11 @@
                     }
                 }
             </select>
+        </div>
+        <div class="col l2 valign-wrapper">
+            <div class="valign">
+            <input type="submit" class="btn waves-effect" name="buttonSubmit" value="Apply Filter">
+                </div>
         </div>
     </div>
 </form>

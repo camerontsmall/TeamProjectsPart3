@@ -149,11 +149,11 @@ namespace Facilities {
             return types;
         }
 
-        public static List<string> Codes() {
+        public static List<string> Codes(string dept_id = "") {
             List<string> codes = new List<string>();
 
             var DB = Database.Open("dbConnectionString");
-            var list = DB.Query("SELECT room_code FROM room;");
+            var list = DB.Query("SELECT room_code FROM room WHERE dept_id = '' OR dept_id = @0;", dept_id);
             DB.Close();
             foreach (var item in list) {
                 codes.Add(item["room_code"]);

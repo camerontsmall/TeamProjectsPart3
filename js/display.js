@@ -15,13 +15,13 @@ function hideHelp() {
     backdrop.style.opacity = 0;
 }
 
-function loadRooms(){
+function loadRooms(dept_id = ""){
     var type = document.getElementById('roomtypeinput').value;
     var park = document.getElementById('parkinput').value;
 
-    var api_url  = "./api/rooms.php";
+    var api_url  = "./api/rooms.php?dept=" + dept_id;
     if(type && park){
-        api_url = "./api/rooms.php?type=" + type + "&park=" + park;
+        api_url = "./api/rooms.php?type=" + type + "&park=" + park + "&dept=" + dept_id;
     }
     $.ajax({
         url : api_url,

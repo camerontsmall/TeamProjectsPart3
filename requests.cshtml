@@ -22,12 +22,12 @@
         string special = Request.Form["special"];
         string facility = Request.Form["facility"];
 
-        string insert_statement = "INSERT INTO request (module_code, day, period, week, owner, semester, status, last_changed, booking_round) VALUES (@0, @1, @2, @3, @4, @5, 'p', @6, 0)";
+        string insert_statement = "INSERT INTO request (module_code, day, period, week, owner, semester, status, last_changed, booking_round, dept_id) VALUES (@0, @1, @2, @3, @4, @5, 'p', @6, 0, @7)";
         string room_statement = "INSERT INTO request_room (request_id, room_code, park, capacity, type, special, facility) VALUES (@@IDENTITY ,@0, @1,@2, @3, @4, @5)";
 
         if (module.Length > 0 && period.Length > 0) {
             try {
-                DB.Execute(insert_statement, module, day, period, week, WebSecurity.CurrentUserId, semester, System.DateTime.Now);
+                DB.Execute(insert_statement, module, day, period, week, WebSecurity.CurrentUserId, semester, System.DateTime.Now, Department.User.departmentID());
                 DB.Execute(room_statement, roompref, roompark, capacity, roomtype, special, facility);
 
             <div class="card-panel green white-text">
@@ -58,7 +58,7 @@
         </div>
     }
 
-    var Data = DB.Query("SELECT * FROM request ORDER BY last_changed DESC");
+    var Data = DB.Query("SELECT * FROM request WHERE dept_id = null OR dept_id = @0 ORDER BY last_changed DESC", Department.User.departmentID());
 
     var ldata = Models.Request.convertTo(Data);
 
@@ -145,7 +145,7 @@
                 <label for="roominput">Preferred room</label>
                 <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
                 <select id="roomlist" class="browser-default" name="roompref">
-                    @RequestForm.Rooms()
+                    @RequestForm.Rooms("", Department.User.departmentID())
                 </select>
                 <br />
                 <p>Required Facilities</p>

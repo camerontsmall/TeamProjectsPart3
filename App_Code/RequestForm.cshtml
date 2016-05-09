@@ -77,9 +77,9 @@ foreach (var module in Bookings.Module.AllCodes(dept_id))
     }
 }
 
-@helper Rooms(string value = "") { 
+@helper Rooms(string value = "", string dept_id = "") { 
         <option value="">No preference</option>
-foreach (var code in Facilities.Room.Codes()) {
+foreach (var code in Facilities.Room.Codes(dept_id)) {
 
                 string selected = (value == code) ? "selected" : "";
                <option @selected value="@code">@code</option>
@@ -99,7 +99,12 @@ foreach(dynamic lect in Department.Lecturer.lecturerByDept(dept_id))
 
 @helper RoomFacilities(string facilities = "") { 
     <!-- @facilities -->
-string[] facarray = facilities.Split(',');
+string[] facarray = new string[0];
+try {
+    facarray = facilities.Split(',');
+} catch(Exception e) {
+    <!-- @e.Message -->
+}
 foreach(dynamic fac in Facilities.FacilityTypes.PossibleFacilities()) {
     string id = fac.Key.ToString();
     string code_id = "facility_" + id;

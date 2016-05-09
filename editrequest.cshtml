@@ -161,7 +161,7 @@
                         <label for="roominput">Preferred room</label>
                         <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
                         <select id="roomlist" class="browser-default" name="roompref">
-                            @RequestForm.Rooms()
+                            @RequestForm.Rooms("", Department.User.departmentID())
                         </select>
                     </div>
                     <div class="col s12 m12 l12" id="form_right">

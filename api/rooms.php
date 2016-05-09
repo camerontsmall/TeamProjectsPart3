@@ -11,9 +11,10 @@ if(isset($_GET['type']) && $_GET['park']){
 	$park =  $_GET['park'];
 }
 
+$dept_id = $_GET['dept'];
 
 if(isset($type) && isset($park)){
-	$query = "SELECT * FROM room WHERE type = '$type' AND park = '$park';";
+	$query = "SELECT * FROM room WHERE type = '$type' AND park = '$park' AND (dept_id = '' OR dept_id = '$dept_id');";
 }else{
 	$query = "SELECT * FROM room;";
 }
