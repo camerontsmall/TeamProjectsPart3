@@ -64,7 +64,7 @@ function loadRoomInfo() {
 
 
  function loadModules(dept_id) {
-    var code = document.getElementById('partinput').value;
+    var part = document.getElementById('partinput').value;
 
     var api_url = "./api/modules.php?part=" + part + "&dept=" + dept_id;
     $.ajax({

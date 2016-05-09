@@ -142,22 +142,22 @@
                 </form>
           
                 <form method="post" action="?addroom=@id&id=@id">
-                        <label for="capacityinput">Capacity required</label>
+                        <p for="capacityinput">Capacity required</p>
                         <input id="capacityinput" type="number" name="capacity" value="50" min="0" max="400" />
                         <br />
-                        <label for="roomtypeinput">Preferred room type</label>
+                        <p for="roomtypeinput">Preferred room type</p>
                         <select id="roomtypeinput" class="browser-default" name="roomtype">
                             @RequestForm.RoomTypes()
                         </select>
                         <br />
-                        <div for="parkinput">Preferred park</div>
+                        <p for="parkinput">Preferred park</p>
                         <select id="parkinput" name="roompark" class="browser-default">
                             @RequestForm.Parks()
                         </select>
                         <br />
                         <div onclick="loadRooms('@Department.User.departmentID()')" class="btn waves-effect">Update Room Suggestions</div>
                         <br />
-                        <div for="roominput">Preferred room</div>
+                        <p for="roominput">Preferred room</p>
                         <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
                         <select id="roomlist" class="browser-default" name="roompref" onchange="loadRoomInfo()">
                             @RequestForm.Rooms("", Department.User.departmentID())

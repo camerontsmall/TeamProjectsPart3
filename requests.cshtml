@@ -25,7 +25,7 @@
         string insert_statement = "INSERT INTO request (module_code, day, period, week, owner, semester, status, last_changed, booking_round, dept_id) VALUES (@0, @1, @2, @3, @4, @5, 'p', @6, 0, @7)";
         string room_statement = "INSERT INTO request_room (request_id, room_code, park, capacity, type, special, facility) VALUES (@@IDENTITY ,@0, @1,@2, @3, @4, @5)";
 
-        if (module.Length > 0 && period.Length > 0) {
+        if (module.Length > 0 && period.ToString().Length > 0) {
             try {
                 DB.Execute(insert_statement, module, day, period, week, WebSecurity.CurrentUserId, semester, System.DateTime.Now, Department.User.departmentID());
                 DB.Execute(room_statement, roompref, roompark, capacity, roomtype, special, facility);
@@ -75,7 +75,7 @@
     string newweek = "";
     int newcapacity = 50;
     string newtype = "";
-    string newpark = "";
+    char newpark = 'c';
     string newroom = "";
 
     if (Request.QueryString["copy"] != null) {
@@ -85,6 +85,7 @@
         newday = past["Day"];
         newperiods = past["Period"].ToString();
         newroom = (string)past["Preference"];
+        newpark = past["Park"].ToString().ToLower()[0] ;
         int startperiod = past["Period"];
         for (int i = 1; i < past["Length"]; i++) {
             newperiods += ("," + (startperiod + i));
@@ -127,8 +128,8 @@
                 </select>
             </div>
             <div class="col s12 m12 l6" id="form_right">
-                <div>Capacity required</div>
-                <input id="capacityinput" class="active" type="number" name="capacity" value="@newcapacity" min="0" max="400"/>
+                <p>Capacity required</p>
+                <input id="capacityinput" type="number" name="capacity" value="@newcapacity" min="0" max="400"/>
                 <br />
                 <div for="roomtypeinput">Preferred room type</div>
                 <select id="roomtypeinput" class="browser-default" name="roomtype" >
@@ -137,7 +138,7 @@
                 <br />
                 <div for="parkinput">Preferred park</div>
                 <select id="parkinput" name="roompark" class="browser-default">
-                    @RequestForm.Parks()
+                    @RequestForm.Parks(newpark)
                 </select>
                 <br />
                 <div onclick="loadRooms('@Department.User.departmentID()')" class="btn waves-effect">Update Room Suggestions</div>
@@ -177,7 +178,7 @@
     @JsonList.PrintList("requestlist", JSON, "All requests")
 </div>
 <script>
-    Materialize.updateTextFields();
+    loadRoomInfo();
 </script>
 @{
     DB.Close();
