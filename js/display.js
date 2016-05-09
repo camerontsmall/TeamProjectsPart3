@@ -15,7 +15,7 @@ function hideHelp() {
     backdrop.style.opacity = 0;
 }
 
-function loadRooms(dept_id = ""){
+function loadRooms(dept_id){
     var type = document.getElementById('roomtypeinput').value;
     var park = document.getElementById('parkinput').value;
 
@@ -79,4 +79,40 @@ function deleteRoomReq(id, reqid) {
     if (confirm("Delete room request " + id + "?")) {
         window.location.href = "./editroom?delete=" + id + "&reqid=" + reqid;
     }
+}
+
+var fontSize = 1;
+function zoomIn() {
+    /* Button to make the font size bigger using JavaScript */
+    fontSize += 0.1;
+    //document.body.style.fontSize = fontSize + "em";
+    document.getElementById("wrapper").style.fontSize = fontSize + "em";
+    //document.getElementById("Button").style.fontSize = fontSize + "em";
+}
+function zoomOut() {
+    /* Button to make the font size smaller using JavaScript */
+    fontSize -= 0.1;
+    //document.body.style.fontSize = fontSize + "em";
+    document.getElementById("wrapper").style.fontSize = fontSize + "em";
+    //document.getElementById("Button").style.fontSize = fontSize + "em";
+}
+
+function reset() {
+    fontSize = 1;
+    /* Button to reset the font size using JavaScript */
+    document.getElementById("wrapper").style.fontSize = "initial";
+
+}
+
+function invert(){
+    /* Javascript for inverting page colours */
+    document.body.style.webkitFilter = "invert(100%)";
+    document.body.style.backgroundColor = "black";
+}
+
+function reinvert(){
+    /* Javascript for re-inverting page colours */
+    document.body.style.webkitFilter = "initial";
+
+    document.body.style.backgroundColor = "initial";
 }

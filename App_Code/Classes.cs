@@ -170,6 +170,11 @@ namespace Models{
             }catch(Exception e) {
                 d["Type"] = (string)row["type"];
             }
+            if(row["dept_id"].ToString().Length == 0) {
+                d["Department"] = "Public";
+            } else {
+                d["Department"] = (string)row["dept_id"];
+            }
             return d;
         }
     }
