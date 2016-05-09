@@ -39,8 +39,8 @@
 
 <!-- ADD LECTURER -->
 
-<label style="font-size:2.5em;color:black;">Assign private room to your department</label>
 
+<!--
 
 <br />
 
@@ -69,7 +69,7 @@
 </form>
 
 @{
-    
+    /*
     var room_details = "";
     
     if(IsPost && (Request.QueryString["privateroom"]=="true")){
@@ -84,8 +84,113 @@
         Response.Redirect("~/rooms");
     }
 
+    */
+}
+
+-->
+
+
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+
+
+<label style="font-size:2.5em;color:black;">Add new private room to your department</label>
+
+
+<div id="requestForm">
+    <form method="post" action="./rooms.cshtml">
+        <div class="row">
+ 
+            <div class="col s12 m12 l6" id="form_right">
+                
+                <label for="roominput">Room Code</label>
+                
+                <input id="room_details" name="room_details" type="text" value="">
+                
+                <br />
+                
+                
+                <label for="capacityinput">Room Capacity</label>
+                <input id="capacityinput" type="number" name="capacity" value="" min="0" max="400"/>
+                <br />
+                
+                
+                <label for="roomtypeinput">Room type</label>
+                <select id="roomtypeinput" class="browser-default" name="roomtype" >
+                    @RequestForm.RoomTypes()
+                </select>
+                <br />
+                
+                
+                <label for="parkinput">Park</label>
+                <select id="parkinput" name="roompark" class="browser-default">
+                    @RequestForm.Parks()
+                </select>
+                
+                <br />
+                <p>Required Facilities</p>
+                <div class="row">
+                    @RequestForm.RoomFacilities()
+                </div>
+                <br />
+                
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 l6" id="form_buttons">
+                <input class="btn waves-effect" type="submit" value="Submit" />
+                <div onclick="window.location.reload()" class="btn waves-effect red">Clear</div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+@{
+    
+    var room_details = "";
+    var capacity = "";
+    var type = "";
+    var park = "";
+    var facility = "";
+    
+    if(IsPost){
+        
+        room_details = Request.Form["room_details"];
+        capacity = Request.Form["capacity"];
+        type = Request.Form["roomtype"];
+        park = Request.Form["roompark"];
+        facility = Request.Form["facility"];
+
+        var db = Database.Open("dbConnectionString");
+        //var addPrivateRoom = "INSERT INTO room room_code = @0, park = @1, capacity = @2, type = @3, dept_id = @4";
+       
+        var addPrivateRoom = "INSERT INTO room (room_code, park, capacity, type, dept_id, facility) VALUES (@0,@1,@2,@3,@4,@5)";
+       
+        db.Execute(addPrivateRoom, room_details, park, capacity, type, Department.User.departmentID(), facility);
+        Response.Redirect("~/rooms");
+    }
+
     
 }
+
+
+
 @{
     DB.Close();
 }
