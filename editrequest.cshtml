@@ -156,7 +156,7 @@
                             @RequestForm.Parks()
                         </select>
                         <br />
-                        <div onclick="loadRooms()" class="btn waves-effect">Update Room Suggestions</div>
+                        <div onclick="loadRooms('@Department.User.departmentID()')" class="btn waves-effect">Update Room Suggestions</div>
                         <br />
                         <label for="roominput">Preferred room</label>
                         <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
