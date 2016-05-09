@@ -84,11 +84,11 @@
         newmodule_code = past["ModuleCode"];
         newday = past["Day"];
         newperiods = past["Period"].ToString();
+        newroom = (string)past["Preference"];
         int startperiod = past["Period"];
         for (int i = 1; i < past["Length"]; i++) {
             newperiods += ("," + (startperiod + i));
         }
-        newweek = past["Week"];
         <div class="card-panel blue">
             Copying previous request @past_id
         </div>
@@ -145,7 +145,7 @@
                 <label for="roominput">Preferred room</label>
                 <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
                 <select id="roomlist" class="browser-default" name="roompref">
-                    @RequestForm.Rooms("", Department.User.departmentID())
+                    @RequestForm.Rooms(newroom, Department.User.departmentID())
                 </select>
                 <br />
                 <p>Required Facilities</p>

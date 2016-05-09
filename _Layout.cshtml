@@ -71,7 +71,7 @@ function googleTranslateElementInit() {
         @if (Page.Title != "Home") {
             <nav id="current_location_bar" class="top-nav blue darken-1">
                 <div class="nav-wrapper">
-                    <div class="col s12" id="current_location_bar_inner">
+                    <div class="col s12 l6" id="current_location_bar_inner">
                         <a href="." class="breadcrumb">Home</a>
                         @if (@Page.Parent2 != null) {
                             <a href="@Page.Parent2Path" class="breadcrumb">@Page.Parent2</a>
@@ -81,6 +81,29 @@ function googleTranslateElementInit() {
                            
                         } 
                         <a href="@Page.Path" class="breadcrumb">@Page.Title</a>
+
+                        <div style="float:right;">
+                            <button class="btn-flat AccessabilityBarButtons white-text" id="plustext"
+                                    onclick="zoomIn()">
+                                <i class="material-icons">zoom_in</i>
+                            </button>
+                            <button class="btn-flat AccessabilityBarButtons white-text" id="reset"
+                                    onclick="reset()">
+                                0
+                            </button>
+                            <button class="btn-flat AccessabilityBarButtons white-text" id="minustext"
+                                    onclick="zoomOut()">
+                                <i class="material-icons">zoom_out</i>
+                            </button>
+                            <button class="btn-flat AccessabilityBarButtons white-text" id="Invert"
+                                    onclick="invert()">
+                                Invert
+                            </button>
+                            <button class="btn-flat AccessabilityBarButtons white-text" id="reinvert"
+                                    onclick="reinvert()">
+                                Reinvert
+                            </button>
+                            </div>
                     </div>
                 </div>
             </nav>
