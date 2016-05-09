@@ -34,19 +34,22 @@ for (int i=1; i <= 12; i++){
     }
 }
 
-@helper RoomTypes(){
-    foreach(var type in Facilities.Room.Types()){
-        string code = @type.Key;
-        string nice = @type.Value;
-        <option value="@code">@nice</option>
+@helper RoomTypes(string value = ""){
+foreach(var type in Facilities.Room.Types()){
+    string code = @type.Key;
+    string nice = @type.Value;
+
+    string selected = (value == code) ? "selected" : "";
+        <option @selected value="@code">@nice</option>
     }
 }
 
-@helper Parks(){
+@helper Parks(char value = ' '){
     foreach(var park in Facilities.Park.Parks()){
         char code = @park.Key;
         string nice = @park.Value;
-        <option value="@code">@nice</option>
+        string selected = (value == code) ? "selected" : "";
+        <option @selected value="@code">@nice</option>
     }
 }
 
@@ -74,10 +77,12 @@ foreach (var module in Bookings.Module.AllCodes(dept_id))
     }
 }
 
-@helper Rooms() { 
+@helper Rooms(string value = "") { 
         <option value="">No preference</option>
-        foreach (var code in Facilities.Room.Codes()) {
-               <option value="@code">@code</option>
+foreach (var code in Facilities.Room.Codes()) {
+
+                string selected = (value == code) ? "selected" : "";
+               <option @selected value="@code">@code</option>
         }
     }
 
@@ -92,13 +97,16 @@ foreach(dynamic lect in Department.Lecturer.lecturerByDept(dept_id))
 }
     }
 
-@helper RoomFacilities() { 
-    foreach(dynamic fac in Facilities.FacilityTypes.PossibleFacilities()) {
-        int id = fac.Key;
-        string code_id = "facility_" + id.ToString();
-        string name = fac.Value;
+@helper RoomFacilities(string facilities = "") { 
+    <!-- @facilities -->
+string[] facarray = facilities.Split(',');
+foreach(dynamic fac in Facilities.FacilityTypes.PossibleFacilities()) {
+    string id = fac.Key.ToString();
+    string code_id = "facility_" + id;
+    string name = fac.Value;
+    string selected = ((Array.IndexOf(facarray, id)) > -1) ? "checked" : "";
         <div class="col s6">
-            <input type="checkbox" name="facility" value="@id" id="@code_id" />
+            <input @selected type="checkbox" name="facility" value="@id" id="@code_id" />
             <label for="@code_id">@name</label>
         </div>
     }

@@ -67,17 +67,23 @@ namespace Models{
                     statustag = "<p class='red-text'>Rejected</p>";
                     break;
                 case 'w':
-                    statustag = "<p class='brown-text'>Withdrawn</p>";
+                    statustag = "<p class='blue-text'>Withdrawn</p>";
                     break;
             }
             d["Status"] = statustag;
             //d["action"] = "./editrequest?id=" + request_id;
             if (status.ToString().ToLower()[0] == 'c') {
-                d["Edit"] = "<i class='material-icons grey-text disabled'>create</i>";
+                d["Edit"] = "<i class='material-icons grey-text disabled'>lock</i>";
+            } else if (status.ToString().ToLower()[0] == 'r') {
+                d["Edit"] = "<a href='./editrequest?id=" + request_id + "'><i class='material-icons green-text'>refresh</i></a>";
             } else {
                 d["Edit"] = "<a href='./editrequest?id=" + request_id + "'><i class='material-icons green-text'>create</i></a>";
             }
-            d["Delete"] = "<i class='material-icons red-text' onclick=\"deleteRequest(" + request_id + ");\">delete</i>";
+            if (status.ToString().ToLower()[0] == 'w' || status.ToString().ToLower()[0] == 'r') {
+                d["Withdraw/Delete"] = "<i class='material-icons red-text' label='Withdraw' onclick=\"deleteRequest(" + request_id + ");\">delete</i>";
+            } else {
+                d["Withdraw/Delete"] = "<i class='material-icons orange-text' label='Delete' onclick=\"withdrawRequest(" + request_id + ");\">undo</i>";
+            }
             return d;
         }
 
@@ -106,8 +112,12 @@ namespace Models{
             }
             d["Park"] = Facilities.Park.Parks()[(char)((string)data["park"])[0]];
             d["Required Capacity"] = data["capacity"].ToString();
-            d["Type"] = Facilities.Room.Types()[(string)data["type"]];
-            d["action"] = "./editroom?edit=" + data["room_request_id"].ToString();
+            try {
+                d["Type"] = Facilities.Room.Types()[(string)data["type"]];
+            }catch(Exception e) {
+                d["Type"] = (string)data["type"];
+            }
+            d["action"] = "./editroom?id=" + data["room_request_id"].ToString();
             return d;
         }
     }

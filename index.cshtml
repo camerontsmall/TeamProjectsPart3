@@ -16,6 +16,14 @@
     }
 
     var JSON = Json.Encode(tediousList);
+
+    var fdata = DB.Query("SELECT * FROM request WHERE status='r'");
+    var flist2 = Models.Request.convertTo(fdata);
+    var flist3 = new List<Dictionary<string, string>>();
+    foreach(Request r in flist2) {
+        flist3.Add(r.ToNiceList());
+    }
+    var json2 = Json.Encode(flist3);
 }
 
     <div class="AccessabilityBar">
@@ -44,6 +52,9 @@
     <h3>Dashboard</h3>
     <div>
         @JsonList.PrintList("requestlist", JSON, "Approved requests")
+    </div>
+    <div>
+        @JsonList.PrintList("failedlist", json2, "Rejected requests")
     </div>
 
     <script type="text/javascript">

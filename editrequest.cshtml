@@ -28,6 +28,24 @@
 
 
 }
+@if (Request.QueryString["withdraw"] != null) {
+    //Delete request and all room requests
+    string wId = Request.QueryString["withdraw"];
+
+    string wquery = "UPDATE request SET [status] = 'w' WHERE request_id = @0";
+
+    try {
+        DB.Execute(wquery, wId);
+
+        Response.Redirect("~/requests?message=withdrawn&id=" + wId);
+        Response.End();
+
+    } catch (Exception e) {
+        <div class="card-panel red">Error: @e.Message</div>
+    }
+
+
+}
 @{ 
     var id = Request.QueryString["id"];
     if (id == null) {

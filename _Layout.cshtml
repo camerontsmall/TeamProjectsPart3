@@ -73,12 +73,14 @@ function googleTranslateElementInit() {
                 <div class="nav-wrapper">
                     <div class="col s12" id="current_location_bar_inner">
                         <a href="." class="breadcrumb">Home</a>
+                        @if (@Page.Parent2 != null) {
+                            <a href="@Page.Parent2Path" class="breadcrumb">@Page.Parent2</a>
+                        } 
                         @if (@Page.Parent != null) {
                             <a href="@Page.ParentPath" class="breadcrumb">@Page.Parent</a>
-                            <a href="@Page.Path" class="breadcrumb">@Page.Title</a>
-                        } else {
-                            <a href="@Page.Path" class="breadcrumb">@Page.Title</a>
-                        }
+                           
+                        } 
+                        <a href="@Page.Path" class="breadcrumb">@Page.Title</a>
                     </div>
                 </div>
             </nav>

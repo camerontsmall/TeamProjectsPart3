@@ -1,42 +1,51 @@
 
 <html>
      <head> 
-    
-    
          <script src="~/js/materialize.js" ></script>
          <link rel="stylesheet" href="~/css/materialize.css" />
      <body>
- <div class="Helpbar" align="center"> 
- 	   <button class="HelpbarButtons" id="Dashboardbutton" onclick="myFunction()">Dashboard</button> 
-       <button class="HelpbarButtons" id="Manage Requests" onclick="myFunction2()">Manage Requests</button>
-       <button class="HelpbarButtons" id="Past Data" onclick="myFunction3()">Past Data</button>
-       <button class="HelpbarButtons" id="Modules" onclick= "myFunction4()">Modules</button>
-       <button class="HelpbarButtons" id="Rooms" onclick="myFunction5()">Rooms</button>
+ <div class="Helpbar" align= "center"> 
+ 	  <button class="btn" id="Dashboardbutton" onclick="myFunction()">Dashboard</button> 
+       <button class="btn" id="Manage Requests" onclick="myFunction2()">Manage Requests</button>
+       <button class="btn" id="Past Data" onclick="myFunction3()">Past Data</button>
+       <button class="btn" id="Modules" onclick= "myFunction4()">Modules</button>
+       <button class="btn" id="Rooms" onclick="myFunction5()">Rooms</button>
+       <button class="btn" id="Timetable" onclick="myFunction6()">Timetable</button>
+       
        
  
- <br>
- <br>
+<br>
+<br>
+</br> 
 <script>
 function myFunction()
 {
- document.getElementById('DashText').innerHTML = "The dashboard enables you to see details of the approved requests, and to navigate around the site using the navigation bar on the left.";
+ document.getElementById('DashText').innerHTML = "The dashboard provides a simple, compact interface for viewing all information available on the website in a concise manner. It displays all approved and rejected requests and gives you the option to edit, withdraw or delete them if needed.";
 }
 
 function myFunction2()
 {
- document.getElementById('DashText').innerHTML = "The Manage Request Page enables you to add new requests to the timetabling system, as well as to search through and to view previous requests.";
+ document.getElementById('DashText').innerHTML = "The Manage Request page enables the user to create and edit or delete previously submitted requests.";
 }
 function myFunction3()
 {
- document.getElementById('DashText').innerHTML = "Past Data enables you to see requests from previous years";
+ document.getElementById('DashText').innerHTML = "The Past Data page enables the user to view timetable requests from previous years with the ability to copy them as a basis for new requests.";
 }
 function myFunction4()
 {
- document.getElementById('DashText').innerHTML = "The Module Page enables you to view, edit and add new modules to the database";
+ document.getElementById('DashText').innerHTML = "The Modules page enables the user to add a new module or to edit a current one. Also it alows you to assign a new lecturer to an existing module and to view all the current modules in the department.";
 }
 function myFunction5()
 {
- document.getElementById('DashText').innerHTML = "The Rooms page enables you to view all rooms in list format or by timetable view. Also lets you add new private department rooms";
+ document.getElementById('DashText').innerHTML = "The Rooms page displays all the rooms currently existing in the database. Also enables the user to create an entry for a new room that is private to the department.";
+}
+function myFunction6()
+{
+ document.getElementById('DashText').innerHTML = "The Timetable page enables you to view the current status of requests made for the department, displaying rejected requests in red, pending requests in orange and accepted requests in green. Also alows the user to filter those entries by either semester or week.";
+}
+function myFunction7()
+{
+ document.getElementById('DashText').innerHTML = "The Manage Account page confirms who the current user is logged in as and allows you to change your current password.";
 }
 </script>
 
@@ -50,11 +59,3 @@ function myFunction5()
        </body>
        </head>
        </html>
-       
-<style type="text/css">
-.Helpbar {
-    margin: auto;
-    width: 100%;
-    padding: 10px;
-}
-</style>
