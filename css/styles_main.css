@@ -59,7 +59,7 @@ select {
 
 #current_location_bar i{
   display:inline-block;
-  line-height:45px;
+  line-height:35px;
   font-size:1.5em;
   float:left;
 }

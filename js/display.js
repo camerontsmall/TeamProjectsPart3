@@ -34,12 +34,37 @@ function loadRooms(dept_id){
             for (n in data) { 
                 list.innerHTML += '<option value="' + data[n]['room_code'] + '">' + data[n]['room_code'] + '</option>';
             }
+            loadRoomInfo();
         }
     });
 }
 
-function loadModules(dept_id) {
-    var part = document.getElementById('partinput').value;
+function loadRoomInfo() {
+    var code = document.getElementById('roomlist').value;
+
+    var api_url = "./api/room.php?code=" + code;
+
+    $.ajax({
+        url: api_url,
+        method: 'GET',
+        contentType: 'application/json',
+        success: function (data) {
+            data = JSON.parse(data);
+            var el = document.getElementById('roominfo');
+            if (data != null) {
+                el.innerHTML = "Park: " + data['park'] + " Capacity:" + data["capacity"] + " Type:" + data["type"];
+            } else {
+                el.innerHTML = "No room selected";
+            }
+            
+        }
+    });
+}
+
+
+
+ function loadModules(dept_id) {
+    var code = document.getElementById('partinput').value;
 
     var api_url = "./api/modules.php?part=" + part + "&dept=" + dept_id;
     $.ajax({
@@ -57,7 +82,6 @@ function loadModules(dept_id) {
         }
     });
 }
-
 
 function deleteRequest(id) {
 
@@ -82,6 +106,7 @@ function deleteRoomReq(id, reqid) {
 }
 
 var fontSize = 1;
+var inverted = 0;
 function zoomIn() {
     /* Button to make the font size bigger using JavaScript */
     fontSize += 0.1;
@@ -106,13 +131,20 @@ function reset() {
 
 function invert(){
     /* Javascript for inverting page colours */
-    document.body.style.webkitFilter = "invert(100%)";
-    document.body.style.backgroundColor = "black";
+    if (inverted) {
+        document.body.style.webkitFilter = "initial";
+
+        document.body.style.backgroundColor = "initial";
+        inverted = 0;
+    } else {
+
+        document.body.style.webkitFilter = "invert(100%)";
+        document.body.style.backgroundColor = "black";
+        inverted = 1;
+    }
 }
 
 function reinvert(){
     /* Javascript for re-inverting page colours */
-    document.body.style.webkitFilter = "initial";
-
-    document.body.style.backgroundColor = "initial";
+    
 }

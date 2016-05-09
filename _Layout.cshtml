@@ -89,7 +89,7 @@ function googleTranslateElementInit() {
                             </button>
                             <button class="btn-flat AccessabilityBarButtons white-text" id="reset"
                                     onclick="reset()">
-                                0
+                                Reset
                             </button>
                             <button class="btn-flat AccessabilityBarButtons white-text" id="minustext"
                                     onclick="zoomOut()">
@@ -98,10 +98,6 @@ function googleTranslateElementInit() {
                             <button class="btn-flat AccessabilityBarButtons white-text" id="Invert"
                                     onclick="invert()">
                                 Invert
-                            </button>
-                            <button class="btn-flat AccessabilityBarButtons white-text" id="reinvert"
-                                    onclick="reinvert()">
-                                Reinvert
                             </button>
                             </div>
                     </div>
@@ -123,9 +119,11 @@ function googleTranslateElementInit() {
 
 
     <script>
-        $(".button-collapse").sideNav();
-        $('select').material_select();
-        Materialize.updateTextFields();
+        $(document).ready(function() {
+            $(".button-collapse").sideNav();
+            $('select').material_select();
+            Materialize.updateTextFields();
+        });
     </script>
 
 </body>

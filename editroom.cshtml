@@ -61,26 +61,29 @@
 <div class="row">   
     <form method="post" action="?id=@id">
     <div class="col s12 m12 l6" id="form_left>
-        <label for="capacityinput">Capacity required</label>
+        <div for="capacityinput">Capacity required</div>
         <input id="capacityinput" type="number" name="capacity" value="@capacity" min="0" max="400" />
         <br />
-        <label for="roomtypeinput">Preferred room type</label>
+        <div for="roomtypeinput">Preferred room type</div>
         <select id="roomtypeinput" class="browser-default" name="roomtype">
             @RequestForm.RoomTypes(type)
         </select>
         <br />
-        <label for="parkinput">Preferred park</label>
+        <div for="parkinput">Preferred park</div>
         <select id="parkinput" name="roompark" class="browser-default">
             @RequestForm.Parks(park)
         </select>
         <br />
         <div onclick="loadRooms('@Department.User.departmentID()')" class="btn waves-effect">Update Room Suggestions</div>
         <br />
-        <label for="roominput">Preferred room</label>
+        <div for="roominput">Preferred room</div>
         <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
-        <select id="roomlist" class="browser-default" name="roompref">
+        <select id="roomlist" class="browser-default" name="roompref" onchange="loadRoomInfo()">
             @RequestForm.Rooms(room, Department.User.departmentID())
         </select>
+        <br/>
+        <div class="card-panel blue white-text" id="roominfo">No room selected</div>
+
       </div>
     <div class="col s12 m12 l6" id="form_right">
         <p>Required Facilities</p>
@@ -88,7 +91,7 @@
             @RequestForm.RoomFacilities(facilities)
         </div>
         <br />
-        <label for="specialinput">Special requirements</label>
+        <div for="specialinput">Special requirements</div>
         <textarea id="specialinput" name="special" class="materialize-textarea" length="200">@special</textarea>
         <input type="text" disabled name="owner" style="display:none;" value="@WebSecurity.CurrentUserId" />
     </div>

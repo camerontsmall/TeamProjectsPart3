@@ -100,60 +100,61 @@
     <form method="post" action="./requests.cshtml">
         <div class="row">
             <div class="col s12 m12 l6" id="form_left">
-                <label for="partinput">Degree Part</label>
+                <div for="partinput">Degree Part</div>
                 <select id="partinput" class="browser-default" name="part" value="@newmodule_code" onchange="loadModules('@Department.User.departmentID()')">
                     @RequestForm.Parts()
                 </select>
                 <br />
-                <label for="moduleinput">Module Code</label>
+                <div for="moduleinput">Module Code</div>
                 <select id="moduleinput" class="browser-default" name="modulecode" value="@newmodule_code">
                     @RequestForm.Modules(Department.User.departmentID(), newmodule_code)
                 </select>
                 <br />
-                <label for="dayinput">Day</label>
+                <div for="dayinput">Day</div>
                 <select id="dayinput" class="browser-default" name="day" value="@newday">
                     @RequestForm.Days(newday)
                 </select>
                 <br />
-                <label for="periodinput">Period(s)</label>
+                <div for="periodinput">Period(s)</div>
                 <select multiple id="periodinput" class="browser-default" name="period">
                     <!-- @newperiods -->
                     @RequestForm.Periods(newperiods)
                 </select>
                 <br />
-                <label for="weeksinnput" class="active">Week(s)</label>
+                <div for="weeksinput" class="active">Week(s)</div>
                 <select multiple id="weeksinput" class="browser-default" name="weeks">
                     @RequestForm.Weeks()
                 </select>
             </div>
             <div class="col s12 m12 l6" id="form_right">
-                <label for="capacityinput">Capacity required</label>
-                <input id="capacityinput" type="number" name="capacity" value="@newcapacity" min="0" max="400"/>
+                <div>Capacity required</div>
+                <input id="capacityinput" class="active" type="number" name="capacity" value="@newcapacity" min="0" max="400"/>
                 <br />
-                <label for="roomtypeinput">Preferred room type</label>
+                <div for="roomtypeinput">Preferred room type</div>
                 <select id="roomtypeinput" class="browser-default" name="roomtype" >
-                    @RequestForm.RoomTypes()
+                    @RequestForm.RoomTypes() 
                 </select>
                 <br />
-                <label for="parkinput">Preferred park</label>
+                <div for="parkinput">Preferred park</div>
                 <select id="parkinput" name="roompark" class="browser-default">
                     @RequestForm.Parks()
                 </select>
                 <br />
                 <div onclick="loadRooms('@Department.User.departmentID()')" class="btn waves-effect">Update Room Suggestions</div>
                 <br />
-                <label for="roominput">Preferred room</label>
+                <div for="roominput">Preferred room</div>
                 <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
-                <select id="roomlist" class="browser-default" name="roompref">
+                <select id="roomlist" class="browser-default" name="roompref" onchange="loadRoomInfo()">
                     @RequestForm.Rooms(newroom, Department.User.departmentID())
                 </select>
                 <br />
+                <div class="card-panel blue white-text" id="roominfo">No room selected</div>
                 <p>Required Facilities</p>
                 <div class="row">
                     @RequestForm.RoomFacilities()
                 </div>
                 <br />
-                <label for="specialinput">Special requirements</label>
+                <div for="specialinput">Special requirements</div>
                 <textarea id="specialinput" name="special" class="materialize-textarea" length="200"></textarea>
                 <input type="text" disabled name="owner" style="display:none;" value="@WebSecurity.CurrentUserId"/>
 
