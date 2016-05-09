@@ -88,14 +88,14 @@ foreach (var code in Facilities.Room.Codes(dept_id)) {
 
 @helper Lecturer(string dept_id) { 
     <option value="">--</option>
-foreach(dynamic lect in Department.Lecturer.lecturerByDept(dept_id))
-{
-        int id = lect["lecturer_id"];
-        string fullname = lect["full_name"];
-        string username = lect["username"];
+var lecturers = Department.Lecturer.lecturerByDept(dept_id);
+foreach (dynamic lect in lecturers) {
+    int id = lect["lecturer_id"];
+    string fullname = lect["full_name"];
+    string username = lect["username"];
         <option value="@id">@fullname (@username)</option>
-}
     }
+}
 
 @helper RoomFacilities(string facilities = "") { 
     <!-- @facilities -->

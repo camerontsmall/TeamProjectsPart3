@@ -46,11 +46,7 @@ namespace Department {
             var DB = Database.Open("dbConnectionString");
             var list = DB.Query("SELECT * FROM lecturer WHERE dept_id=@0;", dept_id);
             DB.Close();
-            if (list.Count() > 0) {
-                return list;
-            } else {
-                return false;
-            }
+            return list;
         }
 
         public static string lecturerById(int id) {
