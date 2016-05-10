@@ -51,7 +51,16 @@
             </li>
             @Links.NavList(pages, Page.Path)
             <li>Managing @Department.User.departmentID()</li>
+            <li>
+                <div id="google_translate_element"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+</li>
         </ul>
         <ul class="side-nav hide-on-large-only" id="mobile_nav">
             <li class="logo" id="logo">
@@ -76,7 +85,7 @@
                         <div style="float:right;">
                             <button class="btn-flat AccessabilityBarButtons white-text" id="plustext"
                                     onclick="zoomIn()">
-                                <i class="material-icons">zoom_in</i>
+                                <i class="material-icons">&#xE8FF;</i>
                             </button>
                             <button class="btn-flat AccessabilityBarButtons white-text" id="reset"
                                     onclick="reset()">
@@ -84,7 +93,7 @@
                             </button>
                             <button class="btn-flat AccessabilityBarButtons white-text" id="minustext"
                                     onclick="zoomOut()">
-                                <i class="material-icons">zoom_out</i>
+                                <i class="material-icons">&#xE900;</i>
                             </button>
                             <button class="btn-flat AccessabilityBarButtons white-text" id="Invert"
                                     onclick="invert()">
@@ -96,6 +105,8 @@
             </nav>
         }
     </header>
+
+
 
     <main id='wrapper' class="container">
         @RenderBody()
@@ -117,13 +128,7 @@
         });
     </script>
 
-    <div id="google_translate_element"></div>
-    <script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.BOTTOM_RIGHT}, 'google_translate_element');
-}
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+   
 
 
 </body>
