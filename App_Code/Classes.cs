@@ -73,7 +73,7 @@ namespace Models{
                     break;
             }
             d["Status"] = statustag;
-            d["Semester"] = semester.ToString();
+            d["Semester"] = (semester == 0)? "Ad-hoc" : semester.ToString();
             //d["action"] = "./editrequest?id=" + request_id;
             if (status.ToString().ToLower()[0] == 'c') {
                 d["Edit"] = "<i class='material-icons grey-text disabled' title='Editing locked'>lock</i>";

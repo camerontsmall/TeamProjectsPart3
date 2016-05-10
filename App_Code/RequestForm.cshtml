@@ -18,7 +18,7 @@ foreach(var period in Bookings.Period.All()){
 @helper Semesters(int val = 1) { 
     <option @((val == 1)? "selected" : "") value="1">Semester 1</option>
     <option @((val == 2)? "selected" : "") value="2">Semester 2</option>
-    <option @((val == 3)? "selected" : "") value="0">Ad-Hoc</option>
+    <!-- <option @((val == 3)? "selected" : "") value="0">Ad-hoc</option> -->
 }
 
 @helper Days(int val = 1) {
