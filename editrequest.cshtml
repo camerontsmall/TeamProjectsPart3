@@ -72,10 +72,11 @@
     var day = Request.Form["day"];
     var period = Request.Form["period"];
     var week = Request.Form["weeks"];
+    var semester = Request.Form["semester"];
 
-    var query = "UPDATE request SET status='p', module_code=@0, day=@1, period=@2, week=@3 WHERE request_id=@4";
+    var query = "UPDATE request SET status='p', module_code=@0, day=@1, period=@2, week=@3, semester=@4 WHERE request_id=@5";
     try {
-        DB.Execute(query, module_code, day, period, week, id);
+        DB.Execute(query, module_code, day, period, week, semester, id);
         <div class="card-panel green white-text">Saved changes</div>
     } catch (Exception e) {
         <div class="card-panel red">Failed to edit request: @e.Message</div>
@@ -114,6 +115,10 @@
                         @RequestForm.Modules(Department.User.departmentID(), data["module_code"])
                     </select>
                     <br />
+                    <div for="seminput">Semester</div>
+                    <select id="seminput" class="browser-default" name="semester">
+                        @RequestForm.Semesters(data["semester"])
+                    </select>
                     <div for="dayinput">Day</div>
                     <select id="dayinput" class="browser-default" name="day">
                         @RequestForm.Days(data["day"])
@@ -140,7 +145,6 @@
                         </div>
                     </div>
                 </form>
-          
                 <form method="post" action="?addroom=@id&id=@id">
                         <p for="capacityinput">Capacity required</p>
                         <input id="capacityinput" type="number" name="capacity" value="50" min="0" max="400" />

@@ -23,6 +23,7 @@ namespace Models{
         public string week;
         public int owner;
         public DateTime last_changed;
+        public int semester;
 
         public void addData(dynamic data)
         {
@@ -36,6 +37,7 @@ namespace Models{
             this.week = (string)data["week"];
             this.owner = (int)data["owner"];
             this.last_changed = (DateTime)data["last_changed"];
+            this.semester = (data["semester"] == null)? 0 : (int)data["semester"];
         }
 
         public static List<Request> convertTo(dynamic data){
@@ -71,6 +73,7 @@ namespace Models{
                     break;
             }
             d["Status"] = statustag;
+            d["Semester"] = semester.ToString();
             //d["action"] = "./editrequest?id=" + request_id;
             if (status.ToString().ToLower()[0] == 'c') {
                 d["Edit"] = "<i class='material-icons grey-text disabled' title='Editing locked'>lock</i>";

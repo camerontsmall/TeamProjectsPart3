@@ -118,6 +118,11 @@
                     @RequestForm.Modules(Department.User.departmentID(), newmodule_code)
                 </select>
                 <br />
+                <div for="seminput">Semester</div>
+                <select id="seminput" class="browser-default" name="semester">
+                    @RequestForm.Semesters()
+                </select>
+                <br/>
                 <div for="dayinput">Day</div>
                 <select id="dayinput" class="browser-default" name="day" value="@newday">
                     @RequestForm.Days(newday)
@@ -148,13 +153,14 @@
                     @RequestForm.Parks(newpark)
                 </select>
                 <br />
+                <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
                 <div onclick="loadRooms('@Department.User.departmentID()')" class="btn waves-effect">Update Room Suggestions</div>
                 <br />
                 <div for="roominput">Preferred room</div>
-                <!-- <input list="roomlist" name="roompref" id="roominput" class="active"/> -->
                 <select id="roomlist" class="browser-default" name="roompref" onchange="loadRoomInfo()">
                     @RequestForm.Rooms(newroom, Department.User.departmentID())
                 </select>
+                    
                 <br />
                 <div class="card-panel blue white-text" id="roominfo">No room selected</div>
                 <p>Required Facilities</p>
