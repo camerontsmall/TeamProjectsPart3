@@ -52,7 +52,8 @@ function loadRoomInfo() {
             data = JSON.parse(data);
             var el = document.getElementById('roominfo');
             if (data != null) {
-                el.innerHTML = "Park: " + data['park'] + " Capacity:" + data["capacity"] + " Type:" + data["type"];
+                el.innerHTML = "Park: " + data['park'] + " Capacity: " + data["capacity"] + " Type: " + data["type"];
+                if (data["dept_id"].length > 0) { el.innerHTML += "Department: " + data["dept_id"]; }
             } else {
                 el.innerHTML = "No room selected";
             }
